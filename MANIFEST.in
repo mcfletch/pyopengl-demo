@@ -1,0 +1,2 @@
+recursive-include PyOpenGL-Demo *.py *.bmp *.png *.ppm *.face *.vert *.xyzr *.ttf *.txt 
+include PyOpenGL-Demo/twburton/*
