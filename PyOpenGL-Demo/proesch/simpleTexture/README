@@ -1,0 +1,4 @@
+texturedQuad.py
+	Load a texture from an image file given as a command line
+	argument (requires PIL) or generate a texture from random 
+	rgb values. Map the texture to a quad.

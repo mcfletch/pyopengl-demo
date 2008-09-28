@@ -1,0 +1,21 @@
+3Dlabs-License.txt
+	3Dlabs Inc. Ltd. license file for brick.frag and brick.vert
+brick.frag
+	3DLabs shader for procedural bricks
+brick.vert
+	3DLabs Vertex shader for procedural bricks extended to 
+	perform deformation of a torus
+shaderProg.py
+	Python class to simplify the incorporation of GLSL programs into
+	applications. In particular, methods for loading, compiling
+	and linking shader programs are provided as well as methods to get
+	the indices of uniform variables and vertex attributes.
+	See textureShader.py and torusShader.py for sample applications.
+rgbMorph.frag
+	Fragment shader program that transforms rgb vectors.
+textureShader.py
+	Demo that loads a texture from file and multiplies the rgb
+	colors with a randomly varying transformation matrix.
+torusShader.py
+	Demo showing a torus with time varying deformation
+	(brick.vert) and a brick pattern (brick.frag)

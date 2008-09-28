@@ -1,0 +1,9 @@
+stereoCamera.py
+	Helper class encapsulating the calculation of offaxis stereo
+	settings (parallel axis asymmetric frustum perspective projection,
+	see http://local.wasp.uwa.edu.au/~pbourke/projection/stereorender)
+	The underlying equations and their implementation are by courtesy of 
+	Paul Bourke.
+stereoDemo.py
+	Demo showing a rotating teapot in anaglyph oder shutter glasses 
+	stereo mode depending on the command line argument.

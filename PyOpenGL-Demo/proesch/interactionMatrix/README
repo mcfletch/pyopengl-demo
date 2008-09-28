@@ -1,0 +1,8 @@
+interactionMatrix.py
+	Class encapsulating a transformation matrix and methods to 
+	add transformations (translation, rotations)
+mouseInteractor.py
+	Helper class to translate/rotate a scene via glut mouse
+	interaction.
+interactionPot.py
+	Demo Program using a teapot

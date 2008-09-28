@@ -1,0 +1,5 @@
+bezier.py
+
+This application demonstrates the use of bezier patches to model a 
+deforming surface. In contrast to the nurbs example 
+(see ../nurbs/nurbs.py) edges clearly delineate individual patches.

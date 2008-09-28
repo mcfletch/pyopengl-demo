@@ -1,0 +1,12 @@
+nurbsCurve.py
+	Plot a nurbs curve with control points positioned on a circle. The
+	deviation from a real circle is visualised by rotating the curve
+	about its center.
+	Simply position your mouse pointer on the curve and notice the 
+	deviation while the object is rotating.
+
+nurbsCircle.py
+	Plot a circle using NURBS and control points connected by lines.
+	See Foley, van Dam, Feiner, Hughes: "Computer Graphics",
+	second edition in C, Chapter 11.2.3, Fig. 11.31 
+	Do the test with the mouse pointer again ...
