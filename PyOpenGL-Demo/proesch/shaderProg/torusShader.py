@@ -8,6 +8,10 @@
 #
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
+import OpenGL 
+OpenGL.FULL_LOGGING = True
+import pdb
+pdb.set_trace()
 
 import sys
 from shaderProg import ShaderProgram
@@ -33,7 +37,8 @@ def animationStep( ):
 	global time
 	time+=0.05
 	global sP
-	if sP.isEnabled():
+	if sP.enable():
+		glUseProgramObjectARB( 1L )
 		glUniform1fARB( sP.indexOfUniformVariable("Time"), time )
 	sleep( 1 / float( frameRate ) )
 	glutPostRedisplay( )
@@ -85,6 +90,8 @@ def init(  ):
 	glEndList( )
 	initShaders( )
 
+import logging
+logging.basicConfig()
 glutInit( sys.argv )
 glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH )
 glutInitWindowSize( 250, 250 )
