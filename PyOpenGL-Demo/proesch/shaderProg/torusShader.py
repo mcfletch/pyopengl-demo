@@ -8,11 +8,6 @@
 #
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
-import OpenGL 
-OpenGL.FULL_LOGGING = True
-import pdb
-pdb.set_trace()
-
 import sys
 from shaderProg import ShaderProgram
 try:
