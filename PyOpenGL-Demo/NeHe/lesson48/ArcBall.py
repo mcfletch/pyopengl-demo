@@ -31,7 +31,7 @@ except ImportError, err:
 	try: 
 		import Numeric
 		def sumDot( a,b ):
-			return sum (Numeric.dot (TempPt, TempPt) )
+			return sum (Numeric.dot (a, b) )
 	except ImportError, err:
 		print "This demo requires the numpy or Numeric extension, sorry"
 		import sys

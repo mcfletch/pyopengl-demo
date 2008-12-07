@@ -114,7 +114,7 @@ class ShaderProgram ( object ):
 			print "\nShaders not compiled/linked properly"
 			result = -1
 		else:
-			result = glGetUniformLocationARB( self.__shaderProgramID, variableName+'\000' )
+			result = glGetUniformLocationARB( self.__shaderProgramID, variableName)
 			self.__checkOpenGLError( )
 		if result < 0:
 			print 'Variable "%s" not known to the shader' % ( variableName )
