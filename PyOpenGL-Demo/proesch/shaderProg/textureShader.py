@@ -44,7 +44,7 @@ class FileTexture( Texture ):
 
 frameRate = 30
 from time import sleep
-def animationStep( ):
+def animationStep( *args ):
 	global frameRate
 	global sP
 	if sP.isEnabled():
@@ -64,7 +64,7 @@ def animationStep( ):
 	sleep( 1 / float( frameRate ) )
 	glutPostRedisplay( )
 
-def display(  ):
+def display( *args ):
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT )
 	glColor3f( 1, 1, 1 )
 	glMatrixMode( GL_PROJECTION )
