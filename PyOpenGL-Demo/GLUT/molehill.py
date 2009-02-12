@@ -37,17 +37,16 @@ def display():
 	glEnable(GL_LIGHTING)
 	glDisable( GL_CULL_FACE )
 	glEnable(GL_DEPTH_TEST)
-	glColor3f( 0, 0, 1 )
 	glCallList(THE_LIST)
 	glutSwapBuffers()
 
 
 def main():
 	mat_red_diffuse = numpy.array( ( 0.7, 0.0, 0.1, 1.0 ), 'f' )
-	mat_green_diffuse = ( 0.0, 0.7, 0.1, 1.0 )
-	mat_blue_diffuse = ( 0.0, 0.1, 0.7, 1.0 )
-	mat_yellow_diffuse = ( 0.7, 0.8, 0.1, 1.0 )
-	mat_specular = ( 1.0, 1.0, 1.0, 1.0 )
+	mat_green_diffuse = numpy.array(( 0.0, 0.7, 0.1, 1.0 ),'f')
+	mat_blue_diffuse = numpy.array(( 0.0, 0.1, 0.7, 1.0 ),'f')
+	mat_yellow_diffuse = numpy.array(( 0.7, 0.8, 0.1, 1.0 ),'f')
+	mat_specular = numpy.array(( 1.0, 1.0, 1.0, 1.0 ),'f')
 	mat_shininess = 100.0
 	knots = ( 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0 )
 
@@ -61,8 +60,8 @@ def main():
 	nurb = gluNewNurbsRenderer()
 	# get a really good sampling
 	gluNurbsProperty(nurb, GLU_SAMPLING_TOLERANCE, 5.0)
-	#gluNurbsProperty(nurb, GLU_DISPLAY_MODE, GLU_FILL)
-	gluNurbsProperty(nurb, GLU_DISPLAY_MODE, GLU_OUTLINE_POLYGON)
+	gluNurbsProperty(nurb, GLU_DISPLAY_MODE, GLU_FILL)
+	#gluNurbsProperty(nurb, GLU_DISPLAY_MODE, GLU_OUTLINE_POLYGON)
 	
 
 	# Build control points for NURBS mole hills. 
@@ -133,7 +132,6 @@ def main():
 	THE_LIST = glGenLists( 1 )
 	glNewList(THE_LIST, GL_COMPILE)
 	
-	glEnable(GL_COLOR_MATERIAL)
 	glEnable(GL_AUTO_NORMAL)
 	glEnable(GL_NORMALIZE)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular)
