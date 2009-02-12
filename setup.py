@@ -1,12 +1,22 @@
 #! /usr/bin/env python
 """OpenGL-ctypes setup script (setuptools-based)
 """
-from setuptools import setup, find_packages
+
 import sys, os
 sys.path.insert(0, '.' )
 
+try:
+    from setuptools import setup, find_packages
+    packages = find_packages(  )
+except ImportError:
+
+    # if setuptools isn't installed... we just use these packages manually.
+    from distutils.core import setup
+    packages = ['PyOpenGL-Demo', 'PyOpenGL-Demo.tom', 'PyOpenGL-Demo.GLE', 'PyOpenGL-Demo.dek', 'PyOpenGL-Demo.redbook', 'PyOpenGL-Demo.NeHe', 'PyOpenGL-Demo.da', 'PyOpenGL-Demo.GLUT', 'PyOpenGL-Demo.dek.OglSurface', 'PyOpenGL-Demo.NeHe.lesson43', 'PyOpenGL-Demo.NeHe.lesson44', 'PyOpenGL-Demo.NeHe.lesson48', 'PyOpenGL-Demo.GLUT.tom']
+
+
 requirements = ['PyOpenGL']
-packages = find_packages(  )
+
 
 
 if __name__ == "__main__":
