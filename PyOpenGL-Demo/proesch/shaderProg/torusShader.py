@@ -1,4 +1,4 @@
-#!/usr/bin/python2.4
+#!/usr/bin/env python
 # Demonstration of the shaderProgram:
 # Animated torus with procedural texture.
 #
@@ -34,7 +34,7 @@ def animationStep( ):
 	global time
 	time+=0.05
 	global sP
-	if sP.enable():
+	if sP and sP.enable():
 		glUseProgramObjectARB( 1L )
 		glUniform1fARB( sP.indexOfUniformVariable("Time"), time )
 	sleep( 1 / float( frameRate ) )

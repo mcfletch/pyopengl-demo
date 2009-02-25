@@ -145,6 +145,8 @@ if __name__ == '__main__':
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA)
 	glutInitWindowSize( 100,100 )
 	glutCreateWindow("shaderProg Test")
+	# Note: this will fail on many platforms where you must call
+	# *after* you get an initialized glut context...
 	Sp = ShaderProgram()
 	Sp.addShader( GL_VERTEX_SHADER_ARB, "temperature.vert" )
 	Sp.addShader( GL_FRAGMENT_SHADER_ARB, "temperature.frag" )

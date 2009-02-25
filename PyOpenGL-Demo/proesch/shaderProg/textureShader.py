@@ -1,8 +1,10 @@
-#!/usr/bin/python2.4
+#!/usr/bin/env python
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
+#import OpenGL 
+#OpenGL.FULL_LOGGING = True
 
 import sys
 import array
@@ -47,6 +49,12 @@ from time import sleep
 def animationStep( *args ):
 	global frameRate
 	global sP
+	if not quadList:
+		if len(sys.argv) > 1: 
+			init( sys.argv[1] )
+		else:
+			init( None )
+		assert quadList
 	if sP.isEnabled():
 		global rgbTransformMatrix
 		row = random.randint( 0, 3 )
@@ -65,6 +73,12 @@ def animationStep( *args ):
 	glutPostRedisplay( )
 
 def display( *args ):
+	if not quadList:
+		if len(sys.argv) > 1: 
+			init( sys.argv[1] )
+		else:
+			init( None )
+		assert quadList
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT )
 	glColor3f( 1, 1, 1 )
 	glMatrixMode( GL_PROJECTION )
@@ -130,15 +144,18 @@ def init( fileName ):
 	glEndList( )
 	initShaders( )
 
-glutInit( sys.argv )
-glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB )
-glutInitWindowSize( 250, 250 )
-glutInitWindowPosition( 100, 100 )
-glutCreateWindow( sys.argv[0] )
-if len(sys.argv) > 1: 
-	init( sys.argv[1] )
-else:
-	init( None )
-glutDisplayFunc( display )
-glutIdleFunc( animationStep )
-glutMainLoop(  )
+def main():
+	import logging
+	logging.basicConfig()
+	glutInit( sys.argv )
+	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB )
+	glutInitWindowSize( 250, 250 )
+	glutInitWindowPosition( 100, 100 )
+	glutCreateWindow( sys.argv[0] )
+	glutDisplayFunc( display )
+	glutIdleFunc( animationStep )
+	glutMainLoop(  )
+
+if __name__ == "__main__":
+	main()
+	
