@@ -8,6 +8,8 @@
 #
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
+#import OpenGL
+#OpenGL.FULL_LOGGING = True
 import sys
 from shaderProg import ShaderProgram
 try:
@@ -40,6 +42,8 @@ def animationStep( ):
 
 def display(  ):
 	"""Glut display function."""
+	if not torusList:
+		init()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT )
 	glMatrixMode( GL_PROJECTION )
 	glLoadIdentity( )
@@ -73,6 +77,8 @@ def initShaders( ):
 	glUniform2fvARB( sP.indexOfUniformVariable("BrickPct"), 1, \
 		(0.9, 0.85) )
 
+torusList = None
+
 def init(  ):
 	"Glut init function."""
 	glClearColor ( 0.3, 0.3, 0.3, 1 )
@@ -85,14 +91,19 @@ def init(  ):
 	glEndList( )
 	initShaders( )
 
-import logging
-logging.basicConfig()
-glutInit( sys.argv )
-glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH )
-glutInitWindowSize( 250, 250 )
-glutInitWindowPosition( 100, 100 )
-glutCreateWindow( sys.argv[0] )
-init(  )
-glutDisplayFunc( display )
-glutIdleFunc( animationStep )
-glutMainLoop(  )
+def main():
+
+	import logging
+	logging.basicConfig()
+	glutInit( sys.argv )
+	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH )
+	glutInitWindowSize( 250, 250 )
+	glutInitWindowPosition( 100, 100 )
+	glutCreateWindow( sys.argv[0] )
+	glutDisplayFunc( display )
+	glutIdleFunc( animationStep )
+	glutMainLoop(  )
+
+if __name__ == "__main__":
+	main()
+	
