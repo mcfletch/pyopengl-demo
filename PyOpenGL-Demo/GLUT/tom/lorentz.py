@@ -55,7 +55,7 @@ def drawLorentz( x, y, z, n=2000, dt=0.01):
 
 	glEnable(GL_LIGHTING)
 
-LORENTZ_LIST = lorentz( 0.01, 0.01, 0.01 )
+LORENTZ_LIST = None
 
 def display( ):
 	"""Callback function for displaying the scene
@@ -84,8 +84,12 @@ def display( ):
 		0,1,0, # up-vector
 	)
 	rotation()
-	drawLorentz( 0.01, 0.01, 0.01 )
-	#glCallList( LORENTZ_LIST )
+	global LORENTZ_LIST
+	if LORENTZ_LIST is None:
+		LORENTZ_LIST = lorentz( 0.01, 0.01, 0.01 )
+	glCallList( LORENTZ_LIST )
+#	drawLorentz( 0.01, 0.01, 0.01 )
+
 	glutSwapBuffers()
 
 def idle( ):
