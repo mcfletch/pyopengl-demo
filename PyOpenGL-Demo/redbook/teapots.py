@@ -93,6 +93,7 @@ def init():
    teapotList = glGenLists(1)
    glNewList (teapotList, GL_COMPILE)
    glutSolidTeapot(1.0)
+   #glutSolidSphere( 1.0, 8, 8 )
    glEndList ()
 
 # Move object into position.  Use 3rd through 12th 
@@ -187,13 +188,14 @@ def keyboard(key, x, y):
       sys.exit(0)
 
 # Main Loop 
-glutInit(sys.argv);
-glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
-glutInitWindowSize(500, 600);
-glutInitWindowPosition(50,50);
-glutCreateWindow(sys.argv[0]);
-init();
-glutReshapeFunc(reshape)
-glutDisplayFunc(display)
-glutKeyboardFunc(keyboard)
-glutMainLoop()
+if __name__ == "__main__":
+	glutInit(sys.argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitWindowSize(500, 600);
+	glutInitWindowPosition(50,50);
+	glutCreateWindow(sys.argv[0]);
+	init();
+	glutReshapeFunc(reshape)
+	glutDisplayFunc(display)
+	glutKeyboardFunc(keyboard)
+	glutMainLoop()
