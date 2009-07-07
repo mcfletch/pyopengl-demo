@@ -61,14 +61,14 @@ def display():
     glTranslate(1.0, 1.0, 0.0)
     y = 25.0
     for s in PROMPT:
-        glRasterPos(40.0, y)
+        glRasterPos2fv(GLfloat_2(40.0, y))
         y += 30.0
         for c in s:
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
 
     y = 100.0
     for t in AllTimers:
-        glRasterPos(80.0, y)
+        glRasterPos2fv(GLfloat_2(80.0, y))
         for c in t.getDescription():
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
         y += 30.0
