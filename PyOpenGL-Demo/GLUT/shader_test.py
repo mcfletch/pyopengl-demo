@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 '''Tests rendering using the ARB shader objects extension...
 '''
+import OpenGL 
+OpenGL.ERROR_ON_COPY = True 
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *

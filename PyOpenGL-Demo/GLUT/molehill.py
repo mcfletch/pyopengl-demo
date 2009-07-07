@@ -15,17 +15,24 @@ __version__ = string.split('$Revision: 1.4 $')[1]
 __date__ = string.join(string.split('$Date: 2008/09/05 20:23:33 $')[1:3], ' ')
 __author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
 
+import OpenGL 
+OpenGL.ERROR_ON_COPY = True 
+
 #
 # Ported to PyOpenGL 2.0 by Tarn Weisner Burton 10May2001
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
+vec3 = GLfloat_3
+vec4 = GLfloat_4
 try:
 	import numpy 
 except ImportError, err:
 	import Numeric as numpy
 import sys
+
+array = numpy.array 
 
 THE_LIST = None
 
@@ -47,8 +54,8 @@ def main():
 	mat_blue_diffuse = numpy.array(( 0.0, 0.1, 0.7, 1.0 ),'f')
 	mat_yellow_diffuse = numpy.array(( 0.7, 0.8, 0.1, 1.0 ),'f')
 	mat_specular = numpy.array(( 1.0, 1.0, 1.0, 1.0 ),'f')
-	mat_shininess = 100.0
-	knots = ( 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0 )
+	mat_shininess = GLfloat( 100.0 )
+	knots = numpy.array( (0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0),'f' )
 
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
@@ -122,6 +129,7 @@ def main():
 	pts3[3][0][2] = 1.0
 	pts4[0][3][2] = 1.0
 	
+	pts1,pts2,pts3,pts4 = array(pts1,'f'),array(pts2,'f'),array(pts3,'f'),array(pts4,'f')
 	glMatrixMode(GL_PROJECTION)
 	gluPerspective(55.0, 1.0, 2.0, 24.0)
 	glMatrixMode(GL_MODELVIEW)

@@ -4,11 +4,14 @@
 # * Conversion to GLUT by Mark J. Kilgard 
 # conversion to Python using PyOpenGL with frame rates ala glxgears
 # Peter Barth
-     
+import OpenGL 
+OpenGL.ERROR_ON_COPY = True 
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 import sys, time 
 from math import sin,cos,sqrt,pi
+from OpenGL.constants import GLfloat
+vec4 = GLfloat_4
 
 def gear(inner_radius, outer_radius, width, teeth, tooth_depth):
     r0 = inner_radius
@@ -211,10 +214,11 @@ def reshape(width, height):
 def init():
     global gear1, gear2, gear3
     
-    pos = (5.0, 5.0, 10.0, 0.0)
-    red = (0.8, 0.1, 0.0, 1.0)
-    green = (0.0, 0.8, 0.2, 1.0)
-    blue = (0.2, 0.2, 1.0, 1.0)
+    
+    pos = vec4(5.0, 5.0, 10.0, 0.0)
+    red = vec4(0.8, 0.1, 0.0, 1.0)
+    green = vec4(0.0, 0.8, 0.2, 1.0)
+    blue = vec4(0.2, 0.2, 1.0, 1.0)
 
     glLightfv(GL_LIGHT0, GL_POSITION, pos)
     glEnable(GL_CULL_FACE)
