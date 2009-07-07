@@ -31,11 +31,11 @@ def createList( ):
 
 def light():
 	"""Setup light 0 and enable lighting"""
-	glLightfv(GL_LIGHT0, GL_AMBIENT, [0.0, 1.0, 0.0, 1.0])
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, [1.0, 1.0, 1.0, 1.0])
-	glLightfv(GL_LIGHT0, GL_SPECULAR, [1.0, 1.0, 1.0, 1.0])
-	glLightfv(GL_LIGHT0, GL_POSITION, [1.0, 1.0, 1.0, 0.0]);   
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, [0.2, 0.2, 0.2, 1.0])
+	glLightfv(GL_LIGHT0, GL_AMBIENT, GLfloat_4(0.0, 1.0, 0.0, 1.0))
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, GLfloat_4(1.0, 1.0, 1.0, 1.0))
+	glLightfv(GL_LIGHT0, GL_SPECULAR, GLfloat_4(1.0, 1.0, 1.0, 1.0))
+	glLightfv(GL_LIGHT0, GL_POSITION, GLfloat_4(1.0, 1.0, 1.0, 0.0));   
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, GLfloat_4(0.2, 0.2, 0.2, 1.0))
 	glEnable(GL_LIGHTING)
 	glEnable(GL_LIGHT0)
 
@@ -74,7 +74,7 @@ def display( swap=1, clear=1):
 	glFrontFace(GL_CCW)
 	glEnable(GL_CULL_FACE)  # added by jfp to use with new logo.py
 	glEnable(GL_DEPTH_TEST)
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, [1., 1., 0., 0.])
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, GLfloat_4(1., 1., 0., 0.))
 
 ##	define_logo()
 	global TEXT_DISPLAY_LIST

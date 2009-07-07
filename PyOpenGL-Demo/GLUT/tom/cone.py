@@ -11,6 +11,8 @@ if __name__ == '__build__':
 __version__='$Revision: 1.1.1.1 $'[11:-2]
 __date__ = '$Date: 2007/02/15 19:25:11 $'[6:-2]
 
+import OpenGL 
+OpenGL.ERROR_ON_COPY = True 
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -28,17 +30,17 @@ def drawCone( position = (0,-1,0), radius=1, height=2, slices=50,stacks=10 ):
 
 def coneMaterial( ):
 	"""Setup material for cone"""
-	glMaterialfv(GL_FRONT, GL_AMBIENT, [0.2, 0.2, 0.2, 1.0])
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, [0.8, 0.8, 0.8, 1.0])
-	glMaterialfv(GL_FRONT, GL_SPECULAR, [1.0, 0.0, 1.0, 1.0])
-	glMaterialfv(GL_FRONT, GL_SHININESS, 50.0)
+	glMaterialfv(GL_FRONT, GL_AMBIENT, GLfloat_4(0.2, 0.2, 0.2, 1.0))
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, GLfloat_4(0.8, 0.8, 0.8, 1.0))
+	glMaterialfv(GL_FRONT, GL_SPECULAR, GLfloat_4(1.0, 0.0, 1.0, 1.0))
+	glMaterialfv(GL_FRONT, GL_SHININESS, GLfloat(50.0))
 def light():
 	"""Setup light 0 and enable lighting"""
-	glLightfv(GL_LIGHT0, GL_AMBIENT, [0.0, 1.0, 0.0, 1.0])
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, [1.0, 1.0, 1.0, 1.0])
-	glLightfv(GL_LIGHT0, GL_SPECULAR, [1.0, 1.0, 1.0, 1.0])
-	glLightfv(GL_LIGHT0, GL_POSITION, [1.0, 1.0, 1.0, 0.0]);   
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, [0.2, 0.2, 0.2, 1.0])
+	glLightfv(GL_LIGHT0, GL_AMBIENT, GLfloat_4(0.0, 1.0, 0.0, 1.0))
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, GLfloat_4(1.0, 1.0, 1.0, 1.0))
+	glLightfv(GL_LIGHT0, GL_SPECULAR, GLfloat_4(1.0, 1.0, 1.0, 1.0))
+	glLightfv(GL_LIGHT0, GL_POSITION, GLfloat_4(1.0, 1.0, 1.0, 0.0));   
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, GLfloat_4(0.2, 0.2, 0.2, 1.0))
 	glEnable(GL_LIGHTING)
 	glEnable(GL_LIGHT0)
 def depth():
@@ -95,7 +97,7 @@ def rotation( period = 10):
 	glRotate( angle, 0,1,0)
 	return angle
 
-if __name__ == "__main__":
+def main():
 	print """You should see a high-resolution cone rotating slowly."""
 	import sys
 	glutInit(sys.argv)
@@ -105,3 +107,7 @@ if __name__ == "__main__":
 	glutIdleFunc(display)
 	# note need to do this to properly render faceted geometry
 	glutMainLoop()
+
+if __name__ == "__main__":
+	main()
+    

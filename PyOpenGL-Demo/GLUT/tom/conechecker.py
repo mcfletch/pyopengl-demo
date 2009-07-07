@@ -13,6 +13,8 @@ if __name__ == '__build__':
 __version__='$Revision: 1.1.1.1 $'[11:-2]
 __date__ = '$Date: 2007/02/15 19:25:11 $'[6:-2]
 
+import OpenGL 
+OpenGL.ERROR_ON_COPY = True 
 
 from OpenGL.GL import *
 from OpenGL.GLU import *

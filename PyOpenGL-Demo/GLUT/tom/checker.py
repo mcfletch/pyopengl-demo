@@ -11,6 +11,8 @@ if __name__ == '__build__':
 __version__='$Revision: 1.1.1.1 $'[11:-2]
 __date__ = '$Date: 2007/02/15 19:25:11 $'[6:-2]
 
+import OpenGL 
+OpenGL.ERROR_ON_COPY = True 
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -26,7 +28,7 @@ except ImportError, err:
 		import sys
 		sys.exit()
 
-def drawCheckerBoard( N=5, white=(1,1,1), black=(0,0,0) ):
+def drawCheckerBoard( N=5, white=GLfloat_3(1,1,1), black=GLfloat_3(0,0,0) ):
 	"""Draw an 2N*2N checkerboard with given colours"""
 	glDisable(GL_LIGHTING)
 	try:
@@ -76,8 +78,8 @@ def display( swap=1, clear=1):
 		0,0,0, # center-of-view
 		0,1,0, # up-vector
 	)
-	glLightfv( GL_LIGHT0, GL_DIFFUSE, (.8,.8,.3) )
-	glLightfv( GL_LIGHT0, GL_POSITION, (1,1,3,0) )
+	glLightfv( GL_LIGHT0, GL_DIFFUSE, GLfloat_3(.8,.8,.3) )
+	glLightfv( GL_LIGHT0, GL_POSITION, GLfloat_4(1,1,3,0) )
 	glEnable( GL_LIGHT0)
 	
 	rotation()
