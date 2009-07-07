@@ -49,6 +49,10 @@
 
 
 import OpenGL
+#OpenGL.FULL_LOGGING = True
+#OpenGL.ERROR_ON_COPY = True
+import logging 
+logging.basicConfig()
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
