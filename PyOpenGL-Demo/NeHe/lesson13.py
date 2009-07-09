@@ -60,7 +60,7 @@ def BuildFont ():
 	hDC = win32ui.CreateDCFromHandle (wgldc)
 
 
-	base = glGenLists(32+96);					# // Storage For 96 Characters, plus 32 at the start...
+	base = int(glGenLists(32+96));					# // Storage For 96 Characters, plus 32 at the start...
 
 	# CreateFont () takes a python dictionary to specify the requested font properties. 
 	font_properties = { "name" : "Courier New",
@@ -72,7 +72,7 @@ def BuildFont ():
 	# // Selects The Font We Want
 	oldfont = hDC.SelectObject (font)
 	# // Builds 96 Characters Starting At Character 32
-	wglUseFontBitmaps (wgldc, 32, 96, base+32)
+	wglUseFontBitmapsA(wgldc, 32, 96, base+32)
 	# // reset the font
 	hDC.SelectObject (oldfont)
 	# // Delete The Font (python will cleanup font for us...)
