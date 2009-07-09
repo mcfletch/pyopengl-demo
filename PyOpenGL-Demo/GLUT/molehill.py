@@ -68,7 +68,7 @@ def main():
 	# get a really good sampling
 	gluNurbsProperty(nurb, GLU_SAMPLING_TOLERANCE, 5.0)
 	gluNurbsProperty(nurb, GLU_DISPLAY_MODE, GLU_FILL)
-	#gluNurbsProperty(nurb, GLU_DISPLAY_MODE, GLU_OUTLINE_POLYGON)
+	gluNurbsProperty(nurb, GLU_DISPLAY_MODE, GLU_OUTLINE_POLYGON)
 	
 
 	# Build control points for NURBS mole hills. 
@@ -140,7 +140,6 @@ def main():
 	THE_LIST = glGenLists( 1 )
 	glNewList(THE_LIST, GL_COMPILE)
 	
-	glEnable(GL_AUTO_NORMAL)
 	glEnable(GL_NORMALIZE)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular)
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess)
@@ -148,24 +147,28 @@ def main():
 	# Render red hill. 
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_red_diffuse)
 	gluBeginSurface(nurb)
+	gluNurbsSurface(nurb, knots, knots, pts1, GL_MAP2_NORMAL)
 	gluNurbsSurface(nurb, knots, knots, pts1, GL_MAP2_VERTEX_3)
 	gluEndSurface(nurb)
 
 	# Render green hill. 
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_green_diffuse)
 	gluBeginSurface(nurb)
+	gluNurbsSurface(nurb, knots, knots, pts2, GL_MAP2_NORMAL)
 	gluNurbsSurface(nurb, knots, knots, pts2, GL_MAP2_VERTEX_3)
 	gluEndSurface(nurb)
 
 	# Render blue hill. 
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_blue_diffuse)
 	gluBeginSurface(nurb)
+	gluNurbsSurface(nurb, knots, knots, pts3, GL_MAP2_NORMAL)
 	gluNurbsSurface(nurb, knots, knots, pts3, GL_MAP2_VERTEX_3)
 	gluEndSurface(nurb)
 
 	# Render yellow hill. 
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_yellow_diffuse)
 	gluBeginSurface(nurb)
+	gluNurbsSurface(nurb, knots, knots, pts4, GL_MAP2_NORMAL)
 	gluNurbsSurface(nurb, knots, knots, pts4, GL_MAP2_VERTEX_3)
 	gluEndSurface(nurb)
 	glEndList()
