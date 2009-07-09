@@ -32,7 +32,7 @@ from OpenGL.GLU import *
 from OpenGL.WGL import *	# wglUseFontBitmaps (), wglGetCurrentDC ()
 import win32ui				# CreateFont (), CreateDCFromHandle ()
 from math import cos, sin
-import sys
+import sys, time
 
 
 # *********************** Globals *********************** 
@@ -51,16 +51,21 @@ ESCAPE = '\033'
 # Number of the glut window.
 window = 0
 base = None
-
+import struct
+def pointer_as_int( p ):
+	if hasattr(p,'value'):
+		p = p.value
+	return struct.unpack( 'i',struct.pack( 'I',p ))[0]
 
 def BuildFont ():
 	global base
-
+	# TODO: figure out why ctypes doesn't return a c_void_p, has been
+	# known since at least 2006, still presenting in Python 2.5 win32
 	wgldc = wglGetCurrentDC ()
-	hDC = win32ui.CreateDCFromHandle (wgldc)
+	hDC = win32ui.CreateDCFromHandle (pointer_as_int(wgldc))
 
 
-	base = int(glGenLists(32+96));					# // Storage For 96 Characters, plus 32 at the start...
+	base = glGenLists(32+96);					# // Storage For 96 Characters, plus 32 at the start...
 
 	# CreateFont () takes a python dictionary to specify the requested font properties. 
 	font_properties = { "name" : "Courier New",
@@ -139,8 +144,7 @@ cnt1 = 0
 cnt2 = 0
 # The main drawing function. 
 def DrawGLScene():
-	global cnt1
-	global cnt2
+	global cnt1,cnt2
 
 	# // Clear The Screen And The Depth Buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -152,7 +156,7 @@ def DrawGLScene():
 	glColor3f (1.0 * cos (cnt1), 1.0 * sin (cnt2), 1.0 -0.5 * cos (cnt1+cnt2))
 	# // Position The Text On The Screen
 	glRasterPos2f(-0.45+0.05* cos(cnt1), 0.32*sin(cnt2));
- 	glPrint("Active OpenGL Text With NeHe - %7.2f" %(cnt1));	# // Print GL Text To The Screen
+	glPrint("Active OpenGL Text With NeHe - %7.2f" %(cnt1));	# // Print GL Text To The Screen
 	cnt1+=0.051;										# // Increase The First Counter
 	cnt2+=0.005;										# // Increase The First Counter
 	glutSwapBuffers()
