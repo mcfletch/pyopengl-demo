@@ -1,5 +1,12 @@
 #! /usr/bin/env python
-'''Tests rendering using the ARB shader objects extension...
+'''Tests rendering using shader objects from core GL or extensions
+
+Uses the:
+    Lighthouse 3D Tutorial toon shader
+        http://www.lighthouse3d.com/opengl/glsl/index.php?toon2
+
+By way of:
+    http://www.pygame.org/wiki/GLSLExample
 '''
 import OpenGL 
 OpenGL.ERROR_ON_COPY = True 
@@ -7,43 +14,11 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
-from OpenGL.GL.ARB.shader_objects import *
-from OpenGL.GL.ARB.vertex_shader import *
-from OpenGL.GL.ARB.fragment_shader import *
+# PyOpenGL 3.0.1 introduces this convenience module...
+from OpenGL.GL.shaders import *
 
 import time, sys
-
 program = None
-
-def compileShader( source, shaderType ):
-    """Compile shader source of given type"""
-    shader = glCreateShaderObjectARB(shaderType)
-    print "glShaderSourceARB:", bool(glShaderSourceARB)
-    glShaderSourceARB( shader, source )
-    glCompileShaderARB( shader )
-    return shader
-
-
-def compileProgram(vertexSource=None, fragmentSource=None):
-    ##return
-    program = glCreateProgramObjectARB()
-
-    if vertexSource:
-        vertexShader = compileShader(vertexSource, GL_VERTEX_SHADER_ARB)
-        glAttachObjectARB(program, vertexShader)
-    if fragmentSource:
-        fragmentShader = compileShader(fragmentSource, GL_FRAGMENT_SHADER_ARB)
-        glAttachObjectARB(program, fragmentShader)
-
-    glValidateProgramARB( program )
-    glLinkProgramARB(program)
-
-    if vertexShader:
-        glDeleteObjectARB(vertexShader)
-    if fragmentShader:
-        glDeleteObjectARB(fragmentShader)
-
-    return program
 
 # A general OpenGL initialization function.  Sets all of the initial parameters. 
 def InitGL(Width, Height):                # We call this right after our OpenGL window is created.
@@ -60,46 +35,34 @@ def InitGL(Width, Height):                # We call this right after our OpenGL 
 
     glMatrixMode(GL_MODELVIEW)
  
-    if not glInitShaderObjectsARB():
+    if not glUseProgram:
         print 'Missing Shader Objects!'
         sys.exit(1)
-    if not glInitVertexShaderARB():
-        print 'Missing Vertex Shader!'
-        sys.exit(1)
-    if not glInitFragmentShaderARB():
-        print 'Missing Fragment Shader!'
-        sys.exit(1)
-    
     global program
     program = compileProgram(
-[
-    '''
-    varying vec3 normal;
-    void main() {
-        normal = gl_NormalMatrix * gl_Normal;
-        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-    }
-    ''',
-], 
-[
-    '''
-    varying vec3 normal;
-    void main() {
-        float intensity;
-        vec4 color;
-        vec3 n = normalize(normal);
-        vec3 l = normalize(gl_LightSource[0].position).xyz;
-    
-        // quantize to 5 steps (0, .25, .5, .75 and 1)
-        intensity = (floor(dot(l, n) * 4.0) + 1.0)/4.0;
-        color = vec4(intensity*1.0, intensity*0.5, intensity*0.5,
-            intensity*1.0);
-    
-        gl_FragColor = color;
-    }
-    ''',
-]
-)
+        compileShader('''
+            varying vec3 normal;
+            void main() {
+                normal = gl_NormalMatrix * gl_Normal;
+                gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+            }
+        ''',GL_VERTEX_SHADER),
+        compileShader('''
+            varying vec3 normal;
+            void main() {
+                float intensity;
+                vec4 color;
+                vec3 n = normalize(normal);
+                vec3 l = normalize(gl_LightSource[0].position).xyz;
+            
+                // quantize to 5 steps (0, .25, .5, .75 and 1)
+                intensity = (floor(dot(l, n) * 4.0) + 1.0)/4.0;
+                color = vec4(intensity*1.0, intensity*0.5, intensity*0.5,
+                    intensity*1.0);
+            
+                gl_FragColor = color;
+            }
+    ''',GL_FRAGMENT_SHADER),)
 
 # The function called when our window is resized (which shouldn't happen if you enable fullscreen, below)
 def ReSizeGLScene(Width, Height):
@@ -122,7 +85,7 @@ def DrawGLScene():
     glTranslatef(-1.5, 0.0, -6.0)
 
     if program:
-        glUseProgramObjectARB(program)
+        glUseProgram(program)
     glutSolidSphere(1.0,32,32)
     glTranslate( 1,0,2 )
     glutSolidCube( 1.0 )
