@@ -85,6 +85,12 @@ def rotation( period = 10):
 	glRotate( angle, 0,1,0)
 	return angle
 
+def key_pressed(*args):
+	# If escape is pressed, kill everything.
+	if args[0] == '\033':
+		sys.exit()
+
+
 if __name__ == "__main__":
 	print """You should see a polynomial curve rotating about the origin."""
 	import sys
@@ -93,5 +99,6 @@ if __name__ == "__main__":
 	glutCreateWindow('Array Drawing Demo')
 	glutDisplayFunc(display)
 	glutIdleFunc(display)
+	glutKeyboardFunc(key_pressed)
 	# note need to do this to properly render faceted geometry
 	glutMainLoop()

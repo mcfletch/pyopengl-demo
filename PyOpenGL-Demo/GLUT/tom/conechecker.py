@@ -50,6 +50,10 @@ def rotation( period = 10):
 	angle = (((time.time()-starttime)%period)/period)* 360
 	glRotate( angle, 0,1,0)
 	return angle
+def key_pressed(*args):
+	# If escape is pressed, kill everything.
+	if args[0] == '\033':
+		sys.exit()
 
 if __name__ == "__main__":
 	print """You should see two OpenGL viewports, in the top, a sphere+checker-board
@@ -59,6 +63,7 @@ and in the bottom, a rotating cone."""
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 	glutCreateWindow('Two-scene Demo (Cone Checker)')
 	glutDisplayFunc(display)
+	glutKeyboardFunc(key_pressed)
 	glutIdleFunc(display)
 	# note need to do this to properly render faceted geometry
 	glutMainLoop()

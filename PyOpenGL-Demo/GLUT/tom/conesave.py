@@ -37,6 +37,10 @@ def saveBuffer( filename="test.jpg", format="JPEG" ):
 	image.save( filename, format )
 	print 'Saved image to %s'% (os.path.abspath( filename))
 	return image
+def key_pressed(*args):
+	# If escape is pressed, kill everything.
+	if args[0] == '\033':
+		sys.exit()
 
 def main():
 	print """You should see a cone rotating slowly, click to save to test.jpg"""
@@ -46,6 +50,7 @@ def main():
 	glutCreateWindow('Image Saving Demo')
 	glutDisplayFunc(cone.display)
 	glutIdleFunc(cone.display)
+	glutKeyboardFunc(key_pressed)
 	glutMouseFunc( click )
 	# note need to do this to properly render faceted geometry
 	glutMainLoop()

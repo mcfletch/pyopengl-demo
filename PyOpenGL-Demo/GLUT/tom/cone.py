@@ -96,6 +96,10 @@ def rotation( period = 10):
 	angle = (((time.time()-starttime)%period)/period)* 360
 	glRotate( angle, 0,1,0)
 	return angle
+def key_pressed(*args):
+	# If escape is pressed, kill everything.
+	if args[0] == '\033':
+		sys.exit()
 
 def main():
 	print """You should see a high-resolution cone rotating slowly."""
@@ -104,6 +108,7 @@ def main():
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 	glutCreateWindow('Rotating Cone')
 	glutDisplayFunc(display)
+	glutKeyboardFunc(key_pressed)
 	glutIdleFunc(display)
 	# note need to do this to properly render faceted geometry
 	glutMainLoop()

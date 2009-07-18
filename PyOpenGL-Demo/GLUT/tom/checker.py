@@ -98,6 +98,10 @@ def rotation( period = 10):
 	angle = (((time.time()-starttime)%period)/period)* 360
 	glRotate( angle, 0,1,0)
 	return angle
+def key_pressed(*args):
+	# If escape is pressed, kill everything.
+	if args[0] == '\033':
+		sys.exit()
 
 if __name__ == "__main__":
 	print """You should see a sphere+checker-board rotating about the origin."""
@@ -106,6 +110,7 @@ if __name__ == "__main__":
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 	glutCreateWindow('Rotating Checkerboard')
 	glutDisplayFunc(display)
+	glutKeyboardFunc(key_pressed)
 	glutIdleFunc(display)
 	# note need to do this to properly render faceted geometry
 	glEnable( GL_DEPTH_TEST )

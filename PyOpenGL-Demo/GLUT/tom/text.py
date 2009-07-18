@@ -88,6 +88,10 @@ def display( swap=1, clear=1):
 
 def idle( ):
 	glutPostRedisplay()
+def key_pressed(*args):
+	# If escape is pressed, kill everything.
+	if args[0] == '\033':
+		sys.exit()
 
 starttime = time.time()
 
@@ -104,6 +108,7 @@ if __name__ == "__main__":
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 	glutCreateWindow('Polygonal Geometry Demo')
 	glutDisplayFunc(display)
+	glutKeyboardFunc(key_pressed)
 	glutIdleFunc(display)
 	# note need to do this to properly render faceted geometry
 	glutMainLoop()

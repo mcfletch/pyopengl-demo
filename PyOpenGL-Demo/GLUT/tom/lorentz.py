@@ -94,6 +94,10 @@ def display( ):
 
 def idle( ):
 	glutPostRedisplay()
+def key_pressed(*args):
+	# If escape is pressed, kill everything.
+	if args[0] == '\033':
+		sys.exit()
 
 starttime = time.time()
 
@@ -110,6 +114,7 @@ attractor, rendered in 3D, rotation about the origin."""
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 	glutCreateWindow('Lorentz Attractor Demo')
+	glutKeyboardFunc(key_pressed)
 	glutDisplayFunc(display)
 	glutIdleFunc(display)
 	glutMainLoop()
