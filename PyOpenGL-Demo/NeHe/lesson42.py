@@ -1,23 +1,24 @@
+#! /usr/bin/env python
 # NeHe Tutorial Lesson: 42 - Multiple Viewports
 #
 # Ported to PyOpenGL 2.0 by Brian Leair 18 Jan 2004
 #
 # This code was created by Jeff Molofee 2000
 #
-# The port was based on the PyOpenGL tutorials and from 
+# The port was based on the PyOpenGL tutorials and from
 # PyOpenGLContext (tests/glprint.py)
 #
-# If you've found this code useful, feel free to let me know 
+# If you've found this code useful, feel free to let me know
 # at (Brian Leair telcom_sage@yahoo.com).
 #
 # See original source and C based tutorial at http://nehe.gamedev.net
 #
 # Note:
 # -----
-# This code is not an ideal example of Pythonic coding or use of OO techniques.  
-# It is a simple and direct exposition of how to use the Open GL API in 
-# Python via the PyOpenGL package. It also uses GLUT, a high quality 
-# platform independent library. Due to using these APIs, this code is 
+# This code is not an ideal example of Pythonic coding or use of OO techniques.
+# It is a simple and direct exposition of how to use the Open GL API in
+# Python via the PyOpenGL package. It also uses GLUT, a high quality
+# platform independent library. Due to using these APIs, this code is
 # more like a C program using procedural based programming.
 #
 # To run this example you will need:
@@ -68,7 +69,7 @@ from OpenGL.GLU import *
 try:
 	import numpy as Numeric
 except ImportError, err:
-	try: 
+	try:
 		import Numeric
 	except ImportError, err:
 		print "This demo requires the numpy or Numeric extension, sorry"
@@ -80,7 +81,7 @@ import sys
 
 
 
-# *********************** Globals *********************** 
+# *********************** Globals ***********************
 # Python 2.2 defines these directly
 try:
 	True
@@ -107,7 +108,7 @@ done = False;													# // Flag To Let Us Know When It's Done
 width	= 128;													# // Maze Width  (Must Be A Power Of 2)
 height	= 128;													# // Maze Height (Must Be A Power Of 2)
 
-tex_data = None													# numarray of unsigned bytes - # // Holds Our RGB Texture Data 
+tex_data = None													# numarray of unsigned bytes - # // Holds Our RGB Texture Data
 
 quadric = None													# // The Quadric Object
 
@@ -164,7 +165,7 @@ def InitGL(Width, Height):				# We call this right after our OpenGL window is cr
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex_data.tostring ());
 
 	glClearColor (0.0, 0.0, 0.0, 0.0);							# // Black Background
@@ -175,7 +176,7 @@ def InitGL(Width, Height):				# We call this right after our OpenGL window is cr
 	glEnable(GL_COLOR_MATERIAL);								# // Enable Color Material (Allows Us To Tint Textures)
 
 	quadric=gluNewQuadric();									# // Create A Pointer To The Quadric Object
-	gluQuadricNormals(quadric, GLU_SMOOTH);						# // Create Smooth Normals 
+	gluQuadricNormals(quadric, GLU_SMOOTH);						# // Create Smooth Normals
 	gluQuadricTexture(quadric, GL_TRUE);						# // Create Texture Coords
 
 	glEnable(GL_LIGHT0);										# // Enable Light0 (Default GL Light)
@@ -258,7 +259,7 @@ def DrawGLScene ():
 	window_height = glutGet (GLUT_WINDOW_HEIGHT)
 
 	# // Update Our Texture... This Is The Key To The Programs Speed... Much Faster Than Rebuilding The Texture Each Time
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, 
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height,
 		GL_RGB, GL_UNSIGNED_BYTE, tex_data.tostring ());
 
 	glClear (GL_COLOR_BUFFER_BIT);										# // Clear Screen
@@ -280,7 +281,7 @@ def DrawGLScene ():
 			glMatrixMode (GL_PROJECTION);								# // Select The Projection Matrix
 			glLoadIdentity ();											# // Reset The Projection Matrix
 			# // Set Up Perspective Mode To Fit 1/4 The Screen (Size Of A Viewport)
-			gluPerspective( 45.0, float (width) / float (height), 0.1, 500.0 ); 
+			gluPerspective( 45.0, float (width) / float (height), 0.1, 500.0 );
 
 		if (loop==2):													# // If We Are Drawing The Third Scene
 			# // Set The Viewport To The Bottom Right.  It Will Take Up Half The Screen Width And Height
@@ -288,7 +289,7 @@ def DrawGLScene ():
 			glMatrixMode (GL_PROJECTION);								# // Select The Projection Matrix
 			glLoadIdentity ();											# // Reset The Projection Matrix
 			# // Set Up Perspective Mode To Fit 1/4 The Screen (Size Of A Viewport)
-			gluPerspective( 45.0, float (width) / float(height), 0.1, 500.0 ); 
+			gluPerspective( 45.0, float (width) / float(height), 0.1, 500.0 );
 
 		if (loop==3):													# // If We Are Drawing The Fourth Scene
 			# // Set The Viewport To The Bottom Left.  It Will Take Up Half The Screen Width And Height
@@ -296,7 +297,7 @@ def DrawGLScene ():
 			glMatrixMode (GL_PROJECTION);								# // Select The Projection Matrix
 			glLoadIdentity ();											# // Reset The Projection Matrix
 			# // Set Up Perspective Mode To Fit 1/4 The Screen (Size Of A Viewport)
-			gluPerspective( 45.0, float(width) / float(height), 0.1, 500.0 ); 
+			gluPerspective( 45.0, float(width) / float(height), 0.1, 500.0 );
 
 		glMatrixMode (GL_MODELVIEW);									# // Select The Modelview Matrix
 		glLoadIdentity ();												# // Reset The Modelview Matrix
@@ -324,7 +325,7 @@ def DrawGLScene ():
 			glEnable(GL_LIGHTING);										# // Enable Lighting
 			gluSphere(quadric,4.0,32,32);								# // Draw A Sphere
 			glDisable(GL_LIGHTING);										# // Disable Lighting
-		
+
 		if (loop==2):													# // Are We Drawing The Third Image?  (Texture At An Angle... Perspective)
 			glTranslatef(0.0,0.0,-2.0);									# // Move 2 Units Into The Screen
 			glRotatef(-45.0,1.0,0.0,0.0);								# // Tilt The Quad Below Back 45 Degrees.
@@ -356,7 +357,7 @@ def DrawGLScene ():
 
 # The function called when our window is resized (which shouldn't happen if you enable fullscreen, below)
 def ReSizeGLScene(Width, Height):
-	if Height == 0:						# Prevent A Divide By Zero If The Window Is Too Small 
+	if Height == 0:						# Prevent A Divide By Zero If The Window Is Too Small
 		Height = 1
 
 	glViewport(0, 0, Width, Height)		# Reset The Current Viewport And Perspective Transformation
@@ -370,7 +371,7 @@ def ReSizeGLScene(Width, Height):
 	glLoadIdentity()
 
 
-# The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)  
+# The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)
 def keyPressed(*args):
 	global window
 
@@ -388,18 +389,18 @@ def main():
 	# pass arguments to init
 	glutInit(sys.argv)
 
-	# Select type of Display mode:   
-	#  Double buffer 
+	# Select type of Display mode:
+	#  Double buffer
 	#  RGBA color
-	# Alpha components supported 
+	# Alpha components supported
 	# Depth buffer
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH)
-	
+
 	glutInitWindowSize(1024, 768)
-	
-	# the window starts at the upper left corner of the screen 
+
+	# the window starts at the upper left corner of the screen
 	glutInitWindowPosition(0, 0)
-	
+
 	# Okay, like the C version we retain the window id to use when closing, but for those of you new
 	# to Python, remember this assignment would make the variable local and not global
 	# if it weren't for the global declaration at the start of main.
@@ -407,34 +408,34 @@ def main():
 
 	# Register the drawing function with glut, BUT in Python land, at least using PyOpenGL, we need to
 	# set the function pointer and invoke a function to actually register the callback, otherwise it
-	# would be very much like the C version of the code.	
+	# would be very much like the C version of the code.
 	glutDisplayFunc(DrawGLScene)
-	
+
 	# Uncomment this line to get full screen.
 	#glutFullScreen()
 
 	# When we are doing nothing, redraw the scene.
 	glutIdleFunc(DrawGLScene)
-	
+
 	# Register the function called when our window is resized.
 	glutReshapeFunc(ReSizeGLScene)
-	
-	# Register the function called when the keyboard is pressed.  
-	# The call setup glutSpecialFunc () is needed to receive 
-	# "keyboard function or directional keys." 
+
+	# Register the function called when the keyboard is pressed.
+	# The call setup glutSpecialFunc () is needed to receive
+	# "keyboard function or directional keys."
 	glutKeyboardFunc(keyPressed)
 	glutSpecialFunc(keyPressed)
 
 	# We've told Glut the type of window we want, and we've told glut about
 	# various functions that we want invoked (idle, resizing, keyboard events).
-	# Glut has done the hard work of building up thw windows DC context and 
+	# Glut has done the hard work of building up thw windows DC context and
 	# tying in a rendering context, so we are ready to start making immediate mode
 	# GL calls.
 	# Call to perform inital GL setup (the clear colors, enabling modes, and most releveant -
 	# consturct the displays lists for the bitmap font.
 	InitGL(640, 480)
 
-	# Start Event Processing Engine	
+	# Start Event Processing Engine
 	glutMainLoop()
 
 # Print message to console, and kick off the main to get it rolling.

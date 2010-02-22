@@ -1,23 +1,24 @@
+#! /usr/bin/env python
 # NeHe Tutorial Lesson: 41 - Volumetric Fog
 #
 # Ported to PyOpenGL 2.0 by Brian Leair 18 Jan 2004
 #
 # This code was created by Jeff Molofee 2000
 #
-# The port was based on the PyOpenGL tutorials and from 
+# The port was based on the PyOpenGL tutorials and from
 # PyOpenGLContext (tests/glprint.py)
 #
-# If you've found this code useful, feel free to let me know 
+# If you've found this code useful, feel free to let me know
 # at (Brian Leair telcom_sage@yahoo.com).
 #
 # See original source and C based tutorial at http://nehe.gamedev.net
 #
 # Note:
 # -----
-# This code is not an ideal example of Pythonic coding or use of OO techniques.  
-# It is a simple and direct exposition of how to use the Open GL API in 
-# Python via the PyOpenGL package. It also uses GLUT, a high quality 
-# platform independent library. Due to using these APIs, this code is 
+# This code is not an ideal example of Pythonic coding or use of OO techniques.
+# It is a simple and direct exposition of how to use the Open GL API in
+# Python via the PyOpenGL package. It also uses GLUT, a high quality
+# platform independent library. Due to using these APIs, this code is
 # more like a C program using procedural based programming.
 #
 # To run this example you will need:
@@ -33,7 +34,7 @@
 #
 #
 # Topics demonstrated in this tutorial:
-#	using PIL (Python Image Library) to load a texture from an image file 
+#	using PIL (Python Image Library) to load a texture from an image file
 # 		(see doc - http://www.pythonware.com/library/pil/handbook/index.htm)
 #	accessing the extension FOG_COORDINATE_EXTENSION
 # 		(see doc - http://pyopengl.sourceforge.net/documentation/opengl_diffs.html)
@@ -48,7 +49,7 @@ from OpenGL.GL.EXT.fog_coord import *
 
 
 
-# *********************** Globals *********************** 
+# *********************** Globals ***********************
 # Python 2.2 defines these directly
 try:
 	True
@@ -63,7 +64,7 @@ ESCAPE = '\033'
 
 # Number of the glut window.
 window = 0
-fogColor = (0.6, 0.3, 0.0, 1.0);								# // Fog Colour 
+fogColor = (0.6, 0.3, 0.0, 1.0);								# // Fog Colour
 camz = None														# // Camera Z Depth
 lastTickCount = 0.0
 
@@ -122,9 +123,9 @@ def BuildTexture (path):
 			resizeHeightPixels = next_p2 (HeightPixels)
 			squash = float (resizeHeightPixels) / float (HeightPixels)
 			resizeWidthPixels = int (WidthPixels * squash)
-		# 
+		#
 	# Resize the image to be used as a texture.
-	# The Python image library provides a handy method resize (). 
+	# The Python image library provides a handy method resize ().
 	# Several filtering options are available.
 	# If you don't specify a filtering option will default NEAREST
 	Picture = Picture.resize ((resizeWidthPixels, resizeHeightPixels), Image.BICUBIC)
@@ -183,7 +184,7 @@ def InitGL(Width, Height):				# We call this right after our OpenGL window is cr
 	glShadeModel (GL_SMOOTH);									# // Select Smooth Shading
 	glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			# // Set Perspective Calculations To Most Accurate
 
-	# // Set Up Fog 
+	# // Set Up Fog
 	glEnable(GL_FOG);											# // Enable Fog
 	glFogi(GL_FOG_MODE, GL_LINEAR);								# // Fog Fade Is Linear
 	glFogfv(GL_FOG_COLOR, fogColor);							# // Set The Fog Color
@@ -199,7 +200,7 @@ def InitGL(Width, Height):				# We call this right after our OpenGL window is cr
 
 # The function called when our window is resized (which shouldn't happen if you enable fullscreen, below)
 def ReSizeGLScene(Width, Height):
-	if Height == 0:						# Prevent A Divide By Zero If The Window Is Too Small 
+	if Height == 0:						# Prevent A Divide By Zero If The Window Is Too Small
 		Height = 1
 
 	glViewport(0, 0, Width, Height)		# Reset The Current Viewport And Perspective Transformation
@@ -213,7 +214,7 @@ def ReSizeGLScene(Width, Height):
 	glLoadIdentity()
 
 
-# The main drawing function. 
+# The main drawing function.
 def DrawGLScene():
 	global camz
 
@@ -279,14 +280,14 @@ def DrawGLScene():
 	return True
 
 
-# The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)  
+# The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)
 def keyPressed(*args):
 	global window
 	global camz
 	global lastTickCount
 
 	tickCount = glutGet (GLUT_ELAPSED_TIME)
-	milliseconds = (tickCount - lastTickCount) 
+	milliseconds = (tickCount - lastTickCount)
 	lastTickCount = tickCount
 	if (milliseconds > 200):
 		lastTickCount = tickCount
@@ -306,21 +307,21 @@ def main():
 	global window, lastTickCount
 
 	# pass arguments to init
-	glutInit(sys.argv)
+	glutInit(sys.argv[1:])
 
-	# Select type of Display mode:   
-	#  Double buffer 
+	# Select type of Display mode:
+	#  Double buffer
 	#  RGBA color
-	# Alpha components supported 
+	# Alpha components supported
 	# Depth buffer
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH)
-	
-	# get a 640 x 480 window 
+
+	# get a 640 x 480 window
 	glutInitWindowSize(640, 480)
-	
-	# the window starts at the upper left corner of the screen 
+
+	# the window starts at the upper left corner of the screen
 	glutInitWindowPosition(0, 0)
-	
+
 	# Okay, like the C version we retain the window id to use when closing, but for those of you new
 	# to Python, remember this assignment would make the variable local and not global
 	# if it weren't for the global declaration at the start of main.
@@ -328,34 +329,34 @@ def main():
 
 	# Register the drawing function with glut, BUT in Python land, at least using PyOpenGL, we need to
 	# set the function pointer and invoke a function to actually register the callback, otherwise it
-	# would be very much like the C version of the code.	
+	# would be very much like the C version of the code.
 	glutDisplayFunc(DrawGLScene)
-	
+
 	# Uncomment this line to get full screen.
 	#glutFullScreen()
 
 	# When we are doing nothing, redraw the scene.
 	glutIdleFunc(DrawGLScene)
-	
+
 	# Register the function called when our window is resized.
 	glutReshapeFunc(ReSizeGLScene)
-	
-	# Register the function called when the keyboard is pressed.  
-	# The call setup glutSpecialFunc () is needed to receive 
-	# "keyboard function or directional keys." 
+
+	# Register the function called when the keyboard is pressed.
+	# The call setup glutSpecialFunc () is needed to receive
+	# "keyboard function or directional keys."
 	glutKeyboardFunc(keyPressed)
 	glutSpecialFunc(keyPressed)
 
 	# We've told Glut the type of window we want, and we've told glut about
 	# various functions that we want invoked (idle, resizing, keyboard events).
-	# Glut has done the hard work of building up thw windows DC context and 
+	# Glut has done the hard work of building up thw windows DC context and
 	# tying in a rendering context, so we are ready to start making immediate mode
 	# GL calls.
 	# Call to perform inital GL setup (the clear colors, enabling modes, and most releveant -
 	# consturct the displays lists for the bitmap font.
 	InitGL(640, 480)
 
-	# Start Event Processing Engine	
+	# Start Event Processing Engine
 	glutMainLoop()
 
 # Print message to console, and kick off the main to get it rolling.
