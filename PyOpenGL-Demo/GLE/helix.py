@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLE import *

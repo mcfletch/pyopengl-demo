@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#! /usr/bin/env python
 # This is statement is required by the build system to query build info
 if __name__ == '__build__':
 	raise Exception
@@ -13,7 +12,7 @@ try:
 	from numpy import *
 	from numpy.random import *
 except ImportError, err:
-	try: 
+	try:
 		from Numeric import *
 		from RandomArray import *
 	except ImportError, err:

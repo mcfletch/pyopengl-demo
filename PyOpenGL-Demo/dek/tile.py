@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 ## example python/pyopengl script to do tiled texturemapping.
 ## By david konerding (dek@cgl.ucsf.edu)
 
@@ -15,7 +9,7 @@ from OpenGL.Tk import *
 ##try:
 ##	import numpy as Numeric
 ##except ImportError, err:
-##	try: 
+##	try:
 ##		import Numeric
 ##	except ImportError, err:
 ##		print "This demo requires the numpy or Numeric extension, sorry"
@@ -32,7 +26,7 @@ class checker:
 		self.imageWidth = im.size[0]
 		self.imageHeight = im.size[1]
 		self.image = im.tostring("raw", "RGBX", 0, -1)
-		
+
 	def display(self, event=None):
 		glClearColor(0.0, 0.0, 0.0, 0)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)

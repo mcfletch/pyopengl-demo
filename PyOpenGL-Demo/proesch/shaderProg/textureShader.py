@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#! /usr/bin/env python
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
-#import OpenGL 
+#import OpenGL
 #OpenGL.FULL_LOGGING = True
 
 import sys
@@ -50,7 +50,7 @@ def animationStep( *args ):
 	global frameRate
 	global sP
 	if not quadList:
-		if len(sys.argv) > 1: 
+		if len(sys.argv) > 1:
 			init( sys.argv[1] )
 		else:
 			init( None )
@@ -74,7 +74,7 @@ def animationStep( *args ):
 
 def display( *args ):
 	if not quadList:
-		if len(sys.argv) > 1: 
+		if len(sys.argv) > 1:
 			init( sys.argv[1] )
 		else:
 			init( None )
@@ -158,4 +158,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
-	
+

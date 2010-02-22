@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import sys
 from OpenGL.GL import *
 from OpenGL.GLE import *
@@ -26,17 +20,17 @@ def JoinStyle (msg):
 	sys.exit(0)
 
 
-# set up a light 
+# set up a light
 lightOnePosition = (40.0, 40, 100.0, 0.0)
-lightOneColor = (0.99, 0.99, 0.99, 1.0) 
+lightOneColor = (0.99, 0.99, 0.99, 1.0)
 
 lightTwoPosition = (-40.0, 40, 100.0, 0.0)
-lightTwoColor = (0.99, 0.99, 0.99, 1.0) 
+lightTwoColor = (0.99, 0.99, 0.99, 1.0)
 
 
 def main(DrawStuff):
 	global glutDisplayFunc, glutMotionFunc
-	# initialize glut 
+	# initialize glut
 	glutInit(sys.argv)
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
 	glutCreateWindow("basic demo")

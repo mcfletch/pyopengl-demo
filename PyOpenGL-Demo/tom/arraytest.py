@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import string
 __version__ = string.split('$Revision: 1.1.1.1 $')[1]
 __date__ = string.join(string.split('$Date: 2007/02/15 19:25:38 $')[1:3], ' ')
@@ -17,7 +11,7 @@ try:
 	from numpy import *
 	from numpy.random import *
 except ImportError, err:
-	try: 
+	try:
 		from Numeric import *
 		from RandomArray import *
 	except ImportError, err:

@@ -1,14 +1,14 @@
-#!/usr/bin/env python2.3
+#! /usr/bin/env python
 # * 3-D gear wheels.  This program is in the public domain.
 # * Brian Paul
-# * Conversion to GLUT by Mark J. Kilgard 
+# * Conversion to GLUT by Mark J. Kilgard
 # conversion to Python using PyOpenGL with frame rates ala glxgears
 # Peter Barth
-import OpenGL 
-OpenGL.ERROR_ON_COPY = True 
+import OpenGL
+OpenGL.ERROR_ON_COPY = True
 from OpenGL.GL import *
 from OpenGL.GLUT import *
-import sys, time 
+import sys, time
 from math import sin,cos,sqrt,pi
 from OpenGL.constants import GLfloat
 vec4 = GLfloat_4
@@ -16,10 +16,10 @@ vec4 = GLfloat_4
 def gear(inner_radius, outer_radius, width, teeth, tooth_depth):
     r0 = inner_radius
     r1 = outer_radius - tooth_depth/2.0
-    r2 = outer_radius + tooth_depth/2.0    
+    r2 = outer_radius + tooth_depth/2.0
     da = 2.0*pi / teeth / 4.0
-    
-    glShadeModel(GL_FLAT)  
+
+    glShadeModel(GL_FLAT)
     glNormal3f(0.0, 0.0, 1.0)
 
     # draw front face
@@ -59,7 +59,7 @@ def gear(inner_radius, outer_radius, width, teeth, tooth_depth):
     glBegin(GL_QUADS)
     da = 2.0*pi / teeth / 4.0
     for i in range(teeth):
-        angle = i * 2.0*pi / teeth        
+        angle = i * 2.0*pi / teeth
         glVertex3f(r1*cos(angle+3*da), r1*sin(angle+3*da),-width*0.5)
         glVertex3f(r2*cos(angle+2*da), r2*sin(angle+2*da),-width*0.5)
         glVertex3f(r2*cos(angle+da),   r2*sin(angle+da),  -width*0.5)
@@ -69,7 +69,7 @@ def gear(inner_radius, outer_radius, width, teeth, tooth_depth):
     # draw outward faces of teeth
     glBegin(GL_QUAD_STRIP);
     for i in range(teeth):
-        angle = i * 2.0*pi / teeth        
+        angle = i * 2.0*pi / teeth
         glVertex3f(r1*cos(angle), r1*sin(angle),  width*0.5)
         glVertex3f(r1*cos(angle), r1*sin(angle), -width*0.5)
         u = r2*cos(angle+da) - r1*cos(angle)
@@ -161,12 +161,12 @@ def draw():
     glutSwapBuffers()
 
     framerate()
-    
+
 def idle():
     global angle
     angle += 2.0
     glutPostRedisplay()
-    
+
 
 # change view angle, exit upon ESC
 def key(k, x, y):
@@ -186,7 +186,7 @@ def key(k, x, y):
 # change view angle
 def special(k, x, y):
     global view_rotx, view_roty, view_rotz
-    
+
     if k == GLUT_KEY_UP:
         view_rotx += 5.0
     elif k == GLUT_KEY_DOWN:
@@ -213,8 +213,8 @@ def reshape(width, height):
 
 def init():
     global gear1, gear2, gear3
-    
-    
+
+
     pos = vec4(5.0, 5.0, 10.0, 0.0)
     red = vec4(0.8, 0.1, 0.0, 1.0)
     green = vec4(0.0, 0.8, 0.2, 1.0)
@@ -232,7 +232,7 @@ def init():
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, red)
     gear(1.0, 4.0, 1.0, 20, 0.7)
     glEndList()
-    
+
     gear2 = glGenLists(1)
     glNewList(gear2, GL_COMPILE)
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green)
@@ -262,7 +262,7 @@ if __name__ == '__main__':
     glutInitWindowSize(300, 300)
     glutCreateWindow("pyGears")
     init()
-    
+
     glutDisplayFunc(draw)
     glutReshapeFunc(reshape)
     glutKeyboardFunc(key)
@@ -276,4 +276,4 @@ if __name__ == '__main__':
         print "GL_EXTENSIONS = ", glGetString(GL_EXTENSIONS)
 
     glutMainLoop()
-    
+

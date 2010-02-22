@@ -60,6 +60,8 @@
 #
 # Ported to PyOpenGL 2.0 by Brian Leair  Feb, 2004
 #
+import OpenGL
+OpenGL.USE_ACCELERATOR = False
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *

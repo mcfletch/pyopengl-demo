@@ -1,16 +1,10 @@
-#!/usr/bin/env python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import sys
 import string
 try:
 	import numpy as Numeric
 except ImportError, err:
-	try: 
+	try:
 		import Numeric
 	except ImportError, err:
 		print "This demo requires the numpy or Numeric extension, sorry"
@@ -27,8 +21,8 @@ MAP="test.ppm"
 
 class Surface:
 	def SetupWindow(self):
-		self.OglFrame = OglFrame.OglFrame(None, 
-										  redraw=self.Display, 
+		self.OglFrame = OglFrame.OglFrame(None,
+										  redraw=self.Display,
 										  depth=1,
 										  double=1)
 		self.OglFrame.ogl.set_background(0,0,0)
@@ -47,7 +41,7 @@ class Surface:
 	def SetupSurface(self):
 		self.surfacelist = glGenLists(1)
 		glNewList(self.surfacelist, GL_COMPILE);
-		
+
 		glEnable(GL_LIGHTING)
 		glEnable(GL_BLEND)
 
@@ -149,7 +143,7 @@ class Surface:
 
 		vcen = Numeric.add.reduce(self.vert)/len(self.vert)
 		self.OglFrame.ogl.set_centerpoint(vcen[0], vcen[1], vcen[2])
-		
+
 
 	def ReadPDB(self):
 		p = NumericPDB.PDB(self.pdbfile)

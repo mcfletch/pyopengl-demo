@@ -1,5 +1,5 @@
-#!/usr/bin/python
-# rotating color cube 
+#! /usr/bin/env python
+# rotating color cube
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.
@@ -41,7 +41,7 @@ def display(  ):
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT )
 	glMatrixMode( GL_PROJECTION )
 	glLoadIdentity( )
-	glOrtho( -2, 2, -2, 2, -2, 2 ) 
+	glOrtho( -2, 2, -2, 2, -2, 2 )
 	glMatrixMode( GL_MODELVIEW )
 	glLoadIdentity( )
 	glRotatef( animationAngle, 1, 1, 1 )

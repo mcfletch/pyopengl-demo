@@ -1,6 +1,6 @@
-#!/usr/bin/python2.4
+#! /usr/bin/env python
 # demo for interactive object motion
-# 
+#
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.

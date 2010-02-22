@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import string
 __version__ = string.split('$Revision: 1.1.1.1 $')[1]
 __date__ = string.join(string.split('$Date: 2007/02/15 19:25:38 $')[1:3], ' ')
@@ -27,7 +21,7 @@ def redraw(o):
 			if (x + y) % 2 == 0:
 				glColor3f(1, 1, 1)
 			else:
-				glColor3f(0, 0, 0)	
+				glColor3f(0, 0, 0)
 			glRectf(x, y, x + 1, y + 1)
 	glEnable(GL_LIGHTING)
 

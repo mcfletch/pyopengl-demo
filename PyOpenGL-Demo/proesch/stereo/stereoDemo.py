@@ -1,4 +1,4 @@
-#!/usr/bin/python2.4
+#! /usr/bin/env python
 # OpenGL stereo demo using stereoCamera class
 #
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
@@ -65,7 +65,7 @@ def render( side ):
 	glMatrixMode(GL_MODELVIEW)
 	glLoadIdentity()
 	gluLookAt( l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8] )
-	glRotatef( animationAngle, 0.2, 0.7, 0.3 )	
+	glRotatef( animationAngle, 0.2, 0.7, 0.3 )
 	glCallList( teapotList )
 
 def display(  ):
@@ -81,7 +81,7 @@ def display(  ):
 		glDrawBuffer( GL_BACK_RIGHT )
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT )
 		render( GL_BACK_RIGHT )
-	elif stereoMode == "ANAGLYPH": 
+	elif stereoMode == "ANAGLYPH":
 		glDrawBuffer( GL_BACK_LEFT )
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT )
 		setLightColor( "red" )
@@ -91,7 +91,7 @@ def display(  ):
 		setLightColor( "green" )
 		render( GL_BACK_RIGHT )
 		glColorMask( True, True, True, True )
-	else: 
+	else:
 		glDrawBuffer(GL_BACK_LEFT)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		setLightColor( "white" )

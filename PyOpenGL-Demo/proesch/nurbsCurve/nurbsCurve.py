@@ -1,7 +1,7 @@
-#!/usr/bin/python2.4
+#! /usr/bin/env python
 # Plot a curve with control points positioned on a circle
 # using NURBS.
-# 
+#
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.
@@ -39,7 +39,7 @@ angleNum = 5
 radius=1
 angles = [ 2*math.pi*float(i)/angleNum for i in range( angleNum ) ]
 
-circlePoints = [ 
+circlePoints = [
 	[ radius*math.cos(theta), radius*math.sin(theta), 0 ] for theta in angles ]
 
 # make sure the curve is closed properly
@@ -47,7 +47,7 @@ degree=3
 for i in range( degree-1 ):
 	circlePoints = circlePoints + [ circlePoints[i] ]
 
-knotNum = len( circlePoints ) + degree 
+knotNum = len( circlePoints ) + degree
 circleKnots =  [ float(i)/(knotNum-1) for i in range( knotNum ) ]
 
 def display(  ):

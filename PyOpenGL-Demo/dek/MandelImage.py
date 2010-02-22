@@ -1,11 +1,6 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
+#! /usr/bin/env python
 ## This isn't really a PyOpenGL demo, but it's a nice
-## example of how Numeric, Tkinter, and PIL can be used 
+## example of how Numeric, Tkinter, and PIL can be used
 ## together to create all sorts of images.
 ## In this case, it's the Mandelbrot set.
 ## i used the Numerical python text example, but modified it to
@@ -14,7 +9,7 @@ if __name__ == '__build__':
 try:
 	import numpy as Numeric
 except ImportError, err:
-	try: 
+	try:
 		import Numeric
 	except ImportError, err:
 		print "This demo requires the numpy or Numeric extension, sorry"
@@ -61,8 +56,8 @@ class Test:
 		self.image = ImageTk.PhotoImage(self.im)
 		self.label = Tkinter.Label(self.root, image=self.image)
 		self.label.pack()
-		
-		
+
+
 	def __init__(self):
 		self.root = Tkinter.Tk()
 		self.i = 0

@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import string
 __version__ = string.split('$Revision: 1.1.1.1 $')[1]
 __date__ = string.join(string.split('$Date: 2007/02/15 19:25:38 $')[1:3], ' ')
@@ -37,7 +31,7 @@ class Fog:
 		if val == GL_LINEAR:
 			glFogf(GL_FOG_START, 1.0)
 			glFogf(GL_FOG_END, 5.0)
-			glFogi(GL_FOG_MODE, val)  
+			glFogi(GL_FOG_MODE, val)
 		elif val == GL_EXP:
 			glFogi(GL_FOG_MODE, val)
 		self.o.tkRedraw()
@@ -61,7 +55,7 @@ class Fog:
 		glFogf(GL_FOG_DENSITY, 0.35)
 		glHint(GL_FOG_HINT, GL_DONT_CARE)
 		glClearColor(0.5, 0.5, 0.5, 1.0)
-		
+
 	def drawTorus(self, x, y, z):
 		glPushMatrix();
 		glTranslatef(x, y, z);
@@ -71,7 +65,7 @@ class Fog:
 		glMaterialfv(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
 		glutSolidTorus(0.275, 0.85, 20, 20)
 		glPopMatrix()
-		
+
 	def redraw(self, o):
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		self.drawTorus(-4.0, -0.5, -1.0)

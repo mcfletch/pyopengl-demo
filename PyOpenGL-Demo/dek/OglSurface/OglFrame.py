@@ -1,10 +1,4 @@
-#!/usr/bin/env python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import sys
 import string
 from OpenGL.GL import *
@@ -12,7 +6,7 @@ from OpenGL.Tk import *
 try:
 	from numpy import *
 except ImportError, err:
-	try: 
+	try:
 		from Numeric import *
 	except ImportError, err:
 		print "This demo requires the numpy or Numeric extension, sorry"
@@ -47,8 +41,8 @@ class OglFrame:
 
 	def Photo(self, event=None):
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
-		pixels = glReadPixels(0, 0, 
-							   self.keywords['width'], self.keywords['height'], 
+		pixels = glReadPixels(0, 0,
+							   self.keywords['width'], self.keywords['height'],
 							   GL_RGBA, GL_UNSIGNED_BYTE)
 		im = Image.new("RGB", (self.keywords['width'], self.keywords['height']))
 		im.fromstring(pixels)
@@ -71,7 +65,7 @@ class OglFrame:
 		self.ogl.bind('<Button-3>', self.ogl.tkRecordMouse)
 		self.ogl.bind('<B3-Motion>', self.ogl.tkScale)
 
-		glBlendFunc(GL_SRC_ALPHA,  GL_ONE_MINUS_SRC_ALPHA);		
+		glBlendFunc(GL_SRC_ALPHA,  GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glEnable(GL_LINE_SMOOTH);
 
@@ -83,12 +77,12 @@ class OglFrame:
 			self.ogl.redraw=redraw
 
 		self.mainloop=self.ogl.mainloop
-		
+
 
 		self.axispoints = identity((3))
 
 if __name__ == '__main__':
-	x= OglFrame(None, 
+	x= OglFrame(None,
 				None,
 				width=320,
 				height=200,

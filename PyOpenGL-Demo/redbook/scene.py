@@ -1,23 +1,18 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
+#! /usr/bin/env python
 '''
-scene.c from the Redbook examples.  
+scene.c from the Redbook examples.
 Converted to Python by Jason Petrone(jp@demonseed.net) 8/00
 
 /*
  * Copyright (c) 1993-1997, Silicon Graphics, Inc.
- * ALL RIGHTS RESERVED 
- * Permission to use, copy, modify, and distribute this software for 
+ * ALL RIGHTS RESERVED
+ * Permission to use, copy, modify, and distribute this software for
  * any purpose and without fee is hereby granted, provided that the above
  * copyright notice appear in all copies and that both the copyright notice
- * and this permission notice appear in supporting documentation, and that 
+ * and this permission notice appear in supporting documentation, and that
  * the name of Silicon Graphics, Inc. not be used in advertising
  * or publicity pertaining to distribution of the software without specific,
- * written prior permission. 
+ * written prior permission.
  *
  * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
  * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
@@ -31,8 +26,8 @@ Converted to Python by Jason Petrone(jp@demonseed.net) 8/00
  * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
  * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
  * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
- * 
- * US Government Users Restricted Rights 
+ *
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -48,7 +43,7 @@ Converted to Python by Jason Petrone(jp@demonseed.net) 8/00
 /*
  *  scene.c
  *  This program demonstrates the use of the GL lighting model.
- *  Objects are drawn using a grey material characteristic. 
+ *  Objects are drawn using a grey material characteristic.
  *  A single light source illuminates the objects.
  */
 
@@ -61,7 +56,7 @@ try:
   from OpenGL.GL import *
 except:
   print '''
-ERROR: PyOpenGL not installed properly.  
+ERROR: PyOpenGL not installed properly.
         '''
   sys.exit()
 
@@ -78,7 +73,7 @@ def init():
    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse)
    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular)
    glLightfv(GL_LIGHT0, GL_POSITION, light_position)
-   
+
    glEnable(GL_LIGHTING)
    glEnable(GL_LIGHT0)
    glEnable(GL_DEPTH_TEST)
@@ -89,13 +84,13 @@ def display():
    glPushMatrix()
    glRotatef(20.0, 1.0, 0.0, 0.0)
    glPushMatrix()
-   glTranslatef(-0.75, 0.5, 0.0); 
+   glTranslatef(-0.75, 0.5, 0.0);
    glRotatef(90.0, 1.0, 0.0, 0.0)
    glutSolidTorus(0.275, 0.85, 15, 15)
    glPopMatrix()
 
    glPushMatrix()
-   glTranslatef(-0.75, -0.5, 0.0); 
+   glTranslatef(-0.75, -0.5, 0.0);
    glRotatef (270.0, 1.0, 0.0, 0.0)
    glutSolidCone(1.0, 2.0, 15, 15)
    glPopMatrix()
@@ -114,10 +109,10 @@ def reshape(w, h):
    glMatrixMode (GL_PROJECTION)
    glLoadIdentity()
    if w <= h:
-      glOrtho(-2.5, 2.5, -2.5*h/w, 
+      glOrtho(-2.5, 2.5, -2.5*h/w,
                2.5*h/w, -10.0, 10.0)
-   else: 
-      glOrtho(-2.5*w/h, 
+   else:
+      glOrtho(-2.5*w/h,
                2.5*w/h, -2.5, 2.5, -10.0, 10.0)
    glMatrixMode(GL_MODELVIEW)
    glLoadIdentity()
@@ -126,11 +121,11 @@ def reshape(w, h):
 def keyboard(key, x, y):
    if key == chr(27):
        sys.exit(0)
-   
+
 
 
 #  Main Loop
-#  Open window with initial window size, title bar, 
+#  Open window with initial window size, title bar,
 #  RGBA display mode, and handle input events.
 
 glutInit(sys.argv)

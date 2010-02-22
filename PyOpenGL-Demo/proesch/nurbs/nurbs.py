@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#! /usr/bin/env python
 # Plot nurbs surface corresponding to a 2D damped oscillation.
 # The surface has two holes. A Teapot below the surface is
 # visible through these holes.
-# 
+#
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.
@@ -91,7 +91,7 @@ circlePoints = [ \
 	for theta in angles ]
 for i in range( circleDegree-1 ):
 	circlePoints = circlePoints + [ circlePoints[i] ]
-knotNum = len( circlePoints ) + circleDegree 
+knotNum = len( circlePoints ) + circleDegree
 circleKnots =  [ float(i)/(knotNum-1) for i in range( knotNum ) ]
 
 # second trim curve is a square
@@ -105,7 +105,7 @@ def updateControlPoints( t ):
 			coord[2] = dampedOscillation( coord[0], coord[1], t )
 
 def plotSurface( t ):
-	# display surface 
+	# display surface
 	updateControlPoints( t )
 	global controlPoints, knots
 	global nurb
@@ -124,7 +124,7 @@ def plotSurface( t ):
 	global squareHolePoints
 	gluPwlCurve( nurb, squareHolePoints, GLU_MAP1_TRIM_2 )
 	gluEndTrim( nurb )
-	
+
 	# trim using circle
 	gluBeginTrim( nurb )
 	global circlePoints, circleKnots
@@ -132,7 +132,7 @@ def plotSurface( t ):
 	gluEndTrim( nurb )
 
 	gluEndSurface( nurb )
-	
+
 
 def display(  ):
 	"""Glut display function."""

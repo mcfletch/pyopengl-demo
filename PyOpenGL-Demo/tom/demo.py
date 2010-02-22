@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import string
 __version__ = string.split('$Revision: 1.1.1.1 $')[1]
 __date__ = string.join(string.split('$Date: 2007/02/15 19:25:38 $')[1:3], ' ')
@@ -44,9 +38,9 @@ class Demo:
 		demo.menu.add_command(label='Blue', underline=0, command=self.set_blue)
 		demo.menu.add_command(label='Lines', underline=0,command=self.set_lines)
 		demo.menu.add_command(label='Text', underline=0,command=self.set_text)
-   
+
 		demo.menu.add('separator')
-		demo.menu.add_command(label='Quit', underline=0, background='red', 
+		demo.menu.add_command(label='Quit', underline=0, background='red',
 				    				 activebackground='green',
 									 command=demo.quit)
 

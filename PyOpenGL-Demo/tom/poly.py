@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import string
 __version__ = string.split('$Revision: 1.1.1.1 $')[1]
 __date__ = string.join(string.split('$Date: 2007/02/15 19:25:40 $')[1:3], ' ')
@@ -15,7 +9,7 @@ from OpenGL.Tk import *
 try:
 	from numpy import *
 except ImportError, err:
-	try: 
+	try:
 		from Numeric import *
 	except ImportError, err:
 		print "This demo requires the numpy or Numeric extension, sorry"
@@ -28,7 +22,7 @@ vertices = transpose(
 	reshape(
 		array(
 			(
-				cos(2*pi*a/float(n)), 
+				cos(2*pi*a/float(n)),
 				sin(3*2*pi*a/float(n))
 			)
 		),

@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import string
 __version__ = string.split('$Revision: 1.1.1.1 $')[1]
 __date__ = string.join(string.split('$Date: 2007/02/15 19:25:40 $')[1:3], ' ')
@@ -40,19 +34,19 @@ def redraw(o):
 # Demo starts here really.
 if __name__ == "__main__":
 	import Tkinter, sys
-	
+
 	o = Opengl(None, width = 400, height = 200, double = 1, depth = 1)
 	o.pack(expand = 1, fill = 'both')
-	
+
 	o.redraw = redraw
 	o.set_centerpoint(30., 2., 0.)
 	o.set_eyepoint(80.)
-	
+
 	o.grob = -1
-	
+
 	o.autospin_allowed = 1
-	
+
 	# Enter the tk mainloop.
-	
+
 	Tkinter.mainloop()
-	
+

@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import string
 __version__ = string.split('$Revision: 1.1.1.1 $')[1]
 __date__ = string.join(string.split('$Date: 2007/02/15 19:25:40 $')[1:3], ' ')
@@ -29,7 +23,7 @@ def redraw(o):
 		glTranslatef(s[0], s[1], s[2])
 		glutSolidSphere(1.4,20,20)
 		glPopMatrix()
-	
+
 def pick(o, p1, p2, event=None):
 	"""A pick function.
 	The end points of the picked line are passed as p1 and p2.
@@ -56,16 +50,16 @@ def pick(o, p1, p2, event=None):
 # Demo starts here really.
 def main():
 	import Tkinter, sys
-	
+
 	o = Opengl(None, width = 200, height = 200, double = 1, depth = 1)
 	glutInit( [] )
 	o.pack(expand = 1, fill = 'both')
-	
+
 	o.redraw = redraw
 	o.pick = pick
 	o.set_centerpoint(-2., 35., 24.)
 	o.set_eyepoint(30.)
-	
+
 	o.spheres = [
 	[-4.322, 30.55, 21.011],
 	[-4.394, 29.355, 21.739],
@@ -100,16 +94,16 @@ def main():
 	[-7.132, 39.91, 23.719],
 	[-7.29, 40.706, 22.617],
 	[-7.707, 39.325, 24.755]]
-	
+
 	o.picked_sphere = -1
 	o.autospin_allowed = 1
-	
+
 	l = Tkinter.Label(None, text = 'Press Shift-Button-1 over an\natom to highlight')
 	l.pack(side = 'top', expand = 1, fill = 'both')
-	
+
 	# Enter the tk mainloop.
 	Tkinter.mainloop()
-	
+
 
 if __name__ == "__main__":
 	main()

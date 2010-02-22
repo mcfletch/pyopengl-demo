@@ -1,7 +1,7 @@
-#!/usr/bin/python2.4
-# 
+#! /usr/bin/env python
+#
 # Load a texture from an image file and map it to a quad.
-# 
+#
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.
@@ -82,7 +82,7 @@ glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB )
 glutInitWindowSize( 250, 250 )
 glutInitWindowPosition( 100, 100 )
 glutCreateWindow( sys.argv[0] )
-if len(sys.argv) > 1: 
+if len(sys.argv) > 1:
 	init( sys.argv[1] )
 else:
 	init( None )

@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#! /usr/bin/env python
 # Demonstration of the shaderProgram:
 # Animated torus with procedural texture.
 #
 # Class to simplify the incorporation of GLSL programs.
-# 
+#
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.
@@ -106,4 +106,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
-	
+

@@ -1,10 +1,4 @@
-#!/usr/bin/python
-
-# This is statement is required by the build system to query build info
-if __name__ == '__build__':
-	raise Exception
-
-
+#! /usr/bin/env python
 import string
 __version__ = string.split('$Revision: 1.1.1.1 $')[1]
 __date__ = string.join(string.split('$Date: 2007/02/15 19:25:40 $')[1:3], ' ')
@@ -14,7 +8,7 @@ import sys
 try:
 	from numpy import *
 except ImportError, err:
-	try: 
+	try:
 		from Numeric import *
 	except ImportError, err:
 		print "This demo requires the numpy or Numeric extension, sorry"
@@ -48,14 +42,14 @@ def lorentz(o, x, y, z, n=2000, dt=0.01):
 				glVertex3d(x, y, z)
 		finally:
 			glEnd()
-		
+
 		glEnable(GL_LIGHTING)
 	finally:
 		glEndList()
 
 def redraw(o):
 	"""The main scene redraw function."""
-	
+
 	# Clear the background and depth buffer.
 	glClearColor(1., 0., 1., 0.)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -66,23 +60,23 @@ def redraw(o):
 # Demo starts here really.
 if __name__ == "__main__":
 	import Tkinter, sys
-	
+
 	# Create the opengl widget here.
-	
+
 	o = Opengl(None, width = 400, height = 400, double = 1)
-	
+
 	# Register the redraw procedure for the widget.
-	
+
 	o.redraw = redraw
-	
+
 	o.pack(side = 'top', expand = 1, fill = 'both')
 	o.set_centerpoint(0., 0., 2000.)
 	o.set_eyepoint(13000.)
-	
+
 	o.far = 600000.
-	
+
 	lorentz(o, 0.01, 0.01, 0.01)
-	
+
 	# Enter the tk mainloop.
-	
+
 	Tkinter.mainloop()

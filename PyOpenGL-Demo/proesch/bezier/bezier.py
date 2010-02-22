@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 # Surface deforming according to a damped oscillation consisting
 # of bezier patches.
-# 
+#
 # Copyright (C) 2007  "Peter Roesch" <Peter.Roesch@fh-augsburg.de>
 #
 # This code is licensed under the PyOpenGL License.
