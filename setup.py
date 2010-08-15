@@ -16,24 +16,24 @@ def find_packages( root ):
 requirements = ['PyOpenGL']
 
 if __name__ == "__main__":
-	setup(
-		name = "PyOpenGL-Demo",
-		version = '3.0.1b1',
-		packages = packages,
+    setup(
+        name = "PyOpenGL-Demo",
+        version = '3.0.1b1',
+        packages = packages,
 
-		description = 'Demonstration scripts for the PyOpenGL library',
-		include_package_data = True,
-		zip_safe = False,
-		options = {
-			'sdist': {
-				'formats': ['gztar','zip'],
-			},
-		},
-		install_requires = requirements,
-		maintainer = 'Mike C. Fletcher',
-		maintainer_email = 'mcfletch@vrplumber.com',
-		url = 'http://pyopengl.sourceforge.net/',
-		license = 'BSD',
-		download_url = "https://sourceforge.net/project/showfiles.php?group_id=5988&package_id=221827",
-
-	)
+        description = 'Demonstration scripts for the PyOpenGL library',
+        include_package_data = True,
+        zip_safe = False,
+        options = {
+            'sdist': {
+                'formats': ['gztar','zip'],
+            },
+        },
+        install_requires = requirements,
+        maintainer = 'Mike C. Fletcher',
+        maintainer_email = 'mcfletch@vrplumber.com',
+        url = 'http://pyopengl.sourceforge.net/',
+        license = 'BSD',
+        use_2to3 = True,
+        download_url = "https://sourceforge.net/project/showfiles.php?group_id=5988&package_id=221827",
+    )
