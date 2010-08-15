@@ -4,8 +4,8 @@ if __name__ == '__build__':
 	raise Exception
 
 import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:28 $')[1:3], ' ')
+__version__ = '$Revision: 1.1.1.1 $'.split()[1]
+__date__ = ' '.join('$Date: 2007/02/15 19:25:28 $'.split()[1:3])
 __author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
 
 try:
