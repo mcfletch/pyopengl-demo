@@ -42,6 +42,7 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import sys
+from OpenGL.GL.ARB.multitexture import *
 from Image import *
 from math import *
 
@@ -259,3 +260,4 @@ def main():
 if __name__ == "__main__":
 	print "Hit ESC key to quit."
 	main()
+
