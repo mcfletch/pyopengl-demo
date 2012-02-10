@@ -18,9 +18,8 @@ requirements = ['PyOpenGL']
 if __name__ == "__main__":
     setup(
         name = "PyOpenGL-Demo",
-        version = '3.0.1b1',
         packages = packages,
-
+        version = '3.0.2',
         description = 'Demonstration scripts for the PyOpenGL library',
         include_package_data = True,
         zip_safe = False,
