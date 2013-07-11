@@ -179,7 +179,7 @@ def keyboard( ch,  x,  y):
         sys.exit(0)
     return 0
 
-VOID, ADD_PLANE, REMOVE_PLANE, MOTION_ON, MOTION_OFF, QUIT = range(6)
+VOID, ADD_PLANE, REMOVE_PLANE, MOTION_ON, MOTION_OFF, QUIT = list(range(6))
 
 def domotion_on(): 
     moving = GL_TRUE
@@ -245,6 +245,6 @@ if __name__ == "__main__":
 	add_plane()
 	add_plane()
 	# start event processing */
-	print 'RIGHT-CLICK to display the menu.'
+	print('RIGHT-CLICK to display the menu.')
 	glutMainLoop()
 
