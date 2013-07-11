@@ -10,8 +10,8 @@
 """
 
 import string
-__version__ = string.split('$Revision: 1.4 $')[1]
-__date__ = string.join(string.split('$Date: 2008/09/05 20:23:33 $')[1:3], ' ')
+__version__ = '1.4'
+__date__ = '2008/09/05 20:23:33'
 __author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
 
 import OpenGL
@@ -27,7 +27,7 @@ vec3 = GLfloat_3
 vec4 = GLfloat_4
 try:
 	import numpy
-except ImportError, err:
+except ImportError:
 	import Numeric as numpy
 import sys
 
@@ -179,7 +179,7 @@ if __name__ == '__main__':
 	try:
 		GLU_VERSION_1_2
 	except:
-		print "Need GLU 1.2 to run this demo"
+		print("Need GLU 1.2 to run this demo")
 		sys.exit(1)
 	main()
 	glutMainLoop()
