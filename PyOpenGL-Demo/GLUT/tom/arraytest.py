@@ -16,14 +16,10 @@ import time, sys
 try:
 	from numpy import *
 	from numpy.random import *
-except ImportError, err:
-	try: 
-		from Numeric import *
-		from RandomArray import *
-	except ImportError, err:
-		print "This demo requires the numpy or Numeric extension, sorry"
-		import sys
-		sys.exit()
+except ImportError:
+	print("This demo requires the numpy extension, sorry")
+	import sys
+	sys.exit()
 
 n=50
 
@@ -92,7 +88,7 @@ def key_pressed(*args):
 
 
 if __name__ == "__main__":
-	print """You should see a polynomial curve rotating about the origin."""
+	print("""You should see a polynomial curve rotating about the origin.""")
 	import sys
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
