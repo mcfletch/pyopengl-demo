@@ -123,7 +123,7 @@ def framerate():
     if t - t0 >= 5.0:
         seconds = t - t0
         fps = frames/seconds
-        print "%.0f frames in %3.1f seconds = %6.3f FPS" % (frames,seconds,fps)
+        print("%.0f frames in %3.1f seconds = %6.3f FPS" % (frames,seconds,fps))
         t0 = t
         frames = 0
 
@@ -270,10 +270,10 @@ if __name__ == '__main__':
     glutVisibilityFunc(visible)
 
     if "-info" in sys.argv:
-        print "GL_RENDERER   = ", glGetString(GL_RENDERER)
-        print "GL_VERSION    = ", glGetString(GL_VERSION)
-        print "GL_VENDOR     = ", glGetString(GL_VENDOR)
-        print "GL_EXTENSIONS = ", glGetString(GL_EXTENSIONS)
+        print("GL_RENDERER   = ", glGetString(GL_RENDERER))
+        print("GL_VERSION    = ", glGetString(GL_VERSION))
+        print("GL_VENDOR     = ", glGetString(GL_VENDOR))
+        print("GL_EXTENSIONS = ", glGetString(GL_EXTENSIONS))
 
     glutMainLoop()
 
