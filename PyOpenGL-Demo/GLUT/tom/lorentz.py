@@ -108,8 +108,8 @@ def rotation( period = 10):
 	return angle
 
 if __name__ == "__main__":
-	print """You should see a curved line representing a Lorentz
-attractor, rendered in 3D, rotation about the origin."""
+	print( """You should see a curved line representing a Lorentz
+attractor, rendered in 3D, rotation about the origin.""" )
 	import sys
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
