@@ -11,12 +11,12 @@ __author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
 try:
 	from numpy import *
 	from numpy.random import *
-except ImportError, err:
+except ImportError as err:
 	try:
 		from Numeric import *
 		from RandomArray import *
-	except ImportError, err:
-		print "This demo requires the numpy or Numeric extension, sorry"
+	except ImportError as err:
+		print("This demo requires the numpy or Numeric extension, sorry")
 		import sys
 		sys.exit()
 import string, sys
@@ -106,8 +106,8 @@ def main():
 	glutKeyboardFunc(keyboard)
 	glutMainLoop()
 
-print "Use the mouse buttons to control some of the dots."
-print "Hit any key to quit."
+print("Use the mouse buttons to control some of the dots.")
+print("Hit any key to quit.")
 main()
 
 
