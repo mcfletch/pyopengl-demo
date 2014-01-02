@@ -88,9 +88,11 @@ def display( swap=1, clear=1):
 
 def idle( ):
 	glutPostRedisplay()
+from OpenGL._bytes import as_8_bit
+ESC = as_8_bit( '\033' )
 def key_pressed(*args):
 	# If escape is pressed, kill everything.
-	if args[0] == '\033':
+	if args[0] == ESC:
 		sys.exit()
 
 starttime = time.time()
@@ -102,7 +104,7 @@ def rotation( period = 10):
 	return angle
 
 if __name__ == "__main__":
-	print """You should see polygonal text rotating slowly."""
+	print("""You should see polygonal text rotating slowly.""")
 	import sys
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)

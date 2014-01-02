@@ -27,7 +27,7 @@ def click( button, state, x, y ):
 
 def saveBuffer( filename="test.jpg", format="JPEG" ):
 	"""Save current buffer to filename in format"""
-	import Image # get PIL's functionality...
+	from PIL import Image # get PIL's functionality...
 	x,y,width,height = glGetDoublev(GL_VIEWPORT)
 	width,height = int(width),int(height)
 	glPixelStorei(GL_PACK_ALIGNMENT, 1)
@@ -35,15 +35,17 @@ def saveBuffer( filename="test.jpg", format="JPEG" ):
 	image = Image.fromstring( "RGB", (width, height), data )
 	image = image.transpose( Image.FLIP_TOP_BOTTOM)
 	image.save( filename, format )
-	print 'Saved image to %s'% (os.path.abspath( filename))
+	print('Saved image to %s'% (os.path.abspath( filename)))
 	return image
+from OpenGL._bytes import as_8_bit
+ESC = as_8_bit( '\033' )
 def key_pressed(*args):
 	# If escape is pressed, kill everything.
-	if args[0] == '\033':
+	if args[0] == ESC:
 		sys.exit()
 
 def main():
-	print """You should see a cone rotating slowly, click to save to test.jpg"""
+	print("""You should see a cone rotating slowly, click to save to test.jpg""")
 	import sys
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)

@@ -4,8 +4,8 @@ if __name__ == '__build__':
 
 
 import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:13 $')[1:3], ' ')
+__version__ = '1.1.1.1'
+__date__ = '2007/02/15 19:25:13'
 __author__ = 'John Popplewell <john@johnnypops.demon.co.uk>'
 from OpenGL.GL import *
 

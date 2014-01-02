@@ -96,13 +96,16 @@ def rotation( period = 10):
 	angle = (((time.time()-starttime)%period)/period)* 360
 	glRotate( angle, 0,1,0)
 	return angle
+
+from OpenGL._bytes import as_8_bit
+ESC = as_8_bit( '\033' )
 def key_pressed(*args):
 	# If escape is pressed, kill everything.
-	if args[0] == '\033':
+	if args[0] == ESC:
 		sys.exit()
 
 def main():
-	print """You should see a high-resolution cone rotating slowly."""
+	print("""You should see a high-resolution cone rotating slowly.""")
 	import sys
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
