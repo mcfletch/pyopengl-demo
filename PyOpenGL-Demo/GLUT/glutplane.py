@@ -177,6 +177,8 @@ def keyboard( ch,  x,  y):
             glutPostRedisplay()
     elif (ch == chr(27)) :
         sys.exit(0)
+    print( 'keyboard' )
+    print( 'Character: %s'%( ch ))
     return 0
 
 VOID, ADD_PLANE, REMOVE_PLANE, MOTION_ON, MOTION_OFF, QUIT = list(range(6))

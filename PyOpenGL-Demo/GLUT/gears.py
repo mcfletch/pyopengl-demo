@@ -169,12 +169,14 @@ def idle():
 
 
 # change view angle, exit upon ESC
+LC_Z = as_8_bit( 'z' )
+UC_Z = as_8_bit( 'Z' )
 def key(k, x, y):
     global view_rotz
 
-    if k == 'z':
+    if k == LC_Z:
         view_rotz += 5.0
-    elif k == 'Z':
+    elif k == UC_Z:
         view_rotz -= 5.0
     elif ord(k) == 27: # Escape
         sys.exit(0)

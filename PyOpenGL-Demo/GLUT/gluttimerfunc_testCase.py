@@ -1,8 +1,9 @@
 import sys
 from OpenGL.GLUT import *
 from OpenGL.GL import *
+from OpenGL._bytes import as_8_bit
 
-ESCAPE = '\033'
+ESCAPE = as_8_bit('\033')
 
 PROMPT = ("Press keys '1' - '0' to start callbacks",
           "Press ESCAPE to exit.")
