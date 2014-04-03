@@ -5,6 +5,9 @@
 # conversion to Python using PyOpenGL with frame rates ala glxgears
 # Peter Barth
 import OpenGL
+import logging
+logging.basicConfig( level=logging.INFO )
+OpenGL.USE_ACCELERATE = False
 OpenGL.ERROR_ON_COPY = True
 from OpenGL.GL import *
 from OpenGL.GLUT import *
