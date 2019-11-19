@@ -4,3 +4,4 @@ build
 dist
 *.bak
 PyOpenGL-Demo/GLUT/tom/test.jpg
+PyOpenGL-Demo/tom/test.jpg
