@@ -45,6 +45,8 @@ Converted to Python by Jason Petrone 6/00
 #  This program demonstrates lots of material properties.
 #  A single light source illuminates the objects.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 
 try:
@@ -52,9 +54,9 @@ try:
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print '''
+  print('''
 ERROR: PyOpenGL not installed properly.
-        '''
+        ''')
   sys.exit()
 
 teapotList = None

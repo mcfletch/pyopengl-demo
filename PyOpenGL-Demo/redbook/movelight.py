@@ -58,6 +58,8 @@ Converted to Python 6/00 by Jason Petrone(jp@demonseed.net)
 
 '''
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 
 try:
@@ -65,9 +67,9 @@ try:
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print '''
+  print('''
 ERROR: PyOpenGL not installed properly.
-        '''
+        ''')
   sys.exit()
 
 

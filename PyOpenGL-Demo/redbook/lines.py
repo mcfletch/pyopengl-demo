@@ -48,16 +48,19 @@ OpenGL(R) is a registered trademark of Silicon Graphics, Inc.
 
 '''
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
+from six.moves import range
 
 try:
   from OpenGL.GLUT import *
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print '''
+  print('''
 ERROR: PyOpenGL not installed properly.
-        '''
+        ''')
   sys.exit()
 
 def drawOneLine(x1, y1, x2, y2):

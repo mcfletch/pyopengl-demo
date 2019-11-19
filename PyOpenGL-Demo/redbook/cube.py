@@ -48,6 +48,8 @@ Converted to Python by Jason Petrone 6/00
 #  glScalef() and a single viewing transformation, gluLookAt().
 #  A wireframe cube is rendered.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 
 try:
@@ -55,9 +57,9 @@ try:
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print '''
+  print('''
 ERROR: PyOpenGL not installed properly.
-        '''
+        ''')
 
 def init():
    glClearColor (0.0, 0.0, 0.0, 0.0)

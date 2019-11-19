@@ -39,9 +39,6 @@ Converted to Python by Jason L. Petrone 7/00
  *
  * OpenGL(R) is a registered trademark of Silicon Graphics, Inc.
  */
-'''
-
-'''
 /*
  *  drawf.c
  *  Draws the bitmapped letter F on the screen(several times).
@@ -49,15 +46,17 @@ Converted to Python by Jason L. Petrone 7/00
  */
 '''
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys, struct
 
 try:
 	from OpenGL.GLUT import *
 	from OpenGL.GL import *
 except:
-	print '''
+	print('''
 ERROR: PyOpenGL not installed properly.
-'''
+''')
 	sys.exit()
 
 
@@ -66,7 +65,7 @@ rasterBytes = (
 	0xff, 0x00, 0xff, 0x00, 0xc0, 0x00, 0xc0, 0x00, 0xc0, 0x00,
 	0xff, 0xc0, 0xff, 0xc0)
 
-rasters = ''
+rasters = b''
 for byte in rasterBytes:
 	rasters = rasters + struct.pack('B', byte)
 
@@ -75,19 +74,19 @@ def init():
 	glClearColor(0.0, 0.0, 0.0, 0.0)
 
 def display():
-	print 'display'
+	print('display')
 	glClear(GL_COLOR_BUFFER_BIT)
 	glColor3f(1.0, 1.0, 1.0)
 	glRasterPos2i(20, 20)
-	print 'beginning bitmaps'
+	print('beginning bitmaps')
 	glBitmap(10, 12, 0.0, 0.0, 11.0, 0.0, rasters)
 	glBitmap(10, 12, 0.0, 0.0, 11.0, 0.0, rasters)
 	glBitmap(10, 12, 0.0, 0.0, 11.0, 0.0, rasters)
-	print 'flushing'
+	print('flushing')
 	glFlush()
 
 def reshape(w, h):
-	print 'reshape'
+	print('reshape')
 	glViewport(0, 0, w, h)
 	glMatrixMode(GL_PROJECTION)
 	glLoadIdentity()
@@ -95,7 +94,7 @@ def reshape(w, h):
 	glMatrixMode(GL_MODELVIEW)
 
 def keyboard(key, x, y):
-	print 'keyboard', key, x,y
+	print('keyboard', key, x,y)
 	if key == chr(27):
 		sys.exit()
 

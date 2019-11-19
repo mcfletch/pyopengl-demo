@@ -39,9 +39,6 @@ Converted to Python by Jason L. Petrone 7/00
  *
  * OpenGL(R) is a registered trademark of Silicon Graphics, Inc.
  */
-'''
-
-'''
 /*
  * smooth.c
  * This program demonstrates smooth shading.
@@ -49,6 +46,8 @@ Converted to Python by Jason L. Petrone 7/00
  */
 '''
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys, struct
 
 try:
@@ -56,9 +55,9 @@ try:
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print '''
+  print('''
 ERROR: PyOpenGL not installed properly.
-        '''
+        ''')
   sys.exit()
 
 

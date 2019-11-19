@@ -39,9 +39,6 @@ Converted to Python by Jason L. Petrone 6/00
  *
  * OpenGL(R) is a registered trademark of Silicon Graphics, Inc.
  */
-'''
-
-'''
 /*
  *  double.c
  *  This is a simple double buffered program.
@@ -49,7 +46,8 @@ Converted to Python by Jason L. Petrone 6/00
  *  Pressing the middle mouse button stops the rotation.
  */
  '''
-
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 
 try:
@@ -57,9 +55,9 @@ try:
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print '''
+  print('''
 ERROR: PyOpenGL not installed properly.
-        '''
+        ''')
   sys.exit()
 
 

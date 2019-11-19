@@ -49,15 +49,17 @@ Converted to Python by Jason Petrone(jp@demonseed.net) 8/00
 
 '''
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 
 try:
   from OpenGL.GLUT import *
   from OpenGL.GL import *
 except:
-  print '''
+  print('''
 ERROR: PyOpenGL not installed properly.
-        '''
+        ''')
   sys.exit()
 
 
