@@ -10,15 +10,15 @@ import maintest
 SCALE = 0.8
 TSCALE = 4
 
-brand_points = map(lambda x: (0, 0, TSCALE*x), (0.1, 0.0, -5.0, -5.1))
+brand_points = list(map(lambda x: (0, 0, TSCALE*x), (0.1, 0.0, -5.0, -5.1)))
 brand_colors = ((1.0, 0.3, 0.0),)*4
 
 points = ((-1.5, 2.0), (-0.75, 2.0), (-0.75, 1.38), (-0.5, 1.25), (0.88, 1.12), (1.0, 0.62), (1.12, 0.1), (0.5, -0.5), (0.2, -1.12),
           (0.3, -1.5), (-0.25, -1.45), (-1.06, -0.3), (-1.38, -0.3), (-1.65, -0.6), (-2.5, 0.5), (-1.5, 0.5), (-1.5, 2.0), (-0.75, 2.0))
 
-tspine = map(lambda x: (TSCALE*x[0], TSCALE*x[1], 0), points)
+tspine = list(map(lambda x: (TSCALE*x[0], TSCALE*x[1], 0), points))
 
-texas_xsection = map(lambda x: (SCALE*x[0], SCALE*x[1]), points[1:])
+texas_xsection = list(map(lambda x: (SCALE*x[0], SCALE*x[1]), points[1:]))
 
 tcolors = []
 
