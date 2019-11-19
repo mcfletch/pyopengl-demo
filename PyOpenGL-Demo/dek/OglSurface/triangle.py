@@ -14,7 +14,7 @@ import NumericPDB
 import string
 from OpenGL.GL import *
 from OpenGL.Tk import *
-import Image
+from PIL import Image
 import OglFrame
 
 MAP="test.ppm"
@@ -52,24 +52,24 @@ class Surface:
 		for i in range(len(self.faces)):
 
 			tri = self.faces[i]
-			vert1 = tuple(self.vert[tri[0]-1])
-			vert2 = tuple(self.vert[tri[1]-1])
-			vert3 = tuple(self.vert[tri[2]-1])
-			norm1 = tuple(self.norm[tri[0]-1])
-			norm2 = tuple(self.norm[tri[1]-1])
-			norm3 = tuple(self.norm[tri[2]-1])
+			vert1 = tuple(self.vert[ int(tri[0]-1)])
+			vert2 = tuple(self.vert[ int(tri[1]-1)])
+			vert3 = tuple(self.vert[ int(tri[2]-1)])
+			norm1 = tuple(self.norm[ int(tri[0]-1)])
+			norm2 = tuple(self.norm[ int(tri[1]-1)])
+			norm3 = tuple(self.norm[ int(tri[2]-1)])
 
-			color = self.colorlist[int(self.nearest[tri[0]-1])-1]
+			color = self.colorlist[int(self.nearest[int(tri[0]-1)])-1]
 			glColor3f(color[0], color[1], color[2])
 			glNormal3fv(norm1)
 			glVertex3fv(vert1)
 
-			color = self.colorlist[int(self.nearest[tri[1]-1])-1]
+			color = self.colorlist[int(self.nearest[int(tri[1]-1)])-1]
 			glColor3f(color[0], color[1], color[2])
 			glNormal3fv(norm2)
 			glVertex3fv(vert2)
 
-			color = self.colorlist[int(self.nearest[tri[2]-1])-1]
+			color = self.colorlist[int(self.nearest[int(tri[2]-1)])-1]
 			glColor3f(color[0], color[1], color[2])
 			glNormal3fv(norm3)
 			glVertex3fv(vert3)
@@ -165,7 +165,7 @@ class Surface:
 		im = Image.open(self.map)
 		self.imageWidth = im.size[0]
 		self.imageHeight = im.size[1]
-		self.image = im.tostring("raw", "RGBX", 0, -1)
+		self.image = im.tobytes("raw", "RGBX", 0, -1)
 
 	def __init__(self, facefile="1crn.face", vertfile="1crn.vert", pdbfile="1crn.pdb"):
 		self.facefile = facefile

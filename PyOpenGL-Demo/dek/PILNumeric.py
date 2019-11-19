@@ -16,8 +16,8 @@ except ImportError, err:
 		sys.exit()
 import FFT
 import Tkinter
-import Image
-import ImageTk
+from PIL import Image
+from PIL import ImageTk
 import sys
 
 w = 256
@@ -36,8 +36,8 @@ def demo():
 
     im = Image.new("RGBA", (w, h))
     print len(data.tostring("raw", "RGBX", 0, -1))
-    print len(im.tostring("raw", "RGBX", 0, -1))
-    im.fromstring(data.tostring("raw", "RGBX", 0, -1),"raw", "RGBX", 0, -1)
+    print len(im.tobytes("raw", "RGBX", 0, -1))
+    im.frombytes(data.tostring("raw", "RGBX", 0, -1),"raw", "RGBX", 0, -1)
 
     root = Tkinter.Tk()
     image = ImageTk.PhotoImage(im)

@@ -2,8 +2,9 @@
 ## example python/pyopengl script to do tiled texturemapping.
 ## By david konerding (dek@cgl.ucsf.edu)
 
+from __future__ import absolute_import
 import sys
-from Image import *
+from PIL.Image import *
 from OpenGL.GL import *
 from OpenGL.Tk import *
 ##try:
@@ -25,7 +26,7 @@ class checker:
 		im = open(self.filename)
 		self.imageWidth = im.size[0]
 		self.imageHeight = im.size[1]
-		self.image = im.tostring("raw", "RGBX", 0, -1)
+		self.image = im.tobytes("raw", "RGBX", 0, -1)
 
 	def display(self, event=None):
 		glClearColor(0.0, 0.0, 0.0, 0)

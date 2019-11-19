@@ -1,6 +1,8 @@
 #!
 
 # This is statement is required by the build system to query build info
+from __future__ import absolute_import
+from __future__ import print_function
 if __name__ == '__build__':
 	raise Exception
 
@@ -24,7 +26,7 @@ if __name__ == '__build__':
 
 
 import sys
-from Image import *
+from PIL.Image import *
 from OpenGL.GL import *
 from OpenGL.Tk import *
 
@@ -63,7 +65,7 @@ class Surface:
 		im = open(filename)
 		self.imageWidth = im.size[0]
 		self.imageHeight = im.size[1]
-		self.image = im.tostring("raw", "RGBX", 0, -1)
+		self.image = im.tobytes("raw", "RGBX", 0, -1)
 #		print self.imageWidth, self.imageHeight, self.imageWidth * self.imageHeight*4, len(self.image)
 
 
@@ -80,7 +82,7 @@ class Surface:
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-		print type(self.image)
+		print(type(self.image))
 		glTexImage2D(GL_TEXTURE_2D, 0, 3, self.imageWidth, self.imageHeight, 0,
 					 GL_RGBA, GL_UNSIGNED_BYTE, self.image)
 		glEnable(GL_TEXTURE_2D)

@@ -12,7 +12,7 @@ except ImportError, err:
 		print "This demo requires the numpy or Numeric extension, sorry"
 		import sys
 		sys.exit()
-import Image
+from PIL import Image
 
 WIDTH=800
 HEIGHT=600
@@ -45,7 +45,7 @@ class OglFrame:
 							   self.keywords['width'], self.keywords['height'],
 							   GL_RGBA, GL_UNSIGNED_BYTE)
 		im = Image.new("RGB", (self.keywords['width'], self.keywords['height']))
-		im.fromstring(pixels)
+		im.frombytes(pixels)
 		im.save(self.imagename)
 
 	def __init__(self, master=None, redraw=None, *arguments, **keywords):

@@ -13,7 +13,7 @@ def find_packages( root ):
     for path, directories, files in os.walk( root ):
         if is_package( path ):
             packages.append( path.replace( '/','.' ) )
-requirements = ['PyOpenGL']
+requirements = ['PyOpenGL','six']
 
 if __name__ == "__main__":
     setup(
