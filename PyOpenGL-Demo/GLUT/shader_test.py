@@ -96,7 +96,7 @@ def DrawGLScene():
 # The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)
 def keyPressed(*args):
     # If escape is pressed, kill everything.
-    if args[0] == '\x1b':
+    if args[0] == b'\x1b':
         sys.exit()
 
 def main():

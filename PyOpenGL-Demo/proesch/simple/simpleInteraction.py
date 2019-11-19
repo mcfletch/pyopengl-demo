@@ -75,9 +75,9 @@ def keyPressed( key, x, y ):
 	"""Callback function (ordinary key pressed)."""
 
 	global rP
-	if key in ('r', 'R'):
+	if key in (b'r', b'R'):
 		rP.reset( )
-	elif key in ('q', 'Q'):
+	elif key in (b'q', b'Q'):
 		sys.exit( )
 	glutPostRedisplay( )
 
