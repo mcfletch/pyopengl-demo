@@ -32,7 +32,7 @@ def saveBuffer( filename="test.jpg", format="JPEG" ):
 	width,height = int(width),int(height)
 	glPixelStorei(GL_PACK_ALIGNMENT, 1)
 	data = glReadPixels(x, y, width, height, GL_RGB, GL_UNSIGNED_BYTE)
-	image = Image.fromstring( "RGB", (width, height), data )
+	image = Image.frombytes( "RGB", (width, height), data )
 	image = image.transpose( Image.FLIP_TOP_BOTTOM)
 	image.save( filename, format )
 	print('Saved image to %s'% (os.path.abspath( filename)))
