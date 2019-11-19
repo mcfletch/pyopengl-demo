@@ -1,14 +1,16 @@
 #! /usr/bin/env python
 # -*- coding: utf8 -*-
 """Port of NeHe Lesson 26 by Ivan Izuver <izuver@users.sourceforge.net>"""
+from __future__ import absolute_import
+from __future__ import print_function
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
-from Image import *
+from PIL.Image import *
 import sys,gc
 
 
-ESCAPE = '\033'
+ESCAPE = b'\x1b'
 
 # Number of the glut window.
 window = 0
@@ -32,7 +34,7 @@ def LoadTextures(fname):
 	
 	ix = image.size[0]
 	iy = image.size[1]
-	image = image.tostring("raw", "RGBX", 0, -1)
+	image = image.tobytes("raw", "RGBX", 0, -1)
 	
 	# Create Texture    
 	glBindTexture(GL_TEXTURE_2D, texture)   # 2d texture (x and y size)
@@ -249,6 +251,6 @@ def main():
 
 # Print message to console, and kick off the main to get it rolling.
 if __name__ == "__main__":
-	print "Hit ESC key to quit."
+	print("Hit ESC key to quit.")
 	main()
 		

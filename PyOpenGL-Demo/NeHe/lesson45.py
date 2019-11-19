@@ -39,36 +39,31 @@
 # Make sure to get versions of Numeric, PyOpenGL, and PIL to match your
 # version of python.
 #
-#
-#
-# PyOpenGL extension wrapper for GL_ARB_vertex_buffer_object is currently
-# only availabel through cvs (no release build yet). When a new release
-# is made of PyOpenGL updating this tutorial should be pretty easy.
-# For now, in place of VBOs, vertex/texcoord arrays are used.
-#
-#
 
 
+from __future__ import absolute_import
+from __future__ import print_function
 import OpenGL
 #OpenGL.FULL_LOGGING = True
 #OpenGL.ERROR_ON_COPY = True
 import logging
+from six.moves import range
 logging.basicConfig()
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 try:
     import numpy as Numeric
-except ImportError, err:
+except ImportError as err:
     try:
         import Numeric
-    except ImportError, err:
-        print "This demo requires the numpy or Numeric extension, sorry"
+    except ImportError as err:
+        print("This demo requires the numpy or Numeric extension, sorry")
         import sys
         sys.exit()
 import traceback
 
-import Image 				# PIL
+from PIL import Image 				# PIL
 import sys
 # import win32api				# GetTickCount
 import time
@@ -78,20 +73,9 @@ from OpenGL.GL.ARB.vertex_buffer_object import *
 # http://oss.sgi.com/projects/ogl-sample/registry/ARB/vertex_buffer_object.txt
 
 
-
-
-# *********************** Globals ***********************
-# Python 2.2 defines these directly
-try:
-    True
-except NameError:
-    True = 1==1
-    False = 1==0
-
-
 # Some api in the chain is translating the keystrokes to this octal string
 # so instead of saying: ESCAPE = 27, we use the following.
-ESCAPE = '\033'
+ESCAPE = b'\x1b'
 
 # Number of the glut window.
 window = 0
@@ -178,7 +162,7 @@ class CMesh:
         while (nZ < sizeY):
             nX = 0
             while (nX < sizeY):
-                for nTri in xrange (6):
+                for nTri in range (6):
                     # // Using This Quick Hack, Figure The X,Z Position Of The Point
                     flX = float (nX)
                     if (nTri == 1) or (nTri == 2) or (nTri == 5):
@@ -207,7 +191,7 @@ class CMesh:
         self.m_nTextureID = glGenTextures (1)						# // Get An Open ID
         glBindTexture( GL_TEXTURE_2D, self.m_nTextureID );			# // Bind The Texture
         glTexImage2D( GL_TEXTURE_2D, 0, 3, sizeX, sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE,
-            self.m_pTextureImage.tostring ("raw", "RGB", 0, -1))
+            self.m_pTextureImage.tobytes ("raw", "RGB", 0, -1))
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
@@ -277,7 +261,7 @@ def IsExtensionSupported (TargetExtension):
             break;
     if (found_extension == False):
         gl_supports_extension = False
-        print "OpenGL rendering context does not support '%s'" % (TargetExtension)
+        print("OpenGL rendering context does not support '%s'" % (TargetExtension))
         return False
 
     gl_supports_extension = True
@@ -309,11 +293,11 @@ def IsExtensionSupported (TargetExtension):
     import traceback
     try:
         __import__ (extension_module_name)
-        print "PyOpenGL supports '%s'" % (TargetExtension)
+        print("PyOpenGL supports '%s'" % (TargetExtension))
     except:
         traceback.print_exc()
-        print 'Failed to import', extension_module_name
-        print "OpenGL rendering context supports '%s'" % (TargetExtension),
+        print('Failed to import', extension_module_name)
+        print("OpenGL rendering context supports '%s'" % (TargetExtension), end=' ')
         return False
 
     return True
@@ -325,13 +309,13 @@ def InitGL(Width, Height):				# We call this right after our OpenGL window is cr
     global g_pMesh,g_fVBOSupported
 
     # // Check for VBOs Supported
-    g_fVBOSupported = IsExtensionSupported ("GL_ARB_vertex_buffer_object")
+    g_fVBOSupported = bool(glGenBuffersARB )
     # // TUTORIAL
     # // Load The Mesh Data
     g_pMesh = CMesh ()
     if (not g_pMesh.LoadHeightmap ("Terrain.bmp",
         CMesh.MESH_HEIGHTSCALE, CMesh.MESH_RESOLUTION)):
-        print "Error Loading Heightmap"
+        print("Error Loading Heightmap")
         sys.exit(1)
         return False
 
@@ -342,7 +326,7 @@ def InitGL(Width, Height):				# We call this right after our OpenGL window is cr
         # so that we call the Extension.
 
         if (not glInitVertexBufferObjectARB()):
-            print "Help!  No GL_ARB_vertex_buffer_object"
+            print("Help!  No GL_ARB_vertex_buffer_object")
             sys.exit(1)
             return False
         # Now we can call to gl*Buffer* ()
@@ -393,11 +377,12 @@ def DrawGLScene():
 
     # // Get FPS
     # milliseconds = win32api.GetTickCount()
-    milliseconds = time.clock () * 1000.0
-    if (milliseconds - g_dwLastFPS >= 1000):					# // When A Second Has Passed...
+    seconds = time.clock ()
+
+    if g_nFrames > 30:
         # g_dwLastFPS = win32api.GetTickCount();				# // Update Our Time Variable
-        g_dwLastFPS = time.clock () * 1000.0
-        g_nFPS = g_nFrames;										# // Save The FPS
+        g_nFPS = g_nFrames/(seconds-g_dwLastFPS);				# // Save The FPS
+        g_dwLastFPS = seconds
         g_nFrames = 0;											# // Reset The FPS Counter
 
         # // Build The Title String
@@ -406,12 +391,12 @@ def DrawGLScene():
             szTitle = szTitle + ", Using VBOs";
         else:
             szTitle = szTitle + ", Not Using VBOs";
-
+        # print("Redisplay fps")
         glutSetWindowTitle ( szTitle );							# // Set The Title
 
-    g_nFrames += 1 												# // Increment Our FPS Counter
-    rot = (milliseconds - g_prev_draw_time) / 1000.0 * 25
-    g_prev_draw_time = milliseconds
+    g_nFrames = g_nFrames + 1 												# // Increment Our FPS Counter
+    rot = (seconds - g_prev_draw_time) * 25
+    g_prev_draw_time = seconds
     g_flYRot += rot 											# // Consistantly Rotate The Scenery
 
     # // Move The Camera
@@ -530,5 +515,5 @@ def main():
 
 # Print message to console, and kick off the main to get it rolling.
 if __name__ == "__main__":
-    print "Hit ESC key to quit."
+    print("Hit ESC key to quit.")
     main()

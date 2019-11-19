@@ -1,14 +1,17 @@
 #! /usr/bin/env python
 # -*- coding: utf8 -*-
 """Port of NeHe Lesson 12 by Ivan Izuver <izuver@users.sourceforge.net>"""
+from __future__ import absolute_import
+from __future__ import print_function
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
 import sys
 import numpy
+from six.moves import range
 
-ESCAPE = '\033'
+ESCAPE = b'\x1b'
 
 # Number of the glut window.
 window = 0
@@ -182,6 +185,6 @@ def main():
 
 # Print message to console, and kick off the main to get it rolling.
 if __name__ == "__main__":
-	print "Hit ESC key to quit."
+	print("Hit ESC key to quit.")
 	main()
 			

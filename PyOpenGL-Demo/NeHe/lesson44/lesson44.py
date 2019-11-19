@@ -37,7 +37,7 @@
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
-import Image					# PIL
+from PIL import Image					# PIL
 try:
 	import win32api				# GetTickCount ()
 	gHaveWin32 = 1
@@ -62,7 +62,7 @@ except NameError:
 
 # Some api in the chain is translating the keystrokes to this octal string
 # so instead of saying: ESCAPE = 27, we use the following.
-ESCAPE = '\033'
+ESCAPE = b'\x1b'
 
 # Number of the glut window.
 window = 0
@@ -390,31 +390,31 @@ def keyPressed(*args):
 		glDeleteLists (gcylList, 1)
 		sys.exit ()
 
-	if key == 'W' or key == 'w':
+	if key == b'W' or key == b'w':
 		gCamera.ChangePitch(-0.2);						# // Pitch the camera up 0.2 degrees
 
-	if key == 'S' or key == 's':
+	if key == b'S' or key == b's':
 		gCamera.ChangePitch(0.2);						# // Pitch the camera down 0.2 degrees
 	
-	if key == 'D' or key == 'd':
+	if key == b'D' or key == b'd':
 		gCamera.ChangeHeading(0.2);						# // Yaw the camera to the left
 	
-	if key == 'A' or key == 'a':
+	if key == b'A' or key == b'a':
 		gCamera.ChangeHeading(-0.2);					# // Yaw the camera to the right
 	
-	if key == 'Z' or key == 'z':
+	if key == b'Z' or key == b'z':
 		gCamera.m_ForwardVelocity = 0.01;				# // Start moving the camera forward 0.01 units every frame
 
-	if key == 'C' or key == 'c':
+	if key == b'C' or key == b'c':
 		gCamera.m_ForwardVelocity = -0.01;				# // Start moving the camera backwards 0.01 units every frame
 	
-	if key == 'X' or key == 'x':
+	if key == b'X' or key == b'x':
 		gCamera.m_ForwardVelocity = 0.0;				# // Stop the camera from moving.
 
-	if args[0] == '1':
+	if args[0] == b'1':
 		gInfoOn = True;									# // Toggle info on
 	
-	if args[0] == '2':
+	if args[0] == b'2':
 		gInfoOn = False;								# // Toggle info off
 
 

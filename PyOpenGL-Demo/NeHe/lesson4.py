@@ -1,7 +1,9 @@
 #! /usr/bin/env python
+from __future__ import absolute_import
+from __future__ import print_function
 import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:21 $')[1:3], ' ')
+__version__ = '1.1.1.1'
+__date__ = '$Date: 2007/02/15 19:25:19'
 __author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
 
 #
@@ -43,7 +45,7 @@ import sys
 
 # Some api in the chain is translating the keystrokes to this octal string
 # so instead of saying: ESCAPE = 27, we use the following.
-ESCAPE = '\033'
+ESCAPE = b'\x1b'
 
 # Number of the glut window.
 window = 0
@@ -183,6 +185,6 @@ def main():
 	glutMainLoop()
 
 # Print message to console, and kick off the main to get it rolling.
-print "Hit ESC key to quit."
+print("Hit ESC key to quit.")
 main()
 

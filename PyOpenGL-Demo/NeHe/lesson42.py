@@ -61,18 +61,21 @@
 #
 # Ported to PyOpenGL 2.0 by Brian Leair  Feb, 2004
 #
+from __future__ import absolute_import
+from __future__ import print_function
 import OpenGL
+from six.moves import range
 OpenGL.USE_ACCELERATOR = False
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 try:
 	import numpy as Numeric
-except ImportError, err:
+except ImportError as err:
 	try:
 		import Numeric
-	except ImportError, err:
-		print "This demo requires the numpy or Numeric extension, sorry"
+	except ImportError as err:
+		print("This demo requires the numpy or Numeric extension, sorry")
 		import sys
 		sys.exit()
 import random
@@ -80,19 +83,9 @@ import time					# sleep () pause for 5 seconds when maze is complete
 import sys
 
 
-
-# *********************** Globals ***********************
-# Python 2.2 defines these directly
-try:
-	True
-except NameError:
-	True = 1==1
-	False = 1==0
-
-
 # Some api in the chain is translating the keystrokes to this octal string
 # so instead of saying: ESCAPE = 27, we use the following.
-ESCAPE = '\033'
+ESCAPE = b'\x1b'
 
 # Number of the glut window.
 window = 0
@@ -144,7 +137,7 @@ def Reset ():
 	# This Will seed the random num stream with current system time.
 	random.seed ()
 
-	for loop in xrange (4):												# // Loop So We Can Assign 4 Random Colors
+	for loop in range (4):												# // Loop So We Can Assign 4 Random Colors
 		r[loop]=128 + random.randint (0,127) 							# // Pick A Random Red Color (Bright)
 		g[loop]=128 + random.randint (0,127) 							# // Pick A Random Green Color (Bright)
 		b[loop]=128 + random.randint (0,127) 							# // Pick A Random Blue Color (Bright)
@@ -188,8 +181,8 @@ def Update ():
 	global width, height, done, mx, my
 
 	done=True;															# // Set done To True
-	for x in xrange (0, width, 2):										# // Loop Through All The Rooms
-		for y in xrange (0, height, 2):									# // On X And Y Axis
+	for x in range (0, width, 2):										# // Loop Through All The Rooms
+		for y in range (0, height, 2):									# // On X And Y Axis
 			if (tex_data[((x+(width*y))*3)]==0):						# // If Current Texture Pixel (Room) Is Blank
 				done=False;												# // We Have To Set done To False (Not Finished Yet)
 
@@ -264,12 +257,12 @@ def DrawGLScene ():
 
 	glClear (GL_COLOR_BUFFER_BIT);										# // Clear Screen
 
-	for loop in xrange (4):												# // Loop To Draw Our 4 Views
+	for loop in range (4):												# // Loop To Draw Our 4 Views
 		glColor3ub(r[loop],g[loop],b[loop]);							# // Assign Color To Current View
 
 		if (loop==0):													# // If We Are Drawing The First Scene
 			# // Set The Viewport To The Top Left.  It Will Take Up Half The Screen Width And Height
-			glViewport (0, window_height/2, window_width/2, window_height/2);
+			glViewport (0, window_height//2, window_width//2, window_height//2);
 			glMatrixMode (GL_PROJECTION);								# // Select The Projection Matrix
 			glLoadIdentity ();											# // Reset The Projection Matrix
 			# // Set Up Ortho Mode To Fit 1/4 The Screen (Size Of A Viewport)
@@ -277,7 +270,7 @@ def DrawGLScene ():
 
 		if (loop==1):													# // If We Are Drawing The Second Scene
 			# // Set The Viewport To The Top Right.  It Will Take Up Half The Screen Width And Height
-			glViewport (window_width/2, window_height/2, window_width/2, window_height/2);
+			glViewport (window_width//2, window_height//2, window_width//2, window_height//2);
 			glMatrixMode (GL_PROJECTION);								# // Select The Projection Matrix
 			glLoadIdentity ();											# // Reset The Projection Matrix
 			# // Set Up Perspective Mode To Fit 1/4 The Screen (Size Of A Viewport)
@@ -285,7 +278,7 @@ def DrawGLScene ():
 
 		if (loop==2):													# // If We Are Drawing The Third Scene
 			# // Set The Viewport To The Bottom Right.  It Will Take Up Half The Screen Width And Height
-			glViewport (window_width/2, 0, window_width/2, window_height/2);
+			glViewport (window_width//2, 0, window_width//2, window_height//2);
 			glMatrixMode (GL_PROJECTION);								# // Select The Projection Matrix
 			glLoadIdentity ();											# // Reset The Projection Matrix
 			# // Set Up Perspective Mode To Fit 1/4 The Screen (Size Of A Viewport)
@@ -293,7 +286,7 @@ def DrawGLScene ():
 
 		if (loop==3):													# // If We Are Drawing The Fourth Scene
 			# // Set The Viewport To The Bottom Left.  It Will Take Up Half The Screen Width And Height
-			glViewport (0, 0, window_width/2, window_height/2);
+			glViewport (0, 0, window_width//2, window_height//2);
 			glMatrixMode (GL_PROJECTION);								# // Select The Projection Matrix
 			glLoadIdentity ();											# // Reset The Projection Matrix
 			# // Set Up Perspective Mode To Fit 1/4 The Screen (Size Of A Viewport)
@@ -308,10 +301,10 @@ def DrawGLScene ():
 			glBegin(GL_QUADS);											# // Begin Drawing A Single Quad
 
 			# // We Fill The Entire 1/4 Section With A Single Textured Quad.
-			glTexCoord2f(1.0, 0.0); 	glVertex2i(window_width/2, 0              );
+			glTexCoord2f(1.0, 0.0); 	glVertex2i(window_width//2, 0              );
 			glTexCoord2f(0.0, 0.0); 	glVertex2i(0,              0              );
-			glTexCoord2f(0.0, 1.0); 	glVertex2i(0,              window_height/2);
-			glTexCoord2f(1.0, 1.0); 	glVertex2i(window_width/2, window_height/2);
+			glTexCoord2f(0.0, 1.0); 	glVertex2i(0,              window_height//2);
+			glTexCoord2f(1.0, 1.0); 	glVertex2i(window_width//2, window_height//2);
 
 			glEnd();													# // Done Drawing The Textured Quad
 
@@ -379,7 +372,7 @@ def keyPressed(*args):
 	if args[0] == ESCAPE:
 		sys.exit ()
 	# // Check To See If Spacebar Is Pressed
-	if (args[0] == ' '):
+	if (args[0] == b' '):
 		Reset();														# // If So, Call Reset And Start A New Maze
 
 	return
@@ -440,7 +433,7 @@ def main():
 
 # Print message to console, and kick off the main to get it rolling.
 if __name__ == "__main__":
-	print "Hit ESC key to quit."
+	print("Hit ESC key to quit.")
 	main()
 
 

@@ -26,6 +26,12 @@
 # and noticed what seemed to be hard coded preferences for VC++ in the case of a Win32 OS.
 #
 #
+from __future__ import absolute_import
+from __future__ import print_function
+import sys
+if not sys.platform.startswith('win'):
+	print("This is a windows only demo")
+	sys.exit(0)
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
@@ -35,18 +41,9 @@ from math import cos, sin
 import sys, time
 
 
-# *********************** Globals *********************** 
-# Python 2.2 defines these directly
-try:
-	True
-except NameError:
-	True = 1==1
-	False = 1==0
-
-
 # Some api in the chain is translating the keystrokes to this octal string
 # so instead of saying: ESCAPE = 27, we use the following.
-ESCAPE = '\033'
+ESCAPE = b'\x1b'
 
 # Number of the glut window.
 window = 0
@@ -225,6 +222,6 @@ def main():
 
 # Print message to console, and kick off the main to get it rolling.
 if __name__ == "__main__":
-	print "Hit ESC key to quit."
+	print("Hit ESC key to quit.")
 	main()
 

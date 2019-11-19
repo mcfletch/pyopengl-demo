@@ -1,7 +1,9 @@
 #! /usr/bin/env python
+from __future__ import absolute_import
+from __future__ import print_function
 import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:20 $')[1:3], ' ')
+__version__ = '1.1.1.1'
+__date__ = '$Date: 2007/02/15 19:25:19 $'
 __author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
 
 #
@@ -42,11 +44,11 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import sys
-from Image import *
+from PIL.Image import *
 
 # Some api in the chain is translating the keystrokes to this octal string
 # so instead of saying: ESCAPE = 27, we use the following.
-ESCAPE = '\033'
+ESCAPE = '\x1b'
 
 # Number of the glut window.
 window = 0
@@ -64,7 +66,7 @@ def LoadTextures():
 
 	ix = image.size[0]
 	iy = image.size[1]
-	image = image.tostring("raw", "RGBX", 0, -1)
+	image = image.tobytes("raw", "RGBX", 0, -1)
 
 	# Create Texture
 	textures = glGenTextures(3)
@@ -191,7 +193,7 @@ def DrawGLScene():
 	glRotatef(yrot,0.0,1.0,0.0)			# Rotate The Cube On It's Y Axis
 	glRotatef(zrot,0.0,0.0,1.0)			# Rotate The Cube On It's Z Axis
 
-	glBindTexture(GL_TEXTURE_2D, int(textures[texture_num]))
+	glBindTexture(GL_TEXTURE_2D, textures[texture_num])
 
 	if light:
 		glEnable(GL_LIGHTING)
@@ -231,7 +233,8 @@ def DrawGLScene():
 def keyPressed(key, x, y):
 	global object, texture_num, light
 	# If escape is pressed, kill everything.
-	key = string.upper(key)
+	key = key.decode('ascii','ignore').upper()
+	print("Pressed: %r"%(key,))
 	if key == ESCAPE:
 		sys.exit()
 	elif key == 'L':
@@ -244,9 +247,9 @@ def keyPressed(key, x, y):
 
 def main():
 	usage = """Press L to toggle Lighting
-Press T to change textures
+Press T to change texture filtering
 Press O to change objects"""
-	print usage
+	print(usage)
 	global window
 	glutInit(sys.argv)
 
@@ -293,6 +296,6 @@ Press O to change objects"""
 
 
 # Print message to console, and kick off the main to get it rolling.
-print "Hit ESC key to quit."
+print("Hit ESC key to quit.")
 main()
 
