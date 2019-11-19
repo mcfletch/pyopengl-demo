@@ -7,15 +7,18 @@
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 import math
+from six.moves import range
 
 try:
   from OpenGL.GLUT import *
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print ''' Error: PyOpenGL not installed properly !!'''
+  print(''' Error: PyOpenGL not installed properly !!''')
   sys.exit(  )
 
 class StereoCamera( object ):
@@ -43,7 +46,7 @@ class StereoCamera( object ):
 	def difference( self, a, b):
 		"""Calculate difference vector."""
 		if not (len( a ) == len ( b )):
-			print ''' Error: different vector length in sub'''
+			print(''' Error: different vector length in sub''')
 			sys.exit(  )
 		c=[ 0 for i in range( len( a ) ) ]
 		for i in range( len( a )):
@@ -53,7 +56,7 @@ class StereoCamera( object ):
 	def sum( self, a, b ):
 		"""Calculate sum vector."""
 		if not (len( a ) == len ( b )):
-			print ''' Error: different vector length in add'''
+			print(''' Error: different vector length in add''')
 			sys.exit(  )
 		c=[ 0 for i in range( len( a ) ) ]
 		for i in range( len( a ) ):
@@ -68,7 +71,7 @@ class StereoCamera( object ):
 	def crossProduct( self, a, b ):
 		"""Cross product of two 3D vectors."""
 		if len( a ) != 3 or len( b ) != 3:
-			print ''' Error: cross product needs 3D vectors as input'''
+			print(''' Error: cross product needs 3D vectors as input''')
 			sys.exit(  )
 		c=[ 0, 0, 0 ]
 		c[0] = a[1]*b[2]-a[2]*b[1]
@@ -115,9 +118,9 @@ if __name__ == '__main__' :
 	sC = StereoCamera( )
 	a=[1,0,0]
 	b=[0,0,1]
-	print sC.crossProduct( a, b )
+	print(sC.crossProduct( a, b ))
 	sC.update( )
-	print sC.lookAtLeft
-	print sC.frustumLeft
-	print sC.lookAtRight
-	print sC.frustumRight
+	print(sC.lookAtLeft)
+	print(sC.frustumLeft)
+	print(sC.lookAtRight)
+	print(sC.frustumRight)

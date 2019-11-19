@@ -10,6 +10,8 @@
 # Details are given in the file license.txt included in this distribution.
 #import OpenGL
 #OpenGL.FULL_LOGGING = True
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 from shaderProg import ShaderProgram
 try:
@@ -20,7 +22,7 @@ try:
 	from OpenGL.GL.ARB.fragment_shader import *
 	from OpenGL.GL.ARB.vertex_shader import *
 except:
-	print ''' Fehler: PyOpenGL nicht intalliert !!'''
+	print(''' Fehler: PyOpenGL nicht intalliert !!''')
 
 	sys.exit(  )
 
@@ -35,7 +37,7 @@ def animationStep( ):
 	time+=0.05
 	global sP
 	if sP and sP.enable():
-		glUseProgramObjectARB( 1L )
+		glUseProgramObjectARB( 1 )
 		glUniform1fARB( sP.indexOfUniformVariable("Time"), time )
 	sleep( 1 / float( frameRate ) )
 	glutPostRedisplay( )

@@ -5,6 +5,8 @@
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 
 try:
@@ -12,7 +14,7 @@ try:
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print ''' Error: PyOpenGL not installed properly !!'''
+  print(''' Error: PyOpenGL not installed properly !!''')
   sys.exit(  )
 
 class InteractionMatrix ( object ):
@@ -58,10 +60,10 @@ if __name__ == '__main__' :
 	glutInit( sys.argv )
 	glutCreateWindow( sys.argv[0] )
 	m=InteractionMatrix()
-	print m.getCurrentMatrix( )
+	print(m.getCurrentMatrix( ))
 	m.addTranslation(1,2,3)
-	print m.getCurrentMatrix( )
+	print(m.getCurrentMatrix( ))
 	m.addRotation(30,0,0,1)
-	print m.getCurrentMatrix( )
+	print(m.getCurrentMatrix( ))
 	m.addTranslation(1,2,3)
-	print m.getCurrentMatrix( )
+	print(m.getCurrentMatrix( ))

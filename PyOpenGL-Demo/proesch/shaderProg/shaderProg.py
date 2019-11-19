@@ -7,6 +7,8 @@
 # Details are given in the file license.txt included in this distribution.
 
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 try:
 	from OpenGL.GLUT import *
@@ -16,7 +18,7 @@ try:
 	from OpenGL.GL.ARB.fragment_shader import *
 	from OpenGL.GL.ARB.vertex_shader import *
 except:
-	print 'Error importing GL / shaders'
+	print('Error importing GL / shaders')
 	sys.exit()
 
 class ShaderProgram ( object ):
@@ -39,14 +41,14 @@ class ShaderProgram ( object ):
 		"""Check if all extensions in a list are present."""
 		for ext in extensions:
 			if ( not ext ):
-				print "Driver does not support ", ext
+				print("Driver does not support ", ext)
 				sys.exit()
 
 	def __checkOpenGLError( self ):
 		"""Print OpenGL error message."""
 		err = glGetError()
 		if ( err != GL_NO_ERROR ):
-			print 'GLERROR: ', gluErrorString( err )
+			print('GLERROR: ', gluErrorString( err ))
 			sys.exit()
 
 	def reset( self ):
@@ -75,7 +77,7 @@ class ShaderProgram ( object ):
 		success = glGetObjectParameterivARB( shaderHandle, 
 			GL_OBJECT_COMPILE_STATUS_ARB)
 		if (not success):
-			print glGetInfoLogARB( shaderHandle )
+			print(glGetInfoLogARB( shaderHandle ))
 			sys.exit( )
 		glAttachObjectARB( self.__shaderProgramID, shaderHandle )
 		self.__checkOpenGLError( )
@@ -88,7 +90,7 @@ class ShaderProgram ( object ):
 		success = glGetObjectParameterivARB( self.__shaderProgramID, 
 			GL_OBJECT_LINK_STATUS_ARB )
 		if (not success):
-			print glGetInfoLogARB(self.__shaderProgramID)
+			print(glGetInfoLogARB(self.__shaderProgramID))
 			sys.exit()
 		else:
 			self.__programReady = True
@@ -100,7 +102,7 @@ class ShaderProgram ( object ):
 			self.__isEnabled=True
 			self.__checkOpenGLError( )
 		else:
-			print "Shaders not compiled/linked properly, enable() failed"
+			print("Shaders not compiled/linked properly, enable() failed")
 
 	def disable( self ):
 		"""De-activate shader programs."""
@@ -111,13 +113,13 @@ class ShaderProgram ( object ):
 	def indexOfUniformVariable( self, variableName ):
 		"""Find the index of a uniform variable."""
 		if not self.__programReady:
-			print "\nShaders not compiled/linked properly"
+			print("\nShaders not compiled/linked properly")
 			result = -1
 		else:
 			result = glGetUniformLocationARB( self.__shaderProgramID, variableName)
 			self.__checkOpenGLError( )
 		if result < 0:
-			print 'Variable "%s" not known to the shader' % ( variableName )
+			print('Variable "%s" not known to the shader' % ( variableName ))
 			sys.exit( )
 		else:
 			return result
@@ -125,13 +127,13 @@ class ShaderProgram ( object ):
 	def indexOfVertexAttribute( self, attributeName ):
 		"""Find the index of an attribute variable."""
 		if not self.__programReady:
-			print "\nShaders not compiled/linked properly"
+			print("\nShaders not compiled/linked properly")
 			result = -1
 		else:
 			result = glGetAttribLocationARB( self.__shaderProgramID, attributeName )
 			self.__checkOpenGLError( )
 		if result < 0:
-			print 'Attribute "%s" not known to the shader' % ( attributeName )
+			print('Attribute "%s" not known to the shader' % ( attributeName ))
 			sys.exit( )
 		else:
 			return result
@@ -151,12 +153,12 @@ if __name__ == '__main__':
 	Sp.addShader( GL_VERTEX_SHADER_ARB, "temperature.vert" )
 	Sp.addShader( GL_FRAGMENT_SHADER_ARB, "temperature.frag" )
 	Sp.linkShaders( )
-	print "Index of variable CoolestTemp: ", \
-		Sp.indexOfUniformVariable( "CoolestTemp" )
+	print("Index of variable CoolestTemp: ", \
+		Sp.indexOfUniformVariable( "CoolestTemp" ))
 	Sp.enable( )
-	print "Index of attribute VertexTemp: ", \
-		Sp.indexOfVertexAttribute( "VertexTemp" )
+	print("Index of attribute VertexTemp: ", \
+		Sp.indexOfVertexAttribute( "VertexTemp" ))
 	glVertexAttrib1fNV(Sp.indexOfVertexAttribute( "VertexTemp" ), 12.3)
 	Sp.disable( )
 	Sp.reset( )
-	print 'OK'
+	print('OK')

@@ -4,6 +4,8 @@
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 from time import sleep
 try:
@@ -11,7 +13,7 @@ try:
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print ''' Error: PyOpenGL not installed properly !!'''
+  print(''' Error: PyOpenGL not installed properly !!''')
   sys.exit(  )
 
 animationAngle = 0.0

@@ -6,13 +6,15 @@
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
 
+from __future__ import absolute_import
+from __future__ import print_function
 from sys import argv, exit
 try:
   from OpenGL.GLUT import *
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print ''' Fehler: PyOpenGL not installed properly !!'''
+  print(''' Fehler: PyOpenGL not installed properly !!''')
   sys.exit(  )
 
 from stereoCamera import StereoCamera
@@ -43,7 +45,7 @@ def animationStep( ):
 
 def setLightColor( s ):
 	"""Set light color to 'white', 'red', 'green' or 'blue'."""
-	if lightColors.has_key( s ):
+	if s in lightColors:
 		c = lightColors[ s ]
 		glLightfv( GL_LIGHT0, GL_AMBIENT, c )
 		glLightfv( GL_LIGHT0, GL_DIFFUSE, c )
@@ -142,8 +144,8 @@ def reshape( width, height ):
 	sC.update( )
 
 if len( argv ) != 2:
-	print "Usage:"
-	print "python stereDemo.py SHUTTER | ANAGLYPH | NONE \n"
+	print("Usage:")
+	print("python stereDemo.py SHUTTER | ANAGLYPH | NONE \n")
 else:
 	glutInit( sys.argv )
 	stereoMode = sys.argv[1].upper( )

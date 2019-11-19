@@ -7,17 +7,20 @@
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 import array
-import Image
+from PIL import Image
 import random
+from six.moves import range
 
 try:
   from OpenGL.GLUT import *
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print ''' Error PyOpenGL not installed properly !!'''
+  print(''' Error PyOpenGL not installed properly !!''')
   sys.exit(  )
 
 
@@ -42,7 +45,7 @@ class FileTexture( Texture ):
 		im = Image.open( fileName )
 		self.xSize = im.size[0]
 		self.ySize = im.size[1]
-		self.rawReference = im.tostring("raw", "RGB", 0, -1)
+		self.rawReference = im.tobytes("raw", "RGB", 0, -1)
 
 def display(  ):
 	"""Glut display function."""
@@ -65,7 +68,7 @@ def init( fileName ):
 	try:
 		texture = FileTexture( fileName )
 	except:
-		print 'could not open ', fileName, '; using random texture'
+		print('could not open ', fileName, '; using random texture')
 		texture = RandomTexture( 256, 256 )
 	glClearColor ( 0, 0, 0, 0 )
 	glShadeModel( GL_SMOOTH )

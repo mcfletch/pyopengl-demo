@@ -5,13 +5,15 @@
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 try:
   from OpenGL.GLUT import *
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print ''' Error: PyOpenGL not installed properly '''
+  print(''' Error: PyOpenGL not installed properly ''')
   sys.exit(  )
 
 import array
@@ -56,7 +58,7 @@ def display(  ):
 
 def init(  ):
 	if not (glColorPointer and glVertexPointer and glDrawElements):
-		print ''' Error: no vertex array support'''
+		print(''' Error: no vertex array support''')
 		sys.exit( )
 	glClearColor ( 0, 0, 0, 0 )
 	glEnable(GL_DEPTH_TEST)

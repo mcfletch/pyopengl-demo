@@ -7,23 +7,26 @@
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import math
 import sys
 from time import sleep
+from six.moves import range
 
 try:
   from OpenGL.GLUT import *
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print ''' Error: PyOpenGL is not installed properly !!'''
+  print(''' Error: PyOpenGL is not installed properly !!''')
   sys.exit(  )
 
 try:
 	import psyco
 	psyco.full()
 except ImportError:
-	print 'no psyco availiable'
+	print('no psyco availiable')
 
 animationAngle = 0.0
 frameRate = 25

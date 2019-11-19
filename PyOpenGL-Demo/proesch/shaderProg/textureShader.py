@@ -6,11 +6,14 @@
 #import OpenGL
 #OpenGL.FULL_LOGGING = True
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 import array
-import Image
+from PIL import Image
 import random
 from shaderProg import *
+from six.moves import range
 
 try:
 	from OpenGL.GLUT import *
@@ -20,7 +23,7 @@ try:
 	from OpenGL.GL.ARB.fragment_shader import *
 	from OpenGL.GL.ARB.vertex_shader import *
 except:
-	print ''' Error PyOpenGL not installed properly !!'''
+	print(''' Error PyOpenGL not installed properly !!''')
 	sys.exit(  )
 
 
@@ -42,7 +45,7 @@ class FileTexture( Texture ):
 		im = Image.open( fileName )
 		self.xSize = im.size[0]
 		self.ySize = im.size[1]
-		self.rawReference = im.tostring("raw", "RGB", 0, -1)
+		self.rawReference = im.tobytes("raw", "RGB", 0, -1)
 
 frameRate = 30
 from time import sleep
@@ -117,7 +120,7 @@ def init( fileName ):
 	try:
 		texture = FileTexture( fileName )
 	except:
-		print 'could not open ', fileName, '; using random texture'
+		print('could not open ', fileName, '; using random texture')
 		texture = RandomTexture( 256, 256 )
 	glClearColor ( 0, 0, 0, 0 )
 	glShadeModel( GL_SMOOTH )

@@ -4,13 +4,16 @@
 # This code is licensed under the PyOpenGL License.
 # Details are given in the file license.txt included in this distribution.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
+from six.moves import range
 try:
   from OpenGL.GLUT import *
   from OpenGL.GL import *
   from OpenGL.GLU import *
 except:
-  print ''' Error PyOpenGL not installed properly!!'''
+  print(''' Error PyOpenGL not installed properly!!''')
   sys.exit(  )
 
 def setList( l, v ):
@@ -107,7 +110,7 @@ def handleMenu( selection ):
 	elif MENU_RED <= selection <= MENU_BLUE:
 		rP.drawColor = colors[ selection ]
 	else:
-		print 'Warning: illegel Menu entry'
+		print('Warning: illegel Menu entry')
 	glutPostRedisplay( )
 
 def initMenus( ):
