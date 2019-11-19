@@ -19,7 +19,7 @@ if __name__ == "__main__":
     setup(
         name = "PyOpenGL-Demo",
         packages = packages,
-        version = '3.0.2',
+        version = '3.1.0',
         description = 'Demonstration scripts for the PyOpenGL library',
         include_package_data = True,
         zip_safe = False,
