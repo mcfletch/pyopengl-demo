@@ -1,0 +1,6 @@
+*.pyc
+*.pyo
+build
+dist
+*.bak
+PyOpenGL-Demo/GLUT/tom/test.jpg
