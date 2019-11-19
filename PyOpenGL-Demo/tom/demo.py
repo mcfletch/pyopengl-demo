@@ -1,20 +1,18 @@
 #! /usr/bin/env python
-import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:38 $')[1:3], ' ')
-__author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
-
+from __future__ import absolute_import
+from __future__ import print_function
 from OpenGL.GL import *
 from OpenGL.Tk import *
+import logo
 
 def new_file(self):
-    print "opening new file"
+    print("opening new file")
 
 def open_file(self):
-    print "opening OLD file"
+    print("opening OLD file")
 
 def print_something(self):
-    print "picked a menu item"
+    print("picked a menu item")
 
 
 class Demo:
@@ -79,11 +77,10 @@ class Demo:
 		glClearColor(0, 0, 0.5, 0)
 		glClear(GL_COLOR_BUFFER_BIT)
 		if ogl.grob == -1:
-			from logo import define_logo
 			ogl.grob = glGenLists(1);
 			glNewList(ogl.grob, GL_COMPILE_AND_EXECUTE);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, [1, 0, 0, 0])
-			define_logo()
+			logo.define_logo()
 			glEndList()
 		else:
 			glCallList(ogl.grob)

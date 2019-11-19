@@ -1,17 +1,15 @@
 #! /usr/bin/env python
-import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:40 $')[1:3], ' ')
-__author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
-
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
+from six.moves import range
 try:
 	from numpy import *
-except ImportError, err:
+except ImportError as err:
 	try:
 		from Numeric import *
-	except ImportError, err:
-		print "This demo requires the numpy or Numeric extension, sorry"
+	except ImportError as err:
+		print("This demo requires the numpy or Numeric extension, sorry")
 		import sys
 		sys.exit()
 from OpenGL.GL import *
@@ -59,7 +57,7 @@ def redraw(o):
 #
 # Demo starts here really.
 if __name__ == "__main__":
-	import Tkinter, sys
+	import six.moves.tkinter, sys
 
 	# Create the opengl widget here.
 
@@ -79,4 +77,4 @@ if __name__ == "__main__":
 
 	# Enter the tk mainloop.
 
-	Tkinter.mainloop()
+	six.moves.tkinter.mainloop()

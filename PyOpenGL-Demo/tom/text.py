@@ -1,9 +1,5 @@
 #! /usr/bin/env python
-import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:40 $')[1:3], ' ')
-__author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
-
+from __future__ import absolute_import
 from OpenGL.GL import *
 from OpenGL.Tk import *
 
@@ -33,7 +29,7 @@ def redraw(o):
 #
 # Demo starts here really.
 if __name__ == "__main__":
-	import Tkinter, sys
+	import six.moves.tkinter, sys
 
 	o = Opengl(None, width = 400, height = 200, double = 1, depth = 1)
 	o.pack(expand = 1, fill = 'both')
@@ -48,5 +44,5 @@ if __name__ == "__main__":
 
 	# Enter the tk mainloop.
 
-	Tkinter.mainloop()
+	six.moves.tkinter.mainloop()
 

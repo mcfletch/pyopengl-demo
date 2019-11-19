@@ -1,15 +1,11 @@
 # This is statement is required by the build system to query build info
+from __future__ import absolute_import
 if __name__ == '__build__':
 	raise Exception
 from OpenGL.GL import *
 
 
 # Object contains 2640 points
-
-import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:40 $')[1:3], ' ')
-__author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
 
 def define_logo():
 	n = glNormal3f

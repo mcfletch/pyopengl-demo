@@ -1,13 +1,10 @@
 #! /usr/bin/env python
-import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:38 $')[1:3], ' ')
-__author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
-
+from __future__ import absolute_import
+from __future__ import print_function
 from OpenGL.GL import *
 from OpenGL.Tk import *
 from OpenGL.GLUT import *
-from Tkinter import *
+from six.moves.tkinter import *
 import sys
 
 class MyApp(Frame):
@@ -36,18 +33,21 @@ class MyApp(Frame):
 		glPopMatrix()
 
 	def save( self, filename='test.jpg', format="JPEG" ):
-		import Image # get PIL's functionality...
+		from PIL import Image # get PIL's functionality...
 		width, height = 400,400
 		glPixelStorei(GL_PACK_ALIGNMENT, 1)
 		data = glReadPixelsub(0, 0, width, height, GL_RGB)
-		assert data.shape == (width,height,3), """Got back array of shape %r, expected %r"""%(
-			data.shape,
-			(width,height,3),
-		)
-		image = Image.fromstring( "RGB", (width, height), data.tostring() )
+		if hasattr(data,'shape'):
+			assert data.shape == (width,height,3), """Got back array of shape %r, expected %r"""%(
+				data.shape,
+				(width,height,3),
+			)
+			image = Image.frombytes( "RGB", (width, height), data.tostring() )
+		else:
+			image = Image.frombytes("RGB",(width,height), data)
 		image = image.transpose( Image.FLIP_TOP_BOTTOM)
 		image.save( filename, format )
-		print 'Saved image to %s'% (os.path.abspath( filename))
+		print('Saved image to %s'% (os.path.abspath( filename)))
 		return image
 
 	def __init__(self):

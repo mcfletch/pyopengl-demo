@@ -1,12 +1,9 @@
 #! /usr/bin/env python
-import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:40 $')[1:3], ' ')
-__author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
-
+from __future__ import absolute_import
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.Tk import *
+from six.moves import range
 
 def redraw(o):
 	"""The main scene redraw function."""
@@ -49,7 +46,7 @@ def pick(o, p1, p2, event=None):
 #
 # Demo starts here really.
 def main():
-	import Tkinter, sys
+	import six.moves.tkinter, sys
 
 	o = Opengl(None, width = 200, height = 200, double = 1, depth = 1)
 	glutInit( [] )
@@ -98,11 +95,11 @@ def main():
 	o.picked_sphere = -1
 	o.autospin_allowed = 1
 
-	l = Tkinter.Label(None, text = 'Press Shift-Button-1 over an\natom to highlight')
+	l = six.moves.tkinter.Label(None, text = 'Press Shift-Button-1 over an\natom to highlight')
 	l.pack(side = 'top', expand = 1, fill = 'both')
 
 	# Enter the tk mainloop.
-	Tkinter.mainloop()
+	six.moves.tkinter.mainloop()
 
 
 if __name__ == "__main__":

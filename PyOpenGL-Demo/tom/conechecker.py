@@ -1,13 +1,10 @@
 #! /usr/bin/env python
-import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:38 $')[1:3], ' ')
-__author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
-
+from __future__ import absolute_import
 from OpenGL.GL import *
 from OpenGL.Tk import *
 from OpenGL.GLUT import *
 import sys
+from six.moves import range
 
 def redraw_checker(o):
 	glClearColor(1, 0, 1, 0)

@@ -1,9 +1,5 @@
 #! /usr/bin/env python
-import string
-__version__ = string.split('$Revision: 1.1.1.1 $')[1]
-__date__ = string.join(string.split('$Date: 2007/02/15 19:25:38 $')[1:3], ' ')
-__author__ = 'Tarn Weisner Burton <twburton@users.sourceforge.net>'
-
+from __future__ import absolute_import
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.Tk import *
@@ -14,12 +10,12 @@ class Fog:
 		self.o.redraw = self.redraw
 		self.o.pack(side = 'top', expand = 1, fill = 'both')
 		self.mode = IntVar(self.o)
-		self.mode.set(GL_EXP)
+		self.mode.set(int(GL_EXP))
 		r1 = Radiobutton(text='GL_LINEAR', anchor=W, variable=self.mode,
-						value=GL_LINEAR, command=self.selectFog)
+						value=int(GL_LINEAR), command=self.selectFog)
 		r1.pack(side = 'top', expand = 1, fill = 'both')
 		r2 = Radiobutton(text='GL_EXP', anchor=W, variable=self.mode,
-						value=GL_EXP, command=self.selectFog)
+						value=int(GL_EXP), command=self.selectFog)
 		r2.pack(side = 'top', expand = 1, fill = 'both')
 
 	def run(self):
