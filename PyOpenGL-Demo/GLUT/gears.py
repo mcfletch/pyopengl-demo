@@ -6,21 +6,25 @@
 # Peter Barth
 import OpenGL
 import logging
-logging.basicConfig( level=logging.INFO )
-OpenGL.USE_ACCELERATE = False
+
+logging.basicConfig(level=logging.INFO)
+# You can set USE_ACCELERATE to False on the command line if you want to do this
+# OpenGL.USE_ACCELERATE = False
 OpenGL.ERROR_ON_COPY = True
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 import sys, time
-from math import sin,cos,sqrt,pi
+from math import sin, cos, sqrt, pi
 from OpenGL.constants import GLfloat
+
 vec4 = GLfloat_4
+
 
 def gear(inner_radius, outer_radius, width, teeth, tooth_depth):
     r0 = inner_radius
-    r1 = outer_radius - tooth_depth/2.0
-    r2 = outer_radius + tooth_depth/2.0
-    da = 2.0*pi / teeth / 4.0
+    r1 = outer_radius - tooth_depth / 2.0
+    r2 = outer_radius + tooth_depth / 2.0
+    da = 2.0 * pi / teeth / 4.0
 
     glShadeModel(GL_FLAT)
     glNormal3f(0.0, 0.0, 1.0)
@@ -29,21 +33,21 @@ def gear(inner_radius, outer_radius, width, teeth, tooth_depth):
     glBegin(GL_QUAD_STRIP)
     for i in range(teeth + 1):
         angle = i * 2.0 * pi / teeth
-        glVertex3f(r0*cos(angle), r0*sin(angle), width*0.5)
-        glVertex3f(r1*cos(angle), r1*sin(angle), width*0.5)
-        glVertex3f(r0*cos(angle), r0*sin(angle), width*0.5)
-        glVertex3f(r1*cos(angle+3*da), r1*sin(angle+3*da), width*0.5)
+        glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5)
+        glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5)
+        glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5)
+        glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
     glEnd()
 
     # draw front sides of teeth
     glBegin(GL_QUADS)
-    da = 2.0*pi / teeth / 4.0
+    da = 2.0 * pi / teeth / 4.0
     for i in range(teeth):
-        angle = i * 2.0*pi / teeth
-        glVertex3f(r1*cos(angle),      r1*sin(angle),      width*0.5)
-        glVertex3f(r2*cos(angle+da),   r2*sin(angle+da),   width*0.5)
-        glVertex3f(r2*cos(angle+2*da), r2*sin(angle+2*da), width*0.5)
-        glVertex3f(r1*cos(angle+3*da), r1*sin(angle+3*da), width*0.5)
+        angle = i * 2.0 * pi / teeth
+        glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5)
+        glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5)
+        glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5)
+        glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
     glEnd()
 
     glNormal3f(0.0, 0.0, -1.0)
@@ -51,50 +55,50 @@ def gear(inner_radius, outer_radius, width, teeth, tooth_depth):
     # draw back face
     glBegin(GL_QUAD_STRIP)
     for i in range(teeth + 1):
-        angle = i * 2.0*pi / teeth
-        glVertex3f(r1*cos(angle), r1*sin(angle), -width*0.5)
-        glVertex3f(r0*cos(angle), r0*sin(angle), -width*0.5)
-        glVertex3f(r1*cos(angle+3*da), r1*sin(angle+3*da),-width*0.5)
-        glVertex3f(r0*cos(angle), r0*sin(angle), -width*0.5)
+        angle = i * 2.0 * pi / teeth
+        glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5)
+        glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5)
+        glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
+        glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5)
     glEnd()
 
     # draw back sides of teeth
     glBegin(GL_QUADS)
-    da = 2.0*pi / teeth / 4.0
+    da = 2.0 * pi / teeth / 4.0
     for i in range(teeth):
-        angle = i * 2.0*pi / teeth
-        glVertex3f(r1*cos(angle+3*da), r1*sin(angle+3*da),-width*0.5)
-        glVertex3f(r2*cos(angle+2*da), r2*sin(angle+2*da),-width*0.5)
-        glVertex3f(r2*cos(angle+da),   r2*sin(angle+da),  -width*0.5)
-        glVertex3f(r1*cos(angle),      r1*sin(angle),     -width*0.5)
+        angle = i * 2.0 * pi / teeth
+        glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
+        glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5)
+        glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5)
+        glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5)
     glEnd()
 
     # draw outward faces of teeth
-    glBegin(GL_QUAD_STRIP);
+    glBegin(GL_QUAD_STRIP)
     for i in range(teeth):
-        angle = i * 2.0*pi / teeth
-        glVertex3f(r1*cos(angle), r1*sin(angle),  width*0.5)
-        glVertex3f(r1*cos(angle), r1*sin(angle), -width*0.5)
-        u = r2*cos(angle+da) - r1*cos(angle)
-        v = r2*sin(angle+da) - r1*sin(angle)
-        len = sqrt(u*u + v*v)
+        angle = i * 2.0 * pi / teeth
+        glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5)
+        glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5)
+        u = r2 * cos(angle + da) - r1 * cos(angle)
+        v = r2 * sin(angle + da) - r1 * sin(angle)
+        len = sqrt(u * u + v * v)
         u = u / len
         v = v / len
         glNormal3f(v, -u, 0.0)
-        glVertex3f(r2*cos(angle+da),   r2*sin(angle+da),   width*0.5)
-        glVertex3f(r2*cos(angle+da),   r2*sin(angle+da),  -width*0.5)
+        glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5)
+        glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5)
         glNormal3f(cos(angle), sin(angle), 0.0)
-        glVertex3f(r2*cos(angle+2*da), r2*sin(angle+2*da), width*0.5)
-        glVertex3f(r2*cos(angle+2*da), r2*sin(angle+2*da),-width*0.5)
-        u = r1*cos(angle+3*da) - r2*cos(angle+2*da)
-        v = r1*sin(angle+3*da) - r2*sin(angle+2*da)
+        glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5)
+        glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5)
+        u = r1 * cos(angle + 3 * da) - r2 * cos(angle + 2 * da)
+        v = r1 * sin(angle + 3 * da) - r2 * sin(angle + 2 * da)
         glNormal3f(v, -u, 0.0)
-        glVertex3f(r1*cos(angle+3*da), r1*sin(angle+3*da), width*0.5)
-        glVertex3f(r1*cos(angle+3*da), r1*sin(angle+3*da),-width*0.5)
+        glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
+        glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
         glNormal3f(cos(angle), sin(angle), 0.0)
 
-    glVertex3f(r1*cos(0), r1*sin(0), width*0.5)
-    glVertex3f(r1*cos(0), r1*sin(0), -width*0.5)
+    glVertex3f(r1 * cos(0), r1 * sin(0), width * 0.5)
+    glVertex3f(r1 * cos(0), r1 * sin(0), -width * 0.5)
 
     glEnd()
 
@@ -103,15 +107,15 @@ def gear(inner_radius, outer_radius, width, teeth, tooth_depth):
     # draw inside radius cylinder
     glBegin(GL_QUAD_STRIP)
     for i in range(teeth + 1):
-        angle = i * 2.0*pi / teeth;
+        angle = i * 2.0 * pi / teeth
         glNormal3f(-cos(angle), -sin(angle), 0.0)
-        glVertex3f(r0*cos(angle), r0*sin(angle), -width*0.5)
-        glVertex3f(r0*cos(angle), r0*sin(angle), width*0.5)
+        glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5)
+        glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5)
     glEnd()
 
 
-(view_rotx,view_roty,view_rotz)=(20.0, 30.0, 0.0)
-(gear1, gear2, gear3) = (0,0,0)
+(view_rotx, view_roty, view_rotz) = (20.0, 30.0, 0.0)
+(gear1, gear2, gear3) = (0, 0, 0)
 angle = 0.0
 
 
@@ -119,21 +123,22 @@ tStart = t0 = time.time()
 frames = 0
 rotationRate = 1.01
 
+
 def framerate():
     global t0, frames
     t = time.time()
     frames += 1
     if t - t0 >= 5.0:
         seconds = t - t0
-        fps = frames/seconds
-        print("%.0f frames in %3.1f seconds = %6.3f FPS" % (frames,seconds,fps))
+        fps = frames / seconds
+        print("%.0f frames in %3.1f seconds = %6.3f FPS" % (frames, seconds, fps))
         t0 = t
         frames = 0
 
 
 def draw():
     rotationRate = (time.time() - tStart) * 1.05
-    angle = (2 * pi) * ((time.time() - tStart)*rotationRate)# * rotationRate
+    angle = (2 * pi) * ((time.time() - tStart) * rotationRate)  # * rotationRate
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     glPushMatrix()
@@ -149,13 +154,13 @@ def draw():
 
     glPushMatrix()
     glTranslatef(3.1, -2.0, 0.0)
-    glRotatef(-2.0*angle-9.0, 0.0, 0.0, 1.0)
+    glRotatef(-2.0 * angle - 9.0, 0.0, 0.0, 1.0)
     glCallList(gear2)
     glPopMatrix()
 
     glPushMatrix()
     glTranslatef(-3.1, 4.2, 0.0)
-    glRotatef(-2.0*angle-25.0, 0.0, 0.0, 1.0)
+    glRotatef(-2.0 * angle - 25.0, 0.0, 0.0, 1.0)
     glCallList(gear3)
     glPopMatrix()
 
@@ -165,6 +170,7 @@ def draw():
 
     framerate()
 
+
 def idle():
     global angle
     angle += 2.0
@@ -172,8 +178,10 @@ def idle():
 
 
 # change view angle, exit upon ESC
-LC_Z = as_8_bit( 'z' )
-UC_Z = as_8_bit( 'Z' )
+LC_Z = as_8_bit("z")
+UC_Z = as_8_bit("Z")
+
+
 def key(k, x, y):
     global view_rotz
 
@@ -181,7 +189,7 @@ def key(k, x, y):
         view_rotz += 5.0
     elif k == UC_Z:
         view_rotz -= 5.0
-    elif ord(k) == 27: # Escape
+    elif ord(k) == 27:  # Escape
         sys.exit(0)
     else:
         return
@@ -207,7 +215,7 @@ def special(k, x, y):
 
 # new window size or exposure
 def reshape(width, height):
-    h = float(height) / float(width);
+    h = float(height) / float(width)
     glViewport(0, 0, width, height)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
@@ -216,9 +224,9 @@ def reshape(width, height):
     glLoadIdentity()
     glTranslatef(0.0, 0.0, -40.0)
 
+
 def init():
     global gear1, gear2, gear3
-
 
     pos = vec4(5.0, 5.0, 10.0, 0.0)
     red = vec4(0.8, 0.1, 0.0, 1.0)
@@ -252,6 +260,7 @@ def init():
 
     glEnable(GL_NORMALIZE)
 
+
 def visible(vis):
     if vis == GLUT_VISIBLE:
         glutIdleFunc(idle)
@@ -259,7 +268,7 @@ def visible(vis):
         glutIdleFunc(None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     glutInit(sys.argv)
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH)
 
@@ -281,4 +290,3 @@ if __name__ == '__main__':
         print("GL_EXTENSIONS = ", glGetString(GL_EXTENSIONS))
 
     glutMainLoop()
-
