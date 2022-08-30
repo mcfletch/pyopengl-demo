@@ -39,14 +39,14 @@ class glFont:
 			self.m_FontTexture = tex;								# // Set the font texture
 		else:
 			# Client should not pass an invalid texture.
-			raise RuntimeError, "SetFontTexture passed invalid texture (ID == 0)"
+			raise RuntimeError("SetFontTexture passed invalid texture (ID == 0)")
 		return
 
 	def BuildFont (self, Scale):
 		self.m_ListBase=glGenLists(256);							# // Creating 256 Display Lists
 		if (self.m_FontTexture != 0):
 			glBindTexture(GL_TEXTURE_2D, self.m_FontTexture);		# // Select Our Font Texture
-			for loop in xrange (256):							 	# // Loop Through All 256 Lists
+			for loop in range (256):							 	# // Loop Through All 256 Lists
 				cx=float(loop%16)/16.0;								# // X Position Of Current Character
 				cy=float(loop/16)/16.0;								# // Y Position Of Current Character
 

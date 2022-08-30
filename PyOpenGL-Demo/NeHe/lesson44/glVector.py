@@ -16,7 +16,7 @@ class glVector:
 			# // Assign this vector to the vector passed in.
 			src_v = args [0]
 			if (not isinstance (src_v, glVector)):
-				raise TypeError, "Invalid ctor argument for glVector"
+				raise TypeError("Invalid ctor argument for glVector")
 			self.i = src_v.i
 			self.j = src_v.j
 			self.k = src_v.k
@@ -27,7 +27,7 @@ class glVector:
 			self.k = 0
 			return
 		else:
-			raise TypeError, "Invalid ctor argument for glVector"
+			raise TypeError("Invalid ctor argument for glVector")
 
 	# def __setattr__ (self, name, value)
 	#	""" We want to """
@@ -62,7 +62,7 @@ class glVector:
 			self.j *= scalar
 			self.k *= scalar
 		else:
-			raise TypeError, "Invalid type (%s) for multiplication argument" % (str (type (other)))
+			raise TypeError("Invalid type (%s) for multiplication argument" % (str (type (other))))
 
 		return self
 
@@ -91,11 +91,11 @@ class glVector:
 
 # Unit Test harness if this python module is run directly.
 if __name__ == "__main__":
-	print "testing slow glpoint/vect.\n"
+	print("testing slow glpoint/vect.\n")
 	v = glVector ()
 	v.i = 1.1
 	v.Magnitude ()
-	print v
-	print "mult new"
-	print (v * 2)
-	print "Done"
+	print(v)
+	print("mult new")
+	print((v * 2))
+	print("Done")

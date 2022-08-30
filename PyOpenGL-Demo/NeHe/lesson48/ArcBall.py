@@ -27,13 +27,13 @@ try:
 	import numpy as Numeric
 	def sumDot( a,b ):
 		return Numeric.dot (a, b)
-except ImportError, err:
+except ImportError as err:
 	try: 
 		import Numeric
 		def sumDot( a,b ):
 			return sum (Numeric.dot (a, b) )
-	except ImportError, err:
-		print "This demo requires the numpy or Numeric extension, sorry"
+	except ImportError as err:
+		print("This demo requires the numpy or Numeric extension, sorry")
 		import sys
 		sys.exit()
 import copy
@@ -74,7 +74,7 @@ class ArcBallT:
 		NewVec = Vector3fT ()
 		# //Copy paramter into temp point
 		TempPt = copy.copy (NewPt)
-		print 'NewPt', NewPt, TempPt
+		print('NewPt', NewPt, TempPt)
 		# //Adjust point coords and scale down to range of [-1 ... 1]
 		TempPt [X] = (NewPt [X] * self.m_AdjustWidth) - 1.0
 		TempPt [Y] = 1.0 - (NewPt [Y] * self.m_AdjustHeight)
@@ -250,7 +250,7 @@ def Matrix3fSetRotationFromQuat4f (q1):
 def unit_test_ArcBall_module ():
 	# Unit testing of the ArcBall calss and the real math behind it.
 	# Simulates a click and drag followed by another click and drag.
-	print "unit testing ArcBall"
+	print("unit testing ArcBall")
 	Transform = Matrix4fT ()
 	LastRot = Matrix3fT ()
 	ThisRot = Matrix3fT ()
@@ -271,21 +271,21 @@ def unit_test_ArcBall_module ():
 	# print ArcBall
 	# print
 	# print
-	print "Quat for first drag"
-	print ThisQuat
+	print("Quat for first drag")
+	print(ThisQuat)
 	ThisRot = Matrix3fSetRotationFromQuat4f (ThisQuat)
 	# Linear Algebra matrix multiplication A = old, B = New : C = A * B
 	ThisRot = Matrix3fMulMatrix3f (LastRot, ThisRot)
 	Transform = Matrix4fSetRotationFromMatrix3f (Transform, ThisRot)
-	print "First transform"
-	print Transform
+	print("First transform")
+	print(Transform)
 	# Done with first drag
 
 
 	# second click
 	LastRot = copy.copy (ThisRot)
-	print "LastRot at end of first drag"
-	print LastRot
+	print("LastRot at end of first drag")
+	print(LastRot)
 	mouse_pt = Point2fT (350,260)
 	ArcBall.click (mouse_pt)
 	# second drag
@@ -293,14 +293,14 @@ def unit_test_ArcBall_module ():
 	ThisQuat = ArcBall.drag (mouse_pt)
 	# print "The ArcBall"
 	# print ArcBall
-	print "Quat for second drag"
-	print ThisQuat
+	print("Quat for second drag")
+	print(ThisQuat)
 	ThisRot = Matrix3fSetRotationFromQuat4f (ThisQuat)
 	ThisRot = Matrix3fMulMatrix3f (LastRot, ThisRot)
 	# print ThisRot
 	Transform = Matrix4fSetRotationFromMatrix3f (Transform, ThisRot)
-	print "Second transform"
-	print Transform
+	print("Second transform")
+	print(Transform)
 	# Done with second drag
 	LastRot = copy.copy (ThisRot)
 

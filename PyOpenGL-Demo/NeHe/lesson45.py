@@ -44,14 +44,17 @@
 from __future__ import absolute_import
 from __future__ import print_function
 import OpenGL
-#OpenGL.FULL_LOGGING = True
-#OpenGL.ERROR_ON_COPY = True
+
+# OpenGL.FULL_LOGGING = True
+# OpenGL.ERROR_ON_COPY = True
 import logging
 from six.moves import range
+
 logging.basicConfig()
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
+
 try:
     import numpy as Numeric
 except ImportError as err:
@@ -60,22 +63,27 @@ except ImportError as err:
     except ImportError as err:
         print("This demo requires the numpy or Numeric extension, sorry")
         import sys
+
         sys.exit()
 import traceback
 
-from PIL import Image 				# PIL
+from PIL import Image  # PIL
 import sys
+
 # import win32api				# GetTickCount
 import time
 
+perf = time.clock if hasattr(time, "clock") else time.perf_counter
+
 # Note Yet Supported
 from OpenGL.GL.ARB.vertex_buffer_object import *
+
 # http://oss.sgi.com/projects/ogl-sample/registry/ARB/vertex_buffer_object.txt
 
 
 # Some api in the chain is translating the keystrokes to this octal string
 # so instead of saying: ESCAPE = 27, we use the following.
-ESCAPE = b'\x1b'
+ESCAPE = b"\x1b"
 
 # Number of the glut window.
 window = 0
@@ -83,183 +91,226 @@ window = 0
 # PyOpenGL doesn't yet have the ARB for vertex_buffer_objects
 NO_VBOS = True
 
-g_fVBOSupported = False;							# // ARB_vertex_buffer_object supported?
-g_pMesh = None;										# // Mesh Data
-g_flYRot = 0.0;										# // Rotation
+g_fVBOSupported = False
+# // ARB_vertex_buffer_object supported?
+g_pMesh = None
+# // Mesh Data
+g_flYRot = 0.0
+# // Rotation
 g_nFPS = 0
-g_nFrames = 0;										# // FPS and FPS Counter
-g_dwLastFPS = 0;									# // Last FPS Check Time
-
-
+g_nFrames = 0
+# // FPS and FPS Counter
+g_dwLastFPS = 0
+# // Last FPS Check Time
 
 
 class CVert:
-    """ // Vertex Class """
-    def __init__ (self, x = 0.0, y = 0.0, z = 0.0):
-        self.x = 0											# // X Component
-        self.y = 0											# // Y Component
-        self.z = 0											# // Z Component
+    """// Vertex Class"""
+
+    def __init__(self, x=0.0, y=0.0, z=0.0):
+        self.x = 0  # // X Component
+        self.y = 0  # // Y Component
+        self.z = 0  # // Z Component
+
 
 # // The Definitions Are Synonymous
 CVec = CVert
 
+
 class CTexCoord:
-    """ // Texture Coordinate Class """
-    def __init__ (self, u = 0.0, v = 0.0):
-        self.u = u;											# // U Component
-        self.v = v;											# // V Component
+    """// Texture Coordinate Class"""
+
+    def __init__(self, u=0.0, v=0.0):
+        self.u = u
+        # // U Component
+        self.v = v
+        # // V Component
+
 
 class CMesh:
-    """ // Mesh Data """
+    """// Mesh Data"""
+
     MESH_RESOLUTION = 4.0
     MESH_HEIGHTSCALE = 1.0
 
-    def __init__ (self):
-        self.m_nVertexCount = 0;								# // Vertex Count
+    def __init__(self):
+        self.m_nVertexCount = 0
+        # // Vertex Count
 
-        self.m_pVertices = None # Numeric.array ( (), 'f') 		# // Vertex Data array
-        self.m_pVertices_as_string = None						# raw memory string for VertexPointer ()
+        self.m_pVertices = None  # Numeric.array ( (), 'f') 		# // Vertex Data array
+        self.m_pVertices_as_string = None  # raw memory string for VertexPointer ()
 
-        self.m_pTexCoords = None # Numeric.array ( (), 'f') 	# // Texture Coordinates array
-        self.m_pTexCoords_as_string = None						# raw memory string for TexPointer ()
+        self.m_pTexCoords = (
+            None  # Numeric.array ( (), 'f') 	# // Texture Coordinates array
+        )
+        self.m_pTexCoords_as_string = None  # raw memory string for TexPointer ()
 
-        self.m_nTextureId = None;								# // Texture ID
+        self.m_nTextureId = None
+        # // Texture ID
 
         # // Vertex Buffer Object Names
-        self.m_nVBOVertices = None;								# // Vertex VBO Name
-        self.m_nVBOTexCoords = None;							# // Texture Coordinate VBO Name
+        self.m_nVBOVertices = None
+        # // Vertex VBO Name
+        self.m_nVBOTexCoords = None
+        # // Texture Coordinate VBO Name
 
         # // Temporary Data
-        self.m_pTextureImage = None;							# // Heightmap Data
+        self.m_pTextureImage = None
+        # // Heightmap Data
 
-
-    def LoadHeightmap( self, szPath, flHeightScale, flResolution ):
-        """ // Heightmap Loader """
+    def LoadHeightmap(self, szPath, flHeightScale, flResolution):
+        """// Heightmap Loader"""
 
         # // Error-Checking
         # // Load Texture Data
         try:
-            self.m_pTextureImage = Image.open (szPath)						 	# // Open The Image
+            self.m_pTextureImage = Image.open(szPath)  # // Open The Image
         except:
             traceback.print_exc()
             return False
 
         # // Generate Vertex Field
-        sizeX = self.m_pTextureImage.size [0]
-        sizeY = self.m_pTextureImage.size [1]
-        self.m_nVertexCount = int ( sizeX * sizeY * 6 / ( flResolution * flResolution ) );
+        sizeX = self.m_pTextureImage.size[0]
+        sizeY = self.m_pTextureImage.size[1]
+        self.m_nVertexCount = int(sizeX * sizeY * 6 / (flResolution * flResolution))
         # self.m_pVertices = Numeric.zeros ((self.m_nVertexCount * 3), 'f') 			# // Vertex Data
         # Non strings approach
-        self.m_pVertices = Numeric.zeros ((self.m_nVertexCount, 3), 'f') 			# // Vertex Data
-        self.m_pTexCoords = Numeric.zeros ((self.m_nVertexCount, 2), 'f') 			# // Texture Coordinates
+        self.m_pVertices = Numeric.zeros(
+            (self.m_nVertexCount, 3), "f"
+        )  # // Vertex Data
+        self.m_pTexCoords = Numeric.zeros(
+            (self.m_nVertexCount, 2), "f"
+        )  # // Texture Coordinates
 
         nZ = 0
         nIndex = 0
         nTIndex = 0
-        half_sizeX = float (sizeX) / 2.0
-        half_sizeY = float (sizeY) / 2.0
-        flResolution_int = int (flResolution)
-        while (nZ < sizeY):
+        half_sizeX = float(sizeX) / 2.0
+        half_sizeY = float(sizeY) / 2.0
+        flResolution_int = int(flResolution)
+        while nZ < sizeY:
             nX = 0
-            while (nX < sizeY):
-                for nTri in range (6):
+            while nX < sizeY:
+                for nTri in range(6):
                     # // Using This Quick Hack, Figure The X,Z Position Of The Point
-                    flX = float (nX)
+                    flX = float(nX)
                     if (nTri == 1) or (nTri == 2) or (nTri == 5):
                         flX += flResolution
-                    flZ = float (nZ)
+                    flZ = float(nZ)
                     if (nTri == 2) or (nTri == 4) or (nTri == 5):
                         flZ += flResolution
                     x = flX - half_sizeX
-                    y = self.PtHeight (int (flX), int (flZ)) * flHeightScale
+                    y = self.PtHeight(int(flX), int(flZ)) * flHeightScale
                     z = flZ - half_sizeY
-                    self.m_pVertices [nIndex, 0] = x
-                    self.m_pVertices [nIndex, 1] = y
-                    self.m_pVertices [nIndex, 2] = z
-                    self.m_pTexCoords [nTIndex, 0] = flX / sizeX
-                    self.m_pTexCoords [nTIndex, 1] =  flZ / sizeY
+                    self.m_pVertices[nIndex, 0] = x
+                    self.m_pVertices[nIndex, 1] = y
+                    self.m_pVertices[nIndex, 2] = z
+                    self.m_pTexCoords[nTIndex, 0] = flX / sizeX
+                    self.m_pTexCoords[nTIndex, 1] = flZ / sizeY
                     nIndex += 1
                     nTIndex += 1
 
                 nX += flResolution_int
             nZ += flResolution_int
 
-        self.m_pVertices_as_string = self.m_pVertices.tostring ()
-        self.m_pTexCoords_as_string = self.m_pTexCoords.tostring ()
+        self.m_pVertices_as_string = (
+            self.m_pVertices.tobytes()
+            if hasattr(self.m_pVertices, "tobytes")
+            else self.m_pVertices.tostring()
+        )
+        self.m_pTexCoords_as_string = (
+            self.m_pTexCoords.tobytes()
+            if hasattr(self.m_pTexCoords, "tobytes")
+            else self.m_pTexCoords.tostring()
+        )
 
         # // Load The Texture Into OpenGL
-        self.m_nTextureID = glGenTextures (1)						# // Get An Open ID
-        glBindTexture( GL_TEXTURE_2D, self.m_nTextureID );			# // Bind The Texture
-        glTexImage2D( GL_TEXTURE_2D, 0, 3, sizeX, sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE,
-            self.m_pTextureImage.tobytes ("raw", "RGB", 0, -1))
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+        self.m_nTextureID = glGenTextures(1)  # // Get An Open ID
+        glBindTexture(GL_TEXTURE_2D, self.m_nTextureID)
+        # // Bind The Texture
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            0,
+            3,
+            sizeX,
+            sizeY,
+            0,
+            GL_RGB,
+            GL_UNSIGNED_BYTE,
+            self.m_pTextureImage.tobytes("raw", "RGB", 0, -1),
+        )
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
         # // Free The Texture Data
         self.m_pTextureImage = None
-        return True;
+        return True
 
-    def PtHeight (self, nX, nY):
-        """ // Calculate The Position In The Texture, Careful Not To Overflow """
-        sizeX = self.m_pTextureImage.size [0]
-        sizeY = self.m_pTextureImage.size [1]
-        if (nX >= sizeX or nY >= sizeY):
+    def PtHeight(self, nX, nY):
+        """// Calculate The Position In The Texture, Careful Not To Overflow"""
+        sizeX = self.m_pTextureImage.size[0]
+        sizeY = self.m_pTextureImage.size[1]
+        if nX >= sizeX or nY >= sizeY:
             return 0
 
         # Get The Red, Green, and Blue Components
         # NOTE, Python Image library starts 0 at the top of the image - so to match the windows
         # code we reverse the Y order
-        pixel = self.m_pTextureImage.getpixel ((nX, sizeY - nY - 1))
-        flR = float (pixel [0])
-        flG = float (pixel [1])
-        flB = float (pixel [2])
-        pixel = self.m_pTextureImage.getpixel ((nY, nX))
+        pixel = self.m_pTextureImage.getpixel((nX, sizeY - nY - 1))
+        flR = float(pixel[0])
+        flG = float(pixel[1])
+        flB = float(pixel[2])
+        pixel = self.m_pTextureImage.getpixel((nY, nX))
 
         # // Calculate The Height Using The Luminance Algorithm
-        return ( (0.299 * flR) + (0.587 * flG) + (0.114 * flB) );
+        return (0.299 * flR) + (0.587 * flG) + (0.114 * flB)
 
-
-    def BuildVBOs (self):
-        """ // Generate And Bind The Vertex Buffer """
-        if (g_fVBOSupported):
-            self.m_nVBOVertices = int(glGenBuffersARB( 1));						# // Get A Valid Name
-            glBindBufferARB( GL_ARRAY_BUFFER_ARB, self.m_nVBOVertices );	# // Bind The Buffer
+    def BuildVBOs(self):
+        """// Generate And Bind The Vertex Buffer"""
+        if g_fVBOSupported:
+            self.m_nVBOVertices = int(glGenBuffersARB(1))
+            # // Get A Valid Name
+            glBindBufferARB(GL_ARRAY_BUFFER_ARB, self.m_nVBOVertices)
+            # // Bind The Buffer
             # // Load The Data
-            glBufferDataARB( GL_ARRAY_BUFFER_ARB, self.m_pVertices, GL_STATIC_DRAW_ARB );
+            glBufferDataARB(GL_ARRAY_BUFFER_ARB, self.m_pVertices, GL_STATIC_DRAW_ARB)
 
             # // Generate And Bind The Texture Coordinate Buffer
-            self.m_nVBOTexCoords = int(glGenBuffersARB( 1));						# // Get A Valid Name
-            glBindBufferARB( GL_ARRAY_BUFFER_ARB, self.m_nVBOTexCoords );		# // Bind The Buffer
+            self.m_nVBOTexCoords = int(glGenBuffersARB(1))
+            # // Get A Valid Name
+            glBindBufferARB(GL_ARRAY_BUFFER_ARB, self.m_nVBOTexCoords)
+            # // Bind The Buffer
             # // Load The Data
-            glBufferDataARB( GL_ARRAY_BUFFER_ARB, self.m_pTexCoords, GL_STATIC_DRAW_ARB );
+            glBufferDataARB(GL_ARRAY_BUFFER_ARB, self.m_pTexCoords, GL_STATIC_DRAW_ARB)
 
             # // Our Copy Of The Data Is No Longer Necessary, It Is Safe In The Graphics Card
             self.m_pVertices = None
-            self.m_pVertices = None;
+            self.m_pVertices = None
             self.m_pTexCoords = None
-            self.m_pTexCoords = None;
+            self.m_pTexCoords = None
         return
 
-def IsExtensionSupported (TargetExtension):
-    """ Accesses the rendering context to see if it supports an extension.
-        Note, that this test only tells you if the OpenGL library supports
-        the extension. The PyOpenGL system might not actually support the extension.
+
+def IsExtensionSupported(TargetExtension):
+    """Accesses the rendering context to see if it supports an extension.
+    Note, that this test only tells you if the OpenGL library supports
+    the extension. The PyOpenGL system might not actually support the extension.
     """
-    Extensions = glGetString (GL_EXTENSIONS)
+    Extensions = glGetString(GL_EXTENSIONS)
     # python 2.3
     # if (not TargetExtension in Extensions):
-    #	gl_supports_extension = False
-    #	print "OpenGL does not support '%s'" % (TargetExtension)
-    #	return False
+    # 	gl_supports_extension = False
+    # 	print "OpenGL does not support '%s'" % (TargetExtension)
+    # 	return False
 
     # python 2.2
-    Extensions = Extensions.split ()
+    Extensions = Extensions.split()
     found_extension = False
     for extension in Extensions:
         if extension == TargetExtension:
             found_extension = True
-            break;
-    if (found_extension == False):
+            break
+    if found_extension == False:
         gl_supports_extension = False
         print("OpenGL rendering context does not support '%s'" % (TargetExtension))
         return False
@@ -272,60 +323,61 @@ def IsExtensionSupported (TargetExtension):
     # Python divides extension into modules
     # g_fVBOSupported = IsExtensionSupported ("GL_ARB_vertex_buffer_object")
     # from OpenGL.GL.EXT.fog_coord import *
-    if (TargetExtension [:3] != "GL_"):
+    if TargetExtension[:3] != "GL_":
         # Doesn't appear to following extension naming convention.
         # Don't have a means to find a module for this exentsion type.
         return False
 
     # extension name after GL_
-    afterGL = TargetExtension [3:]
+    afterGL = TargetExtension[3:]
     try:
-        group_name_end = afterGL.index ("_")
+        group_name_end = afterGL.index("_")
     except:
         # Doesn't appear to following extension naming convention.
         # Don't have a means to find a module for this exentsion type.
         return False
 
-    group_name = afterGL [:group_name_end]
-    extension_name = afterGL [len (group_name) + 1:]
+    group_name = afterGL[:group_name_end]
+    extension_name = afterGL[len(group_name) + 1 :]
     extension_module_name = "OpenGL.GL.ARB.%s" % (extension_name)
 
     import traceback
+
     try:
-        __import__ (extension_module_name)
+        __import__(extension_module_name)
         print("PyOpenGL supports '%s'" % (TargetExtension))
     except:
         traceback.print_exc()
-        print('Failed to import', extension_module_name)
-        print("OpenGL rendering context supports '%s'" % (TargetExtension), end=' ')
+        print("Failed to import", extension_module_name)
+        print("OpenGL rendering context supports '%s'" % (TargetExtension), end=" ")
         return False
 
     return True
 
 
-
 # // Any GL Init Code & User Initialiazation Goes Here
-def InitGL(Width, Height):				# We call this right after our OpenGL window is created.
-    global g_pMesh,g_fVBOSupported
+def InitGL(Width, Height):  # We call this right after our OpenGL window is created.
+    global g_pMesh, g_fVBOSupported
 
     # // Check for VBOs Supported
-    g_fVBOSupported = bool(glGenBuffersARB )
+    g_fVBOSupported = bool(glGenBuffersARB)
     # // TUTORIAL
     # // Load The Mesh Data
-    g_pMesh = CMesh ()
-    if (not g_pMesh.LoadHeightmap ("Terrain.bmp",
-        CMesh.MESH_HEIGHTSCALE, CMesh.MESH_RESOLUTION)):
+    g_pMesh = CMesh()
+    if not g_pMesh.LoadHeightmap(
+        "Terrain.bmp", CMesh.MESH_HEIGHTSCALE, CMesh.MESH_RESOLUTION
+    ):
         print("Error Loading Heightmap")
         sys.exit(1)
         return False
 
-    if (g_fVBOSupported):
+    if g_fVBOSupported:
         # // Get Pointers To The GL Functions
         # In python, calling Init for the extension functions will
         # fill in the function pointers (really function objects)
         # so that we call the Extension.
 
-        if (not glInitVertexBufferObjectARB()):
+        if not glInitVertexBufferObjectARB():
             print("Help!  No GL_ARB_vertex_buffer_object")
             sys.exit(1)
             return False
@@ -336,31 +388,40 @@ def InitGL(Width, Height):				# We call this right after our OpenGL window is cr
         # glDeleteBuffersARB
         g_pMesh.BuildVBOs()
 
-
     # Setup GL States
-    glClearColor (0.0, 0.0, 0.0, 0.5);							# // Black Background
-    glClearDepth (1.0);											# // Depth Buffer Setup
-    glDepthFunc (GL_LEQUAL);									# // The Type Of Depth Testing
-    glEnable (GL_DEPTH_TEST);									# // Enable Depth Testing
-    glShadeModel (GL_SMOOTH);									# // Select Smooth Shading
-    glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			# // Set Perspective Calculations To Most Accurate
-    glEnable(GL_TEXTURE_2D);									# // Enable Texture Mapping
-    glColor4f (1.0, 6.0, 6.0, 1.0)
+    glClearColor(0.0, 0.0, 0.0, 0.5)
+    # // Black Background
+    glClearDepth(1.0)
+    # // Depth Buffer Setup
+    glDepthFunc(GL_LEQUAL)
+    # // The Type Of Depth Testing
+    glEnable(GL_DEPTH_TEST)
+    # // Enable Depth Testing
+    glShadeModel(GL_SMOOTH)
+    # // Select Smooth Shading
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST)
+    # // Set Perspective Calculations To Most Accurate
+    glEnable(GL_TEXTURE_2D)
+    # // Enable Texture Mapping
+    glColor4f(1.0, 6.0, 6.0, 1.0)
 
-    return True;												# // Return TRUE (Initialization Successful)
+    return True
+    # // Return TRUE (Initialization Successful)
 
 
 # The function called when our window is resized (which shouldn't happen if you enable fullscreen, below)
 def ReSizeGLScene(Width, Height):
-    if Height == 0:						# Prevent A Divide By Zero If The Window Is Too Small
+    if Height == 0:  # Prevent A Divide By Zero If The Window Is Too Small
         Height = 1
 
-    glViewport(0, 0, Width, Height)		# Reset The Current Viewport And Perspective Transformation
+    glViewport(
+        0, 0, Width, Height
+    )  # Reset The Current Viewport And Perspective Transformation
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     # // field of view, aspect ratio, near and far
     # This will squash and stretch our objects as the window is resized.
-    gluPerspective(45.0, float(Width)/float(Height), 1, 1000.0)
+    gluPerspective(45.0, float(Width) / float(Height), 1, 1000.0)
 
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
@@ -371,57 +432,70 @@ g_prev_draw_time = 0.0
 def DrawGLScene():
     global g_dwLastFPS, g_nFPS, g_nFrames, g_pMesh, g_fVBOSupported, g_flYRot, g_prev_draw_time
 
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);				# // Clear Screen And Depth Buffer
-    glLoadIdentity ();													# // Reset The Modelview Matrix
-
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    # // Clear Screen And Depth Buffer
+    glLoadIdentity()
+    # // Reset The Modelview Matrix
 
     # // Get FPS
     # milliseconds = win32api.GetTickCount()
-    seconds = time.clock ()
+    seconds = perf()
 
     if g_nFrames > 30:
         # g_dwLastFPS = win32api.GetTickCount();				# // Update Our Time Variable
-        g_nFPS = g_nFrames/(seconds-g_dwLastFPS);				# // Save The FPS
+        g_nFPS = g_nFrames / (seconds - g_dwLastFPS)
+        # // Save The FPS
         g_dwLastFPS = seconds
-        g_nFrames = 0;											# // Reset The FPS Counter
+        g_nFrames = 0
+        # // Reset The FPS Counter
 
         # // Build The Title String
-        szTitle = "Lesson 45: NeHe & Paul Frazee's VBO Tut - %d Triangles, %d FPS" % (g_pMesh.m_nVertexCount / 3, g_nFPS );
-        if ( g_fVBOSupported ):									# // Include A Notice About VBOs
-            szTitle = szTitle + ", Using VBOs";
+        szTitle = "Lesson 45: NeHe & Paul Frazee's VBO Tut - %d Triangles, %d FPS" % (
+            g_pMesh.m_nVertexCount / 3,
+            g_nFPS,
+        )
+        if g_fVBOSupported:  # // Include A Notice About VBOs
+            szTitle = szTitle + ", Using VBOs"
         else:
-            szTitle = szTitle + ", Not Using VBOs";
+            szTitle = szTitle + ", Not Using VBOs"
         # print("Redisplay fps")
-        glutSetWindowTitle ( szTitle );							# // Set The Title
+        glutSetWindowTitle(szTitle)
+        # // Set The Title
 
-    g_nFrames = g_nFrames + 1 												# // Increment Our FPS Counter
+    g_nFrames = g_nFrames + 1  # // Increment Our FPS Counter
     rot = (seconds - g_prev_draw_time) * 25
     g_prev_draw_time = seconds
-    g_flYRot += rot 											# // Consistantly Rotate The Scenery
+    g_flYRot += rot  # // Consistantly Rotate The Scenery
 
     # // Move The Camera
-    glTranslatef( 0.0, -220.0, 0.0 );							# // Move Above The Terrain
-    glRotatef( 10.0, 1.0, 0.0, 0.0 );							# // Look Down Slightly
-    glRotatef( g_flYRot, 0.0, 1.0, 0.0 );						# // Rotate The Camera
+    glTranslatef(0.0, -220.0, 0.0)
+    # // Move Above The Terrain
+    glRotatef(10.0, 1.0, 0.0, 0.0)
+    # // Look Down Slightly
+    glRotatef(g_flYRot, 0.0, 1.0, 0.0)
+    # // Rotate The Camera
 
     # // Enable Pointers
-    glEnableClientState( GL_VERTEX_ARRAY );						# // Enable Vertex Arrays
-    glEnableClientState( GL_TEXTURE_COORD_ARRAY );				# // Enable Texture Coord Arrays
-
+    glEnableClientState(GL_VERTEX_ARRAY)
+    # // Enable Vertex Arrays
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY)
+    # // Enable Texture Coord Arrays
 
     # // Set Pointers To Our Data
-    if( g_fVBOSupported ):
-#		import pdb
-#		pdb.set_trace()
-        glBindBufferARB( GL_ARRAY_BUFFER_ARB, g_pMesh.m_nVBOVertices );
-        glVertexPointer( 3, GL_FLOAT, 0, None );				# // Set The Vertex Pointer To The Vertex Buffer
-        glBindBufferARB( GL_ARRAY_BUFFER_ARB, g_pMesh.m_nVBOTexCoords );
-        glTexCoordPointer( 2, GL_FLOAT, 0, None );				# // Set The TexCoord Pointer To The TexCoord Buffer
+    if g_fVBOSupported:
+        # 		import pdb
+        # 		pdb.set_trace()
+        glBindBufferARB(GL_ARRAY_BUFFER_ARB, g_pMesh.m_nVBOVertices)
+        glVertexPointer(3, GL_FLOAT, 0, None)
+        # // Set The Vertex Pointer To The Vertex Buffer
+        glBindBufferARB(GL_ARRAY_BUFFER_ARB, g_pMesh.m_nVBOTexCoords)
+        glTexCoordPointer(2, GL_FLOAT, 0, None)
+        # // Set The TexCoord Pointer To The TexCoord Buffer
     else:
         # You can use the pythonism glVertexPointerf (), which will convert the numarray into
         # the needed memory for VertexPointer. This has two drawbacks however:
-        #	1) This does not work in Python 2.2 with PyOpenGL 2.0.0.44
-        #	2) In Python 2.3 with PyOpenGL 2.0.1.07 this is very slow.
+        # 	1) This does not work in Python 2.2 with PyOpenGL 2.0.0.44
+        # 	2) In Python 2.3 with PyOpenGL 2.0.1.07 this is very slow.
         # See the PyOpenGL documentation. Section "PyOpenGL for OpenGL Programmers" for details
         # regarding glXPointer API.
         # Also see OpenGLContext Working with Numeric Python
@@ -431,22 +505,23 @@ def DrawGLScene():
         #
         # The faster approach is to make use of an opaque "string" that represents the
         # the data (vertex array and tex coordinates in this case).
-        glVertexPointer( 3, GL_FLOAT, 0, g_pMesh.m_pVertices_as_string);  	# // Set The Vertex Pointer To Our Vertex Data
-        glTexCoordPointer( 2, GL_FLOAT, 0, g_pMesh.m_pTexCoords_as_string); 	# // Set The Vertex Pointer To Our TexCoord Data
-
+        glVertexPointer(3, GL_FLOAT, 0, g_pMesh.m_pVertices_as_string)
+        # // Set The Vertex Pointer To Our Vertex Data
+        glTexCoordPointer(2, GL_FLOAT, 0, g_pMesh.m_pTexCoords_as_string)
+        # // Set The Vertex Pointer To Our TexCoord Data
 
     # // Render
-    glDrawArrays( GL_TRIANGLES, 0, g_pMesh.m_nVertexCount );		# // Draw All Of The Triangles At Once
+    glDrawArrays(GL_TRIANGLES, 0, g_pMesh.m_nVertexCount)
+    # // Draw All Of The Triangles At Once
 
     # // Disable Pointers
-    glDisableClientState( GL_VERTEX_ARRAY );					# // Disable Vertex Arrays
-    glDisableClientState( GL_TEXTURE_COORD_ARRAY );				# // Disable Texture Coord Arrays
+    glDisableClientState(GL_VERTEX_ARRAY)
+    # // Disable Vertex Arrays
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY)
+    # // Disable Texture Coord Arrays
 
-    glutSwapBuffers()													 # // Flush The GL Rendering Pipeline
+    glutSwapBuffers()  # // Flush The GL Rendering Pipeline
     return True
-
-
-
 
 
 # The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)
@@ -455,8 +530,12 @@ def keyPressed(*args):
 
     # If escape is pressed, kill everything.
     if args[0] == ESCAPE:
-        sys.exit ()
+        if glutLeaveMainLoop:
+            glutLeaveMainLoop()
+        else:
+            sys.exit()
     return
+
 
 def main():
     global window
@@ -481,13 +560,13 @@ def main():
     # if it weren't for the global declaration at the start of main.
     window = glutCreateWindow("Lesson 45: NeHe & Paul Frazee's VBO Tut")
 
-        # Register the drawing function with glut, BUT in Python land, at least using PyOpenGL, we need to
+    # Register the drawing function with glut, BUT in Python land, at least using PyOpenGL, we need to
     # set the function pointer and invoke a function to actually register the callback, otherwise it
     # would be very much like the C version of the code.
     glutDisplayFunc(DrawGLScene)
 
     # Uncomment this line to get full screen.
-    #glutFullScreen()
+    # glutFullScreen()
 
     # When we are doing nothing, redraw the scene.
     glutIdleFunc(DrawGLScene)
@@ -512,6 +591,7 @@ def main():
 
     # Start Event Processing Engine
     glutMainLoop()
+
 
 # Print message to console, and kick off the main to get it rolling.
 if __name__ == "__main__":
