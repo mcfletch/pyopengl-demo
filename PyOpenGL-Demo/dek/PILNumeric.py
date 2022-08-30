@@ -20,6 +20,9 @@ from PIL import Image
 from PIL import ImageTk
 import sys
 
+def image_as_bytes(im, *args, **named):
+    return im.tobytes(*args,**named) if hasattr(im,'tobytes') else im.tostring(*args,**named)
+
 w = 256
 h = 256
 
