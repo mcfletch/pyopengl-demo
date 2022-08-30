@@ -8,12 +8,12 @@ how to accomplish a particular effect.
 
 ## Included Demos
 
-* [da/dots.py](da/dots.py) -- mutate array used to render data as points
-* [NeHe/*.py](NeHe/) -- some of NeHe (Richard Campbell)'s 2000-era tutorials converted to Python by John Ferguson then ported again by Tarn Weisner Burton
-* [proesch/*](proesch/) -- tutorials from Peter Roesch on modern features circa 2004
-* [tom/*.py](tom/) -- Tom's (which I believe is a reference to Thomas Schwaller) original demos for Tk from the PyOpenGL 1.5 releases (1998-ish)
-* [GLUT/tom/*.py](GLUT/tom/) -- Tom's original demos ported to run under GLUT 
-* [GLUT/*.py](GLUT/) -- GLGears-alike, Demo with GLUT menus, shader sample
-* [redbook/*.py](redbook/) -- Jason L. Petrone's porting of RedBook demos (core concepts)
-* [GLE/*.py](GLE/) -- Tests/demos of GL Extrusion library (GLE) features
-* [dek/*.py](dek/) -- Demos from David Konerding showing PIL integration
+* [da/dots.py](OpenGL_Demo/da/dots.py) -- mutate array used to render data as points
+* [NeHe/*.py](OpenGL_Demo/NeHe/) -- some of NeHe (Richard Campbell)'s 2000-era tutorials converted to Python by John Ferguson then ported again by Tarn Weisner Burton
+* [proesch/*](OpenGL_Demo/proesch/) -- tutorials from Peter Roesch on modern features circa 2004
+* [tom/*.py](OpenGL_Demo/tom/) -- Tom's (which I believe is a reference to Thomas Schwaller) original demos for Tk from the PyOpenGL 1.5 releases (1998-ish)
+* [GLUT/tom/*.py](OpenGL_Demo/GLUT/tom/) -- Tom's original demos ported to run under GLUT 
+* [GLUT/*.py](OpenGL_Demo/GLUT/) -- GLGears-alike, Demo with GLUT menus, shader sample
+* [redbook/*.py](OpenGL_Demo/redbook/) -- Jason L. Petrone's porting of RedBook demos (core concepts)
+* [GLE/*.py](OpenGL_Demo/GLE/) -- Tests/demos of GL Extrusion library (GLE) features
+* [dek/*.py](OpenGL_Demo/dek/) -- Demos from David Konerding showing PIL integration
