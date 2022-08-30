@@ -1,19 +1,19 @@
 # This is statement is required by the build system to query build info
 if __name__ == '__build__':
-	raise Exception
+    raise Exception
 
 ## This isn't really a PyOpenGL demo, but it's a nice
 ## example of how Numeric, Tkinter, and PIL can be used 
 ## together to create all sorts of images.
 try:
-	import numpy as Numeric
+    import numpy as Numeric
 except ImportError, err:
-	try: 
-		import Numeric
-	except ImportError, err:
-		print "This demo requires the numpy or Numeric extension, sorry"
-		import sys
-		sys.exit()
+    try: 
+        import Numeric
+    except ImportError, err:
+        print "This demo requires the numpy or Numeric extension, sorry"
+        import sys
+        sys.exit()
 import FFT
 import Tkinter
 from PIL import Image
