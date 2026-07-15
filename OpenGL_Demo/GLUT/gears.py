@@ -182,6 +182,23 @@ LC_Z = as_8_bit("z")
 UC_Z = as_8_bit("Z")
 
 
+def leave_main_loop():
+    """Exit the GLUT main loop from within a callback.
+
+    sys.exit() raises SystemExit, which ctypes silently swallows when raised
+    inside a GLUT callback, so it never ends the program. Prefer freeglut's
+    glutLeaveMainLoop() (glutMainLoop() then returns normally); otherwise fall
+    back to os._exit(), because classic GLUT's glutMainLoop() never returns.
+    """
+    if glutLeaveMainLoop:
+        glutLeaveMainLoop()
+    else:
+        import os
+        sys.stdout.flush()
+        sys.stderr.flush()
+        os._exit(0)
+
+
 def key(k, x, y):
     global view_rotz
 
@@ -190,7 +207,7 @@ def key(k, x, y):
     elif k == UC_Z:
         view_rotz -= 5.0
     elif ord(k) == 27:  # Escape
-        sys.exit(0)
+        leave_main_loop()
     else:
         return
     glutPostRedisplay()

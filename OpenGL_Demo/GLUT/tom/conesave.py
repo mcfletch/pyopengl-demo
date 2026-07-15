@@ -39,10 +39,27 @@ def saveBuffer( filename="test.jpg", format="JPEG" ):
 	return image
 from OpenGL._bytes import as_8_bit
 ESC = as_8_bit( '\033' )
+def leave_main_loop():
+    """Exit the GLUT main loop from within a callback.
+
+    sys.exit() raises SystemExit, which ctypes silently swallows when raised
+    inside a GLUT callback, so it never ends the program. Prefer freeglut's
+    glutLeaveMainLoop() (glutMainLoop() then returns normally); otherwise fall
+    back to os._exit(), because classic GLUT's glutMainLoop() never returns.
+    """
+    if glutLeaveMainLoop:
+        glutLeaveMainLoop()
+    else:
+        import os
+        sys.stdout.flush()
+        sys.stderr.flush()
+        os._exit(0)
+
+
 def key_pressed(*args):
 	# If escape is pressed, kill everything.
 	if args[0] == ESC:
-		sys.exit()
+		leave_main_loop()
 
 def main():
 	print("""You should see a cone rotating slowly, click to save to test.jpg""")

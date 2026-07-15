@@ -118,7 +118,7 @@ def display():
   drawOneLine (50.0, 25.0, 350.0, 25.0)
 
   glDisable (GL_LINE_STIPPLE)
-  glFlush ()
+  glutSwapBuffers()
 
 def reshape(w, h):
   glViewport(0, 0, w, h)
@@ -131,7 +131,7 @@ def keyboard(key, x, y):
     sys.exit(0)
 
 glutInit(sys.argv)
-glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB)
 glutInitWindowSize(400, 150)
 glutInitWindowPosition(100, 100)
 glutCreateWindow('Lines')

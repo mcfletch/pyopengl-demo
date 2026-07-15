@@ -103,7 +103,7 @@ def display():
    glPopMatrix()
 
    glPopMatrix()
-   glFlush()
+   glutSwapBuffers()
 
 
 def reshape(w, h):
@@ -131,7 +131,7 @@ def keyboard(key, x, y):
 #  RGBA display mode, and handle input events.
 
 glutInit(sys.argv)
-glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
+glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
 glutInitWindowSize (500, 500)
 glutCreateWindow('scene')
 init()

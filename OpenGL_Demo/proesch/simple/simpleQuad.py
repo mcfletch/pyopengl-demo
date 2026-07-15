@@ -25,7 +25,7 @@ def display(  ):
 	glVertex3f( 0.5, -0.5, 0 )
 	glVertex3f( 0.5, 0.5, 0 )
 	glEnd(  )
-	glFlush (  )
+	glutSwapBuffers()
 
 def init(  ):
 	"""OpenGL/glut init method."""
@@ -33,7 +33,7 @@ def init(  ):
 	glShadeModel( GL_SMOOTH )
 
 glutInit( sys.argv )
-glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB )
+glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB )
 glutInitWindowSize( 250, 250 )
 glutInitWindowPosition( 100, 100 )
 glutCreateWindow( sys.argv[0] )

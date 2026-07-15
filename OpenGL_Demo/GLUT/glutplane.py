@@ -177,13 +177,30 @@ def visible(state):
 # ARGSUSED1
 
 
+def leave_main_loop():
+    """Exit the GLUT main loop from within a callback.
+
+    sys.exit() raises SystemExit, which ctypes silently swallows when raised
+    inside a GLUT callback, so it never ends the program. Prefer freeglut's
+    glutLeaveMainLoop() (glutMainLoop() then returns normally); otherwise fall
+    back to os._exit(), because classic GLUT's glutMainLoop() never returns.
+    """
+    if glutLeaveMainLoop:
+        glutLeaveMainLoop()
+    else:
+        import os
+        sys.stdout.flush()
+        sys.stderr.flush()
+        os._exit(0)
+
+
 def keyboard(ch, x, y):
     if ch == " ":
         if not moving:
             tick()
             glutPostRedisplay()
     elif ch == chr(27):
-        sys.exit(0)
+        leave_main_loop()
     print("keyboard")
     print("Character: %s" % (ch))
     return 0
@@ -215,7 +232,7 @@ def domotion_off():
 
 
 def doquit():
-    sys.exit(0)
+    leave_main_loop()
     return
 
 

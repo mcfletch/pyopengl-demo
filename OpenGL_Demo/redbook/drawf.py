@@ -83,7 +83,7 @@ def display():
 	glBitmap(10, 12, 0.0, 0.0, 11.0, 0.0, rasters)
 	glBitmap(10, 12, 0.0, 0.0, 11.0, 0.0, rasters)
 	print('flushing')
-	glFlush()
+	glutSwapBuffers()
 
 def reshape(w, h):
 	print('reshape')
@@ -103,7 +103,7 @@ def keyboard(key, x, y):
 #  RGBA display mode, and handle input events.
 if __name__ == "__main__":
 	glutInit(sys.argv)
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB)
 	glutInitWindowSize(100, 100)
 	glutInitWindowPosition(100, 100)
 	glutCreateWindow('drawf')

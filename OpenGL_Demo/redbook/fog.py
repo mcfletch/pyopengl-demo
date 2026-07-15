@@ -109,7 +109,7 @@ def display():
    renderSphere (0., -0.5, -3.0)
    renderSphere (1., -0.5, -4.0)
    renderSphere (2., -0.5, -5.0)
-   glFlush()
+   glutSwapBuffers()
 
 def reshape(w, h):
   glViewport(0, 0, w, h)
@@ -146,7 +146,7 @@ def keyboard(key, x, y):
 #  RGBA display mode, depth buffer, and handle input events.
 
 glutInit(sys.argv)
-glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
+glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 glutInitWindowSize(500, 500)
 glutCreateWindow('fog')
 init()

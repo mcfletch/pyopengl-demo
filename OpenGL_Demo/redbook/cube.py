@@ -73,7 +73,7 @@ def display():
    gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
    glScalef (1.0, 2.0, 1.0)      # modeling transformation
    glutWireCube (1.0)
-   glFlush ()
+   glutSwapBuffers ()
 
 def reshape (w, h):
    glViewport (0, 0, w, h)
@@ -88,7 +88,7 @@ def keyboard(key, x, y):
       sys.exit(0)
 
 glutInit(sys.argv)
-glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB)
+glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB)
 glutInitWindowSize (500, 500)
 glutInitWindowPosition (100, 100)
 glutCreateWindow ('cube')

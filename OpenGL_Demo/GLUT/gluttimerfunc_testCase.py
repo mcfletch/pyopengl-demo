@@ -38,9 +38,26 @@ class TimerCBOwner:
         
         glutPostRedisplay()
 
+def leave_main_loop():
+    """Exit the GLUT main loop from within a callback.
+
+    sys.exit() raises SystemExit, which ctypes silently swallows when raised
+    inside a GLUT callback, so it never ends the program. Prefer freeglut's
+    glutLeaveMainLoop() (glutMainLoop() then returns normally); otherwise fall
+    back to os._exit(), because classic GLUT's glutMainLoop() never returns.
+    """
+    if glutLeaveMainLoop:
+        glutLeaveMainLoop()
+    else:
+        import os
+        sys.stdout.flush()
+        sys.stderr.flush()
+        os._exit(0)
+
+
 def keyboard(key, foo, bar):
     if key == ESCAPE:
-        sys.exit()
+        leave_main_loop()
     else:
         TimerCBOwner(key, 2000, 5)
 

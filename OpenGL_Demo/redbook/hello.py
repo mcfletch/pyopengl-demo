@@ -74,7 +74,7 @@ def display():
 
    # don't wait!
    # start processing buffered OpenGL routines
-   glFlush ();
+   glutSwapBuffers()
 
 def init():
    # select clearing color
@@ -92,7 +92,7 @@ def init():
 #  Enter main loop and process events.
 
 glutInit(sys.argv)
-glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB)
 glutInitWindowSize(250, 250)
 glutInitWindowPosition(100, 100)
 glutCreateWindow("hello")
