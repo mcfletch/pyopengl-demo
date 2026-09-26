@@ -41,7 +41,7 @@ class Test:
         xx = np.arange(LowX, HighX, (HighX - LowX) / w * 2)
         yy = np.arange(HighY, LowY, (LowY - HighY) / h * 2) * 1j
         c = np.ravel(xx + yy[:, np.newaxis])
-        z = np.zeros(c.shape, np.complex)
+        z = np.zeros(c.shape, complex)
         output = np.resize(
             np.array(
                 0,
